@@ -1052,11 +1052,11 @@
 
       const OVERALL_REFERENCE = 4.74;
       const TOTAL_ITEMS = QUESTIONS.length;
-      // Apps Script 版本會直接使用 google.script.run；若要保留 GitHub Pages 作為填答入口，
-      // 請在部署 Apps Script 後，把 /exec 網址填到這裡。這不是管理者代碼，不會暴露後台資料。
-      const APP_CONFIG = {
-        gasEndpoint: ""
-      };
+       // Apps Script 版本會直接使用 google.script.run。GitHub Pages 的公開建置流程
+       // 會在上線時把 endpoint placeholder 替換成 /exec；原始碼不保存部署網址。
+       const APP_CONFIG = {
+         gasEndpoint: "__GAS_ENDPOINT__"
+       };
       const STORAGE = {
         draft: "el-scale-draft-v1",
         profile: "el-scale-profile-v1",
@@ -1395,9 +1395,70 @@
           : { ok: false, error: response && response.error ? response.error : "雲端儲存失敗" });
       }
 
+      // GitHub Pages 不能使用 google.script.run；改用不觸發 CORS 預檢的純文字 POST。
+      // credentials: "omit" 讓公開填答不受使用者多重 Google 登入 session 影響。
+      function submitViaPublicPost(record) {
+        const endpoint = getGasEndpoint();
+        const body = JSON.stringify({ action: "submitResponse", payload: record });
+        if (typeof fetch === "function") {
+          return fetch(endpoint, {
+            method: "POST",
+            mode: "no-cors",
+            credentials: "omit",
+            redirect: "follow",
+            keepalive: true,
+            headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            body
+          }).then(() => ({ ok: true, mode: "cloud", transport: "public-post" }))
+            .catch(() => submitViaBeaconOrForm(endpoint, body));
+        }
+        return submitViaBeaconOrForm(endpoint, body);
+      }
+
+      function submitViaBeaconOrForm(endpoint, body) {
+        if (navigator.sendBeacon) {
+          try {
+            const accepted = navigator.sendBeacon(endpoint, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+            if (accepted) return Promise.resolve({ ok: true, mode: "cloud", transport: "beacon" });
+          } catch (error) { /* use form fallback */ }
+        }
+        return new Promise((resolve) => {
+          const frame = document.createElement("iframe");
+          const frameName = "el-scale-submit-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+          frame.name = frameName;
+          frame.title = "資料送出中";
+          frame.setAttribute("aria-hidden", "true");
+          frame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;";
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = endpoint;
+          form.target = frameName;
+          form.enctype = "application/x-www-form-urlencoded;charset=UTF-8";
+          form.style.display = "none";
+          const field = document.createElement("input");
+          field.type = "hidden";
+          field.name = "payload";
+          field.value = body;
+          form.appendChild(field);
+          document.body.append(frame, form);
+          let finished = false;
+          const finish = (result) => {
+            if (finished) return;
+            finished = true;
+            frame.remove();
+            form.remove();
+            resolve(result);
+          };
+          frame.addEventListener("load", () => finish({ ok: true, mode: "cloud", transport: "form" }), { once: true });
+          window.setTimeout(() => finish({ ok: false, error: "目前無法連線至雲端資料庫，請確認網路後再試。" }), 12000);
+          try { form.submit(); } catch (error) { finish({ ok: false, error: "目前無法送出資料，請稍後再試。" }); }
+        });
+      }
+
       async function persistRecord(record) {
-        if (!hasGasBackend()) return { ok: false, mode: "not-configured", error: "目前尚未連接 Google Sheets，這份填答不會送出。請使用 Apps Script 網頁應用程式網址，或先完成後端設定。" };
-        return submitToGas(record);
+        if (hasNativeGasBackend()) return submitToGas(record);
+        if (getGasEndpoint()) return submitViaPublicPost(record);
+        return { ok: false, mode: "not-configured", error: "目前尚未連接 Google Sheets，這份填答不會送出。請使用已完成後端設定的正式網址。" };
       }
 
       function getBand(mean) {
