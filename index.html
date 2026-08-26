@@ -113,7 +113,7 @@
 
     .brand-copy { display: grid; gap: 0; line-height: 1.1; }
 
-    .brand-copy strong { font-size: 15px; letter-spacing: 0.06em; }
+    .brand-copy strong { font-size: 15px; letter-spacing: 0.06em; white-space: nowrap; }
 
     .brand-copy small {
       margin-top: 5px;
@@ -257,7 +257,9 @@
 
     .hero-card {
       position: relative;
-      min-height: 470px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
       padding: 34px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.78);
@@ -286,7 +288,7 @@
     .live-dot { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
     .live-dot::before { width: 7px; height: 7px; content: ""; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 5px rgba(32,132,120,0.10); }
 
-    .hero-card h2 { max-width: 270px; margin: 40px 0 24px; font-size: 28px; letter-spacing: -0.06em; line-height: 1.25; }
+    .hero-card h2 { max-width: 270px; margin: 32px 0 24px; font-size: 28px; letter-spacing: -0.06em; line-height: 1.25; }
 
     .factor-mini-list { display: grid; gap: 10px; }
 
@@ -304,22 +306,24 @@
 
     .factor-mini .dot { width: 10px; height: 10px; background: var(--factor-color); border-radius: 50%; }
     .factor-mini strong { display: block; font-size: 14px; }
-    .factor-mini small { display: block; margin-top: 1px; color: var(--muted); font-size: 10px; letter-spacing: 0.05em; }
-    .factor-mini .mini-mean { color: var(--accent-deep); font-size: 12px; font-weight: 850; }
+    .factor-mini small { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; letter-spacing: 0.05em; }
+    .factor-mini .mini-mean { color: var(--accent-deep); font-size: 12px; font-weight: 850; white-space: nowrap; }
 
     .hero-card-foot {
-      position: absolute;
-      right: 34px;
-      bottom: 30px;
-      left: 34px;
+      position: relative;
+      right: auto;
+      bottom: auto;
+      left: auto;
       z-index: 1;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 20px;
+      margin-top: 24px;
     }
 
-    .hero-card-foot p { max-width: 230px; margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.6; }
+    .hero-card-foot p { flex: 1 1 210px; max-width: 250px; margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.65; }
 
     .hero-spark {
       display: flex;
@@ -356,6 +360,88 @@
     .section-heading p { max-width: 680px; margin: 0; color: var(--ink-soft); }
 
     .method-wrap { margin-top: 84px; }
+
+    .importance-wrap { margin-top: 84px; }
+
+    .importance-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 16px;
+    }
+
+    .importance-quote,
+    .importance-point {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .importance-quote {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 230px;
+      padding: 30px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #f2faf6 0%, #ffffff 74%);
+    }
+
+    .importance-quote::after {
+      position: absolute;
+      right: -34px;
+      bottom: -56px;
+      width: 150px;
+      height: 150px;
+      content: "";
+      background: var(--accent-soft);
+      border-radius: 50%;
+      opacity: 0.58;
+    }
+
+    .quote-mark {
+      position: relative;
+      z-index: 1;
+      color: var(--accent);
+      font-family: Georgia, serif;
+      font-size: 58px;
+      line-height: 0.8;
+    }
+
+    .importance-quote blockquote {
+      position: relative;
+      z-index: 1;
+      max-width: 430px;
+      margin: 13px 0 16px;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 780;
+      letter-spacing: -0.04em;
+      line-height: 1.55;
+    }
+
+    .importance-quote cite {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 11px;
+      font-style: normal;
+      line-height: 1.6;
+    }
+
+    .importance-points { display: grid; gap: 16px; }
+
+    .importance-point { padding: 24px; }
+    .importance-point strong { display: block; color: var(--accent-deep); font-size: 17px; letter-spacing: -0.03em; }
+    .importance-point p { margin: 8px 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
+
+    .importance-source {
+      margin: 15px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
 
     .method-card {
       display: grid;
@@ -402,10 +488,57 @@
       border-radius: var(--radius-md);
     }
 
-    .source-label { color: #8067a5; font-size: 11px; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+    .source-label { color: #8067a5; font-size: 12px; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
     .source-copy { display: grid; gap: 9px; }
-    .source-copy p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.75; }
+    .source-copy p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
     .source-copy strong { color: var(--ink); }
+
+    .profile-gate {
+      margin-bottom: 34px;
+      padding: clamp(24px, 4vw, 38px);
+      background: linear-gradient(135deg, #f0faf6 0%, #ffffff 56%, #fff8ee 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-gate[hidden],
+    #survey-content[hidden] { display: none !important; }
+
+    .profile-gate-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .profile-gate h1 { margin: 10px 0 7px; font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.07em; line-height: 1.2; }
+    .profile-gate-head p { max-width: 620px; margin: 0; color: var(--ink-soft); font-size: 14px; }
+    .profile-step { flex: 0 0 auto; padding: 8px 11px; color: var(--accent-deep); background: rgba(255,255,255,0.76); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+
+    .profile-form { margin-top: 28px; }
+    .profile-fieldset { margin: 0; padding: 0; border: 0; }
+    .profile-fieldset legend { margin-bottom: 12px; color: var(--ink); font-size: 16px; font-weight: 800; }
+
+    .identity-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .identity-option { position: relative; display: flex; align-items: center; gap: 13px; min-height: 76px; padding: 15px 17px; color: var(--ink-soft); background: rgba(255,255,255,0.78); border: 1px solid var(--line); border-radius: 14px; cursor: pointer; transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease, transform 150ms ease; }
+    .identity-option:hover { background: white; border-color: #a5d9c9; transform: translateY(-1px); }
+    .identity-option:has(input:checked) { color: var(--accent-deep); background: #f8fffb; border-color: var(--accent); box-shadow: 0 8px 18px rgba(32,132,120,0.11); }
+    .identity-option input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+    .identity-option span { display: grid; gap: 2px; }
+    .identity-option strong { color: var(--ink); font-size: 15px; }
+    .identity-option small { color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+    .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+    .profile-field { display: grid; gap: 7px; min-width: 0; }
+    .profile-field > span { color: var(--ink); font-size: 13px; font-weight: 800; }
+    .profile-field select { width: 100%; min-height: 48px; padding: 0 13px; color: var(--ink); background: rgba(255,255,255,0.88); border: 1px solid var(--line); border-radius: 11px; font-size: 13px; }
+    .profile-field select:focus-visible { outline: 3px solid rgba(32, 132, 120, 0.26); outline-offset: 3px; }
+    .conditional-profile-fields { margin-top: 2px; }
+    .conditional-profile-fields[hidden] { display: none !important; }
+
+    .profile-actions { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(220,235,229,0.88); }
+    .profile-validation { min-height: 24px; margin: 0; color: #b45e4d; font-size: 12px; }
 
     .survey-top {
       display: flex;
@@ -445,7 +578,7 @@
       background: var(--wash);
       border: 1px solid var(--line);
       border-radius: 14px;
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .survey-notice strong { color: var(--accent-deep); }
@@ -465,10 +598,10 @@
 
     .factor-title { display: flex; align-items: center; gap: 13px; }
     .factor-number { display: grid; place-items: center; width: 34px; height: 34px; color: white; background: var(--factor-color); border-radius: 11px; font-size: 13px; font-weight: 850; }
-    .factor-title h2 { margin: 0; font-size: 21px; letter-spacing: -0.05em; line-height: 1.25; }
-    .factor-title small { display: block; margin-top: 1px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
-    .factor-reference { color: var(--ink-soft); font-size: 11px; text-align: right; }
-    .factor-reference strong { display: block; color: var(--factor-color); font-size: 15px; }
+    .factor-title h2 { margin: 0; font-size: 22px; letter-spacing: -0.05em; line-height: 1.25; }
+    .factor-title small { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
+    .factor-reference { color: var(--ink-soft); font-size: 12px; text-align: right; }
+    .factor-reference strong { display: block; color: var(--factor-color); font-size: 16px; }
 
     .questions-list { display: grid; gap: 1px; padding: 1px; background: var(--line); border-radius: 0 0 var(--radius-md) var(--radius-md); }
 
@@ -478,7 +611,7 @@
     .question-card.has-answer { background: #fcfffd; }
     .question-card.is-missing { background: #fff9f6; box-shadow: inset 4px 0 var(--coral); }
 
-    .question-card legend { display: flex; align-items: flex-start; gap: 14px; width: 100%; padding: 0; color: var(--ink); font-size: 15px; font-weight: 720; line-height: 1.65; }
+    .question-card legend { display: flex; align-items: flex-start; gap: 14px; width: 100%; padding: 0; color: var(--ink); font-size: 16px; font-weight: 720; line-height: 1.65; }
     .item-number { flex: 0 0 auto; color: var(--accent); font-size: 11px; font-weight: 850; letter-spacing: 0.06em; }
     .item-text { flex: 1; }
 
@@ -489,7 +622,7 @@
     .response-option label:hover { background: var(--accent-soft); border-color: #a5d9c9; }
     .response-option input:checked + label { color: white; background: var(--accent); border-color: var(--accent); box-shadow: 0 7px 16px rgba(32,132,120,0.17); transform: translateY(-2px); }
     .response-option label b { display: block; font-size: 17px; line-height: 1.1; }
-    .response-option label small { display: block; max-width: 60px; margin-top: 3px; font-size: 9px; line-height: 1.2; }
+    .response-option label small { display: block; max-width: 78px; margin-top: 3px; font-size: 10.5px; line-height: 1.3; }
 
     .survey-actions {
       display: flex;
@@ -546,19 +679,19 @@
     .factor-result-header .factor-title .factor-number { width: 30px; height: 30px; border-radius: 9px; font-size: 11px; }
     .factor-score { color: var(--factor-color); font-size: 31px; font-weight: 850; letter-spacing: -0.07em; line-height: 1; text-align: right; }
     .factor-score small { color: var(--muted); font-size: 12px; font-weight: 750; letter-spacing: 0; }
-    .factor-result-card > p { min-height: 43px; margin: 18px 0 18px; color: var(--ink-soft); font-size: 12px; line-height: 1.65; }
+    .factor-result-card > p { min-height: 43px; margin: 18px 0 18px; color: var(--ink-soft); font-size: 13px; line-height: 1.65; }
     .compare-block { padding-top: 14px; border-top: 1px dashed var(--line); }
-    .compare-labels { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 10px; font-weight: 750; }
+    .compare-labels { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 750; }
     .compare-labels strong { color: var(--ink); font-size: 11px; }
     .compare-track { position: relative; height: 10px; margin: 9px 0 8px; background: #edf4f1; border-radius: 999px; }
     .compare-user-bar { width: 0%; height: 100%; background: var(--factor-color); border-radius: inherit; transition: width 600ms ease; }
     .compare-marker { position: absolute; top: -4px; left: 0%; width: 2px; height: 18px; background: var(--ink); border-radius: 99px; opacity: 0.65; }
     .compare-marker::after { position: absolute; top: -4px; left: -3px; width: 8px; height: 8px; content: ""; background: var(--ink); border-radius: 50%; }
-    .compare-legend { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 10px; }
+    .compare-legend { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; }
     .compare-legend span { display: inline-flex; align-items: center; gap: 5px; }
     .compare-legend i { display: inline-block; width: 8px; height: 8px; background: var(--factor-color); border-radius: 50%; }
     .compare-legend .reference-dot { width: 2px; height: 11px; background: var(--ink); border-radius: 0; }
-    .factor-result-footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 17px; color: var(--muted); font-size: 11px; }
+    .factor-result-footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 17px; color: var(--muted); font-size: 12px; }
     .delta-positive { color: var(--accent-deep); font-weight: 850; }
     .delta-negative { color: #b46050; font-weight: 850; }
     .delta-neutral { color: #9b7830; font-weight: 850; }
@@ -575,7 +708,7 @@
     .reference-stat { padding: 11px 12px; background: rgba(255,255,255,0.75); border-radius: 11px; }
     .reference-stat small { display: block; color: var(--muted); font-size: 10px; }
     .reference-stat strong { display: block; margin-top: 3px; color: var(--accent-deep); font-size: 16px; }
-    .reference-source { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid rgba(205, 220, 213, 0.9); color: var(--muted) !important; font-size: 10px !important; line-height: 1.7 !important; }
+    .reference-source { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid rgba(205, 220, 213, 0.9); color: var(--muted) !important; font-size: 11px !important; line-height: 1.7 !important; }
 
     .report-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 32px; }
     .report-stamp { margin-top: 20px; color: var(--muted); font-size: 11px; text-align: center; }
@@ -601,12 +734,29 @@
     .admin-metric strong { display: block; margin-top: 4px; color: var(--accent-deep); font-size: 27px; letter-spacing: -0.06em; }
     .admin-metric span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
 
+    .admin-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .admin-group-card { padding: 20px; background: linear-gradient(145deg, #ffffff 0%, var(--wash) 100%); border: 1px solid var(--line); border-radius: var(--radius-md); }
+    .admin-group-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .admin-group-head h3 { margin: 0; font-size: 18px; letter-spacing: -0.05em; }
+    .admin-group-head p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .admin-group-count { color: var(--accent-deep); font-size: 25px; font-weight: 850; letter-spacing: -0.06em; line-height: 1; text-align: right; white-space: nowrap; }
+    .admin-group-count small { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0; }
+    .admin-group-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 17px; }
+    .admin-group-stat { padding: 10px 11px; background: rgba(255,255,255,0.75); border: 1px solid rgba(220,235,229,0.76); border-radius: 10px; }
+    .admin-group-stat small { display: block; color: var(--muted); font-size: 10px; }
+    .admin-group-stat strong { display: block; margin-top: 2px; color: var(--ink); font-size: 17px; }
+    .admin-group-factors { display: grid; gap: 7px; margin-top: 15px; }
+    .admin-group-factor { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 11px; }
+    .admin-group-factor i { width: 8px; height: 8px; background: var(--factor-color); border-radius: 50%; }
+    .admin-group-factor strong { color: var(--ink); font-size: 12px; }
+    .admin-group-empty { margin: 16px 0 0; color: var(--muted); font-size: 11px; }
+
     .admin-panel { padding: 24px; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); }
     .admin-panel-head { display: flex; align-items: end; justify-content: space-between; gap: 15px; margin-bottom: 16px; }
     .admin-panel-head h2 { margin: 0; font-size: 19px; letter-spacing: -0.05em; }
     .admin-panel-head p { margin: 0; color: var(--muted); font-size: 11px; }
     .admin-factor-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .admin-factor-table th { padding: 10px 8px; color: var(--muted); border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 800; text-align: left; }
+    .admin-factor-table th { padding: 10px 8px; color: var(--muted); border-bottom: 1px solid var(--line); font-size: 11px; font-weight: 800; text-align: left; }
     .admin-factor-table td { padding: 13px 8px; border-bottom: 1px solid #edf3f0; }
     .admin-factor-table tr:last-child td { border-bottom: 0; }
     .admin-factor-table .factor-name { display: flex; align-items: center; gap: 8px; font-weight: 750; }
@@ -622,17 +772,17 @@
     .small-button.danger { color: #a34f42; background: var(--coral-soft); border-color: transparent; }
 
     .admin-recent-wrap { overflow-x: auto; }
-    .admin-recent-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 11px; }
-    .admin-recent-table th { padding: 9px 8px; color: var(--muted); background: var(--wash); border-bottom: 1px solid var(--line); font-size: 10px; text-align: left; }
+    .admin-recent-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 12px; }
+    .admin-recent-table th { padding: 9px 8px; color: var(--muted); background: var(--wash); border-bottom: 1px solid var(--line); font-size: 11px; text-align: left; }
     .admin-recent-table th:first-child { border-radius: 9px 0 0 9px; }
     .admin-recent-table th:last-child { border-radius: 0 9px 9px 0; }
     .admin-recent-table td { padding: 12px 8px; border-bottom: 1px solid #edf3f0; }
     .admin-recent-table tr:last-child td { border-bottom: 0; }
-    .band-tag { display: inline-flex; align-items: center; min-height: 23px; padding: 0 8px; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; font-size: 10px; font-weight: 800; }
+    .band-tag { display: inline-flex; align-items: center; min-height: 23px; padding: 0 8px; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; font-size: 11px; font-weight: 800; }
     .band-tag.mid { color: #8c6b27; background: var(--sun-soft); }
     .band-tag.low { color: #a34f42; background: var(--coral-soft); }
 
-    .admin-note { color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .admin-note { color: var(--muted); font-size: 12px; line-height: 1.7; }
     .admin-note strong { color: var(--ink-soft); }
     .empty-state { padding: 35px 20px; color: var(--muted); text-align: center; font-size: 13px; }
 
@@ -644,8 +794,9 @@
 
     @media (max-width: 880px) {
       .hero-grid { grid-template-columns: 1fr; min-height: auto; gap: 42px; }
-      .hero-card { min-height: 430px; max-width: 680px; }
+      .hero-card { min-height: 0; max-width: 680px; }
       .method-card { grid-template-columns: 1fr; }
+      .importance-grid { grid-template-columns: 1fr; }
       .survey-top, .admin-top { align-items: flex-start; flex-direction: column; }
       .progress-box { width: 100%; min-width: 0; }
       .result-hero { grid-template-columns: 1fr; gap: 28px; }
@@ -657,24 +808,31 @@
       .site-header { min-height: 70px; }
       .brand-copy small { display: none; }
       .site-nav { gap: 1px; }
-      .nav-link { padding: 8px 8px; font-size: 11px; }
+      .nav-link { flex: 0 0 auto; padding: 8px 8px; font-size: 12px; white-space: nowrap; }
       .main-content { padding-top: 30px; }
       .hero-copy h1 { font-size: clamp(37px, 12vw, 58px); }
       .hero-description { font-size: 15px; }
-      .hero-card { min-height: 405px; padding: 24px; }
-      .hero-card-foot { right: 24px; bottom: 24px; left: 24px; }
+      .hero-card { min-height: 0; padding: 24px; }
+      .hero-card h2 { margin-top: 28px; font-size: 27px; }
+      .hero-card-foot { margin-top: 20px; }
       .stats-ribbon { grid-template-columns: 1fr; }
       .stat-cell { min-height: 80px; padding: 15px 20px; }
       .method-points { grid-template-columns: 1fr; }
+      .importance-wrap { margin-top: 58px; }
+      .importance-quote { min-height: 0; padding: 24px; }
+      .importance-quote blockquote { font-size: 19px; }
       .privacy-note { flex-direction: column; gap: 4px; }
       .source-card { grid-template-columns: 1fr; gap: 8px; }
+      .profile-gate-head, .profile-actions { align-items: stretch; flex-direction: column; }
+      .profile-step { align-self: flex-start; }
+      .identity-options, .profile-grid { grid-template-columns: 1fr; }
       .survey-notice { align-items: flex-start; flex-direction: column; }
       .factor-section-header { align-items: flex-start; flex-direction: column; }
       .factor-reference { text-align: left; }
       .question-card { padding: 17px 14px 15px; }
-      .question-card legend { gap: 9px; font-size: 14px; }
+      .question-card legend { gap: 9px; font-size: 15px; }
       .response-labels { grid-template-columns: repeat(3, 1fr); gap: 6px; margin-left: 0; }
-      .response-option label { min-height: 52px; }
+      .response-option label { min-height: 58px; padding-inline: 3px; }
       .survey-actions { align-items: stretch; flex-direction: column; }
       .actions-right { justify-content: stretch; }
       .actions-right .button { flex: 1; }
@@ -686,6 +844,7 @@
       .factor-results-grid, .insight-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
       .admin-metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .admin-groups { grid-template-columns: 1fr; }
       .admin-metric { padding: 15px; }
       .admin-metric strong { font-size: 23px; }
       .admin-panel { padding: 17px 14px; }
@@ -752,36 +911,60 @@
           <div class="stat-cell"><small>結果呈現</small><strong>四因素＋總分</strong></div>
         </div>
 
+        <section class="importance-wrap" aria-labelledby="importance-title">
+          <div class="section-heading"><span class="eyebrow">Why emotional literacy matters</span><h2 id="importance-title">情緒素養，是教師照顧自己與支持學生的底氣。</h2><p>論文指出，教師的情緒能力和自我效能、教學品質與心理健康都有關；先看見自己的狀態，才更有空間回應教學現場與人際互動。</p></div>
+          <div class="importance-grid">
+            <article class="importance-quote"><span class="quote-mark" aria-hidden="true">“</span><blockquote>「情緒素養可能也是支持教師心理健康的一條重要途徑。」</blockquote><cite>— 王宣惠、洪儷瑜，《教師情緒素養量表之編製》</cite></article>
+            <div class="importance-points">
+              <article class="importance-point"><strong>面對高壓現場</strong><p>教師同時承擔教學、班級經營與多方關係互動。情緒素養有助於覺察內在狀態、調節反應，保留持續工作的能量。</p></article>
+              <article class="importance-point"><strong>支持專業成長</strong><p>本研究整合情緒素養、情緒智力與社會情緒學習觀點，建立 35 題、四因素的量表，作為自我反思與專業培訓的參考。</p></article>
+            </div>
+          </div>
+          <p class="importance-source">研究摘要：本量表以 554 名有效在職教師資料建構並驗證，結果支持自我覺察、自我管理、社會覺察與人際技能四因素架構。這是一份自我了解工具，不是診斷或正式常模。</p>
+        </section>
+
         <div class="method-wrap">
           <div class="section-heading"><span class="eyebrow">How it works</span><h2>把感受整理成可以前進的線索</h2><p>每一題都沒有標準答案，請依「現在實際的狀態與感受」選擇最符合你的程度。</p></div>
           <div class="method-card">
             <div><h3>你會得到一份個人化的四因素報表</h3><p>完成填答後，結果會呈現各因素的題目平均、原始總分、與論文教師樣本平均的差距，並用低／中／高分區協助閱讀。這是一份自我反思工具，不是診斷或排名。</p></div>
             <div class="method-points"><div class="method-point"><b>01</b><strong>直覺填答</strong><span>依第一個真實反應作答，不必揣測「應該選幾分」。</span></div><div class="method-point"><b>02</b><strong>即時計分</strong><span>35 題完成後，自動計算四因素與總量表分數。</span></div><div class="method-point"><b>03</b><strong>對照閱讀</strong><span>完成後在報表中和論文教師樣本平均並列，看見自己的優勢與下一步。</span></div></div>
           </div>
-          <div class="privacy-note"><strong>資料提醒</strong><span>本頁預設不收集姓名或聯絡方式。尚未接上雲端時，回覆只保存在這個瀏覽器；部署 Apps Script 後才會集中寫入你的 Google 試算表。</span></div>
+          <div class="privacy-note"><strong>填答提醒</strong><span>本量表不要求填寫姓名或聯絡方式；僅詢問分組統計所需的基本資料。請依照你目前的實際感受作答，結果僅供自我了解與專業發展參考。</span></div>
           <div class="source-card" id="source"><div class="source-label">Research note</div><div class="source-copy"><p><strong>引用論文：</strong>王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。</p><p><strong>研究支持：</strong>本研究獲教育部高等教育深耕計畫之特色領域研究中心經費補助，由「國立臺灣師範大學社會情緒教育與發展研究中心」支應。</p></div></div>
         </div>
       </section>
 
       <section id="survey-view" class="view" hidden aria-labelledby="survey-title">
-        <div class="survey-top">
-          <div><span class="eyebrow">Step 01 · Reflect</span><h1 id="survey-title">現在的你，感覺如何？</h1><p>請依據你現在實際的狀態與感受，圈選最符合的選項。</p></div>
-          <div class="progress-box" aria-live="polite"><div class="progress-meta"><span id="current-section-label">準備開始</span><strong><span id="answered-count">0</span> / 35 題</strong></div><div class="progress-track" aria-hidden="true"><div id="progress-fill" class="progress-fill"></div></div><div class="progress-meta" style="margin-top:7px"><span>填答進度</span><strong id="progress-value">0%</strong></div></div>
+        <section id="profile-gate" class="profile-gate" aria-labelledby="profile-title">
+          <div class="profile-gate-head"><div><span class="eyebrow">Step 01 · About you</span><h1 id="profile-title">先告訴我們你的身分</h1><p>這些資料只用於分組整理結果，不需要填寫姓名或聯絡方式。請選擇最符合你目前狀態的選項。</p></div><span class="profile-step">1 / 2</span></div>
+          <form id="profile-form" class="profile-form" novalidate>
+            <fieldset class="profile-fieldset"><legend>填答身分</legend><div class="identity-options"><label class="identity-option"><input type="radio" name="respondent-type" value="teacher" required><span><strong>教師</strong><small>目前正在學校任教，或正在進行教師相關實習／培訓</small></span></label><label class="identity-option"><input type="radio" name="respondent-type" value="non-teacher"><span><strong>非教師</strong><small>目前沒有在學校任教，作為情緒素養的參考填答者</small></span></label></div></fieldset>
+            <div class="profile-grid"><label class="profile-field" for="profile-gender"><span>性別</span><select id="profile-gender" required><option value="">請選擇</option><option value="女性">女性</option><option value="男性">男性</option><option value="其他／不便回答">其他／不便回答</option></select></label><label class="profile-field" for="profile-age"><span>年齡</span><select id="profile-age" required><option value="">請選擇</option><option value="25 歲以下">25 歲以下</option><option value="26-30 歲">26-30 歲</option><option value="31-40 歲">31-40 歲</option><option value="41-50 歲">41-50 歲</option><option value="51 歲以上">51 歲以上</option><option value="不便回答">不便回答</option></select></label></div>
+            <div id="teacher-profile-fields" class="conditional-profile-fields" hidden><div class="profile-grid"><label class="profile-field" for="profile-stage"><span>任教階段</span><select id="profile-stage"><option value="">請選擇</option><option value="幼兒園">幼兒園</option><option value="國小">國小</option><option value="國中">國中</option><option value="高中">高中</option><option value="其他教育階段">其他教育階段</option></select></label><label class="profile-field" for="profile-experience"><span>教學年資</span><select id="profile-experience"><option value="">請選擇</option><option value="０師培生">０師培生</option><option value="初任教師（未滿 2 年）">初任教師（未滿 2 年）</option><option value="2 年以上未達 5 年">2 年以上未達 5 年</option><option value="5 年以上未達 10 年">5 年以上未達 10 年</option><option value="10 年以上未達 15 年">10 年以上未達 15 年</option><option value="15 年以上未達 20 年">15 年以上未達 20 年</option><option value="20 年以上">20 年以上</option></select></label></div></div>
+            <div id="nonteacher-profile-fields" class="conditional-profile-fields" hidden><div class="profile-grid"><label class="profile-field" for="profile-occupation"><span>目前主要工作／身分</span><select id="profile-occupation"><option value="">請選擇</option><option value="學生／在學者">學生／在學者</option><option value="公務／軍警">公務／軍警</option><option value="教育／研究（非教師）">教育／研究（非教師）</option><option value="醫療／健康／社會照顧">醫療／健康／社會照顧</option><option value="科技／工程／製造">科技／工程／製造</option><option value="商業／金融／行政">商業／金融／行政</option><option value="服務／銷售／餐旅">服務／銷售／餐旅</option><option value="文化／媒體／自由業">文化／媒體／自由業</option><option value="農林漁牧／營建／運輸">農林漁牧／營建／運輸</option><option value="家務／退休／待業">家務／退休／待業</option><option value="其他">其他</option></select></label></div></div>
+            <div class="profile-actions"><p id="profile-validation" class="profile-validation" aria-live="polite"></p><button id="profile-continue-button" class="button" type="submit">開始作答 <span aria-hidden="true">→</span></button></div>
+          </form>
+        </section>
+        <div id="survey-content" hidden>
+          <div class="survey-top">
+            <div><span class="eyebrow">Step 02 · Reflect</span><h1 id="survey-title">現在的你，感覺如何？</h1><p>請依據你現在實際的狀態與感受，圈選最符合的選項。</p></div>
+            <div class="progress-box" aria-live="polite"><div class="progress-meta"><span id="current-section-label">準備開始</span><strong><span id="answered-count">0</span> / 35 題</strong></div><div class="progress-track" aria-hidden="true"><div id="progress-fill" class="progress-fill"></div></div><div class="progress-meta" style="margin-top:7px"><span>填答進度</span><strong id="progress-value">0%</strong></div></div>
+          </div>
+          <div class="survey-notice"><span><strong>六點量表：</strong>1 非常不同意 · 2 不同意 · 3 些許不同意 · 4 些許同意 · 5 同意 · 6 非常同意</span><span id="draft-status">自動保存於本機</span></div>
+          <form id="survey-form" novalidate><div id="question-sections"></div><div class="survey-actions"><div id="validation-message" class="validation-message" aria-live="polite"></div><div class="actions-right"><button id="survey-back-button" class="button secondary" type="button">返回首頁</button><button id="submit-button" class="button" type="submit">查看我的報表 <span aria-hidden="true">→</span></button></div></div></form>
         </div>
-        <div class="survey-notice"><span><strong>六點量表：</strong>1 非常不同意 · 2 不同意 · 3 些許不同意 · 4 些許同意 · 5 同意 · 6 非常同意</span><span id="draft-status">自動保存於本機</span></div>
-        <form id="survey-form" novalidate><div id="question-sections"></div><div class="survey-actions"><div id="validation-message" class="validation-message" aria-live="polite"></div><div class="actions-right"><button id="survey-back-button" class="button secondary" type="button">返回首頁</button><button id="submit-button" class="button" type="submit">查看我的報表 <span aria-hidden="true">→</span></button></div></div></form>
       </section>
 
       <section id="results-view" class="view" hidden aria-labelledby="results-title">
         <div class="results-top"><span class="eyebrow">Step 02 · Your report</span></div>
         <div id="result-hero" class="result-hero">
           <div class="overall-score"><div id="overall-ring" class="score-ring" aria-label="總量表平均分數"><div class="score-ring-inner"><strong id="overall-mean">–</strong><span>/ 6 平均</span></div></div></div>
-          <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span class="pill">參考平均 4.74</span></div></div>
+          <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p>彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
+        <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
-        <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p>本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
+        <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
 
         <div class="report-actions"><button id="print-button" class="button" type="button">列印／儲存 PDF</button><button id="retake-button" class="button secondary" type="button">重新填答</button><button id="results-home-button" class="button ghost" type="button">回到首頁</button></div>
         <p id="report-stamp" class="report-stamp"></p>
@@ -792,9 +975,10 @@
         <div id="admin-lock" class="admin-lock" hidden><div class="lock-icon" aria-hidden="true">⌁</div><h2>後台資料需要代碼</h2><p>雲端模式會要求 Apps Script 中設定的後台代碼。這只保護報表讀取，不會影響一般填答。</p><div class="admin-login"><input id="admin-code" type="password" autocomplete="current-password" placeholder="輸入後台代碼"><button id="admin-login-button" type="button">登入</button></div><p id="admin-login-message" class="admin-login-message" aria-live="polite"></p></div>
         <div id="admin-dashboard" class="admin-summary" hidden>
           <div class="admin-metrics"><div class="admin-metric"><small>累積回覆</small><strong id="admin-count">0</strong><span>匿名填答筆數</span></div><div class="admin-metric"><small>整體平均</small><strong id="admin-overall-mean">–</strong><span>總量表題目平均</span></div><div class="admin-metric"><small>高分組</small><strong id="admin-high-count">0</strong><span>平均 5 分以上</span></div><div class="admin-metric"><small>最近回覆</small><strong id="admin-latest-date">–</strong><span>最後一筆送出日期</span></div></div>
+          <div id="admin-groups" class="admin-groups" aria-label="教師與非教師分組統計"></div>
           <div class="admin-panel"><div class="admin-panel-head"><div><h2>四因素累積平均</h2><p>與論文教師樣本平均並列</p></div></div><div id="admin-factor-table"></div></div>
           <div class="admin-panel"><div class="admin-toolbar"><p><strong>最近回覆</strong> · 只顯示匿名編號與計分摘要</p><div class="admin-toolbar-actions"><button id="export-csv-button" class="small-button" type="button">匯出 CSV</button><button id="export-json-button" class="small-button" type="button">匯出 JSON</button><button id="clear-local-button" class="small-button danger" type="button">清除本機資料</button></div></div><div id="admin-recent-table" class="admin-recent-wrap"></div></div>
-          <p class="admin-note"><strong>資料保護：</strong>本工具只儲存作答答案與計分摘要，不收集姓名、Email 或其他直接識別資料。若部署到公開網址，請維持試算表私有，並定期下載備份。</p>
+          <p class="admin-note"><strong>資料保護：</strong>本工具只儲存身分分組、基本背景、作答答案與計分摘要，不收集姓名、Email 或其他直接識別資料。若部署到公開網址，請維持試算表私有，並定期下載備份。</p>
         </div>
       </section>
     </main>
@@ -852,6 +1036,9 @@
         { id: "relationship-skills", number: "F4", name: "人際技能", english: "Relationship skills", items: [28,29,30,31,32,33,34,35], referenceMean: 4.67, color: "#c59a45", tint: "#fff8e6", description: "清楚溝通、合作與處理衝突，在關係中平衡自己與他人的需求。" }
       ];
 
+      // 作答畫面採固定混合順序，避免填答者從題目排列看出因素分組；計分仍依 FACTORS 對應題號進行。
+      const SURVEY_ORDER = [1,10,21,28,2,11,22,29,3,12,23,30,4,13,24,31,5,14,25,32,6,15,26,33,7,16,27,34,8,17,35,9,18,19,20];
+
       const SCALE = [
         { value: 1, label: "非常不同意" },
         { value: 2, label: "不同意" },
@@ -865,12 +1052,14 @@
       const TOTAL_ITEMS = QUESTIONS.length;
       const STORAGE = {
         draft: "el-scale-draft-v1",
+        profile: "el-scale-profile-v1",
         submissions: "el-scale-submissions-v1"
       };
 
       const state = {
         view: "welcome",
         answers: loadDraft(),
+        profile: loadProfile(),
         results: null,
         adminRecords: [],
         adminMode: "local"
@@ -902,6 +1091,26 @@
         return Object.fromEntries(Object.entries(draft).filter(([key, value]) => Number.isInteger(Number(key)) && Number(value) >= 1 && Number(value) <= 6));
       }
 
+      function loadProfile() {
+        const profile = readStorage(STORAGE.profile, null);
+        return profile && typeof profile === "object" ? profile : null;
+      }
+
+      function isProfileComplete(profile = state.profile) {
+        if (!profile || !profile.respondentType || !profile.gender || !profile.age) return false;
+        if (profile.respondentType === "teacher") return Boolean(profile.teachingStage && profile.teachingExperience);
+        if (profile.respondentType === "non-teacher") return Boolean(profile.occupation);
+        return false;
+      }
+
+      function getRespondentLabel(profile = state.profile) {
+        return profile && profile.respondentType === "teacher" ? "教師" : profile && profile.respondentType === "non-teacher" ? "非教師" : "未分組";
+      }
+
+      function getReferenceLabel(profile = state.profile) {
+        return profile && profile.respondentType === "non-teacher" ? "論文教師樣本平均（僅供參考）" : "論文教師樣本平均";
+      }
+
       function saveDraft() {
         writeStorage(STORAGE.draft, state.answers);
         updateProgress();
@@ -919,6 +1128,7 @@
         return {
           id: String(record.id || "EL-UNKNOWN"),
           submittedAt: record.submittedAt || new Date().toISOString(),
+          profile: record.profile && typeof record.profile === "object" ? record.profile : null,
           answers: record.answers || {},
           scores: record.scores
         };
@@ -932,13 +1142,75 @@
 
       function clearDraft() {
         state.answers = {};
+        state.profile = null;
         try { localStorage.removeItem(STORAGE.draft); } catch (error) { /* no-op */ }
+        try { localStorage.removeItem(STORAGE.profile); } catch (error) { /* no-op */ }
         updateResumeButton();
       }
 
       function updateResumeButton() {
         const hasDraft = Object.keys(state.answers).length > 0 && Object.keys(state.answers).length < TOTAL_ITEMS;
         $("#resume-button").hidden = !hasDraft;
+      }
+
+      function renderProfileForm() {
+        const profile = state.profile || {};
+        const typeInput = document.querySelector('input[name="respondent-type"][value="' + (profile.respondentType || "") + '"]');
+        $$('input[name="respondent-type"]').forEach((input) => { input.checked = input === typeInput; });
+        $("#profile-gender").value = profile.gender || "";
+        $("#profile-age").value = profile.age || "";
+        $("#profile-stage").value = profile.teachingStage || "";
+        $("#profile-experience").value = profile.teachingExperience || "";
+        $("#profile-occupation").value = profile.occupation || "";
+        updateProfileFields();
+      }
+
+      function updateProfileFields() {
+        const type = document.querySelector('input[name="respondent-type"]:checked')?.value || "";
+        const teacherFields = $("#teacher-profile-fields");
+        const nonTeacherFields = $("#nonteacher-profile-fields");
+        teacherFields.hidden = type !== "teacher";
+        nonTeacherFields.hidden = type !== "non-teacher";
+        $("#profile-stage").required = type === "teacher";
+        $("#profile-experience").required = type === "teacher";
+        $("#profile-occupation").required = type === "non-teacher";
+      }
+
+      function readProfileForm() {
+        const type = document.querySelector('input[name="respondent-type"]:checked')?.value || "";
+        return {
+          respondentType: type,
+          gender: $("#profile-gender").value,
+          age: $("#profile-age").value,
+          teachingStage: type === "teacher" ? $("#profile-stage").value : "",
+          teachingExperience: type === "teacher" ? $("#profile-experience").value : "",
+          occupation: type === "non-teacher" ? $("#profile-occupation").value : ""
+        };
+      }
+
+      function syncSurveyGate() {
+        const complete = isProfileComplete();
+        $("#profile-gate").hidden = complete;
+        $("#survey-content").hidden = !complete;
+        if (complete) {
+          renderSurvey();
+          updateProgress();
+        }
+      }
+
+      function handleProfileSubmit(event) {
+        event.preventDefault();
+        updateProfileFields();
+        const profile = readProfileForm();
+        if (!isProfileComplete(profile)) {
+          $("#profile-validation").textContent = profile.respondentType ? "請完成目前身分所需的資料，再開始作答。" : "請先選擇填答身分，再繼續。";
+          return;
+        }
+        state.profile = profile;
+        writeStorage(STORAGE.profile, state.profile);
+        $("#profile-validation").textContent = "";
+        syncSurveyGate();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
       function showView(view) {
@@ -949,8 +1221,8 @@
         });
         $$("[data-view]").forEach((element) => element.classList.toggle("is-active", element.dataset.view === view));
         if (view === "survey") {
-          renderSurvey();
-          updateProgress();
+          renderProfileForm();
+          syncSurveyGate();
         }
         if (view === "admin") renderAdmin();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -958,20 +1230,18 @@
 
       function renderSurvey() {
         const container = $("#question-sections");
-        container.innerHTML = FACTORS.map((factor, factorIndex) => {
-          const questions = factor.items.map((id) => QUESTIONS.find((question) => question.id === id));
-          return `<section class="factor-section" style="--factor-color:${factor.color};--factor-tint:${factor.tint}" aria-labelledby="factor-${factor.id}">
-            <div class="factor-section-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h2 id="factor-${factor.id}">${factor.name}</h2><small>${factor.english}</small></div></div><div class="factor-reference"><strong>論文平均 ${factor.referenceMean.toFixed(2)}</strong>${factor.items.length} 題 · 題目平均</div></div>
-            <div class="questions-list">${questions.map(renderQuestion).join("")}</div>
-          </section>`;
-        }).join("");
+        const questions = SURVEY_ORDER.map((id) => QUESTIONS.find((question) => question.id === id));
+        container.innerHTML = `<section class="factor-section survey-section-neutral" style="--factor-color:var(--accent);--factor-tint:var(--wash)" aria-labelledby="survey-questions-title">
+          <div class="factor-section-header"><div class="factor-title"><span class="factor-number">35</span><div><h2 id="survey-questions-title">請依直覺作答</h2><small>35 題 · 依當下感受回答</small></div></div><div class="factor-reference"><strong>35 題</strong>完成後查看報表</div></div>
+          <div class="questions-list">${questions.map((question, index) => renderQuestion(question, index + 1)).join("")}</div>
+        </section>`;
         updateQuestionStates();
       }
 
-      function renderQuestion(question) {
+      function renderQuestion(question, displayNumber) {
         const selected = Number(state.answers[question.id] || 0);
         return `<fieldset class="question-card${selected ? " has-answer" : ""}" data-question-id="${question.id}">
-          <legend><span class="item-number">${String(question.id).padStart(2, "0")}</span><span class="item-text">${question.text}</span></legend>
+          <legend><span class="item-number">${String(displayNumber).padStart(2, "0")}</span><span class="item-text">${question.text}</span></legend>
           <div class="response-labels">${SCALE.map((option) => `<span class="response-option"><input id="q${question.id}-${option.value}" type="radio" name="q-${question.id}" value="${option.value}"${selected === option.value ? " checked" : ""}><label for="q${question.id}-${option.value}"><b>${option.value}</b><small>${option.label}</small></label></span>`).join("")}</div>
         </fieldset>`;
       }
@@ -991,8 +1261,7 @@
         $("#answered-count").textContent = answered;
         $("#progress-value").textContent = percentage + "%";
         $("#progress-fill").style.width = percentage + "%";
-        const nextFactor = FACTORS.find((factor) => factor.items.some((id) => !state.answers[id]));
-        $("#current-section-label").textContent = nextFactor ? nextFactor.name : "全部完成";
+        $("#current-section-label").textContent = answered === 0 ? "準備開始" : answered === TOTAL_ITEMS ? "全部完成" : "填答進行中";
       }
 
       function calculateScores(answers) {
@@ -1020,10 +1289,10 @@
         };
       }
 
-      function makeRecord(scores) {
-        const id = "EL-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
-        return { id, submittedAt: new Date().toISOString(), answers: { ...state.answers }, scores };
-      }
+     function makeRecord(scores) {
+       const id = "EL-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+        return { id, submittedAt: new Date().toISOString(), profile: { ...(state.profile || {}) }, answers: { ...state.answers }, scores };
+     }
 
       function submitToGas(record) {
         return new Promise((resolve) => {
@@ -1051,48 +1320,55 @@
         return { key: "high", label: "高分區 · ≥ 5.00" };
       }
 
-      function getDeltaCopy(difference) {
-        if (difference > 0.14) return { label: "高於論文平均", className: "delta-positive" };
-        if (difference < -0.14) return { label: "低於論文平均", className: "delta-negative" };
-        return { label: "接近論文平均", className: "delta-neutral" };
+      function getDeltaCopy(difference, referenceLabel = "論文平均") {
+        if (difference > 0.14) return { label: `高於${referenceLabel}`, className: "delta-positive" };
+        if (difference < -0.14) return { label: `低於${referenceLabel}`, className: "delta-negative" };
+        return { label: `接近${referenceLabel}`, className: "delta-neutral" };
       }
 
-      function renderResults(scores, saveResult, submittedAt) {
-        state.results = scores;
-        const overall = scores.overall;
-        const band = getBand(overall.mean);
-        const delta = getDeltaCopy(overall.difference);
-        $("#overall-mean").textContent = overall.mean.toFixed(2);
-        $("#overall-total").textContent = `總分 ${overall.total} / ${overall.max}`;
-        $("#overall-band").textContent = band.label;
-        $("#overall-band").className = "pill" + (band.key === "mid" ? " warm" : "");
-        $("#overall-ring").style.setProperty("--ring-progress", `${Math.min(360, Math.max(0, overall.mean / 6 * 360))}deg`);
-        $("#overall-summary").textContent = `你的總量表題目平均為 ${overall.mean.toFixed(2)}，${delta.label}（${Math.abs(overall.difference).toFixed(2)} 分）。這份結果適合拿來整理感受、看見優勢，也找出想持續練習的方向。`;
-        $("#factor-results").innerHTML = FACTORS.map((factor, index) => {
-          const score = scores.factors[factor.id];
-          const factorDelta = getDeltaCopy(score.difference);
-          const userPercent = Math.min(100, Math.max(0, score.mean / 6 * 100));
-          const referencePercent = Math.min(100, Math.max(0, factor.referenceMean / 6 * 100));
-          return `<article class="factor-result-card" style="--factor-color:${factor.color}">
-            <div class="factor-result-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>${factor.english}</small></div></div><div class="factor-score">${score.mean.toFixed(2)}<small> / 6</small></div></div>
-            <p>${factor.description}</p>
-            <div class="compare-block"><div class="compare-labels"><span>你的題目平均</span><strong>${score.mean.toFixed(2)}</strong></div><div class="compare-track"><div class="compare-user-bar" style="width:${userPercent}%"></div><span class="compare-marker" style="left:${referencePercent}%" title="論文平均 ${factor.referenceMean.toFixed(2)}"></span></div><div class="compare-legend"><span><i></i>你的結果</span><span><i class="reference-dot"></i>論文平均 ${factor.referenceMean.toFixed(2)}</span></div></div>
-            <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
-          </article>`;
-        }).join("");
+      function renderResults(scores, saveResult, submittedAt, profile = state.profile) {
+       state.results = scores;
+       const overall = scores.overall;
+       const band = getBand(overall.mean);
+        const referenceLabel = getReferenceLabel(profile);
+        const respondentLabel = getRespondentLabel(profile);
+        const delta = getDeltaCopy(overall.difference, referenceLabel);
+       $("#overall-mean").textContent = overall.mean.toFixed(2);
+       $("#overall-total").textContent = `總分 ${overall.total} / ${overall.max}`;
+       $("#overall-band").textContent = band.label;
+       $("#overall-band").className = "pill" + (band.key === "mid" ? " warm" : "");
+       $("#overall-ring").style.setProperty("--ring-progress", `${Math.min(360, Math.max(0, overall.mean / 6 * 360))}deg`);
+       $("#overall-summary").textContent = `你的總量表題目平均為 ${overall.mean.toFixed(2)}，${delta.label}（${Math.abs(overall.difference).toFixed(2)} 分）。這份結果適合拿來整理感受、看見優勢，也找出想持續練習的方向。`;
+        $("#reference-average-pill").textContent = `${referenceLabel} 4.74`;
+        $("#respondent-summary").textContent = `填答身分：${respondentLabel}`;
+        $("#respondent-summary").hidden = !profile || !profile.respondentType;
+        $("#factor-results-caption").textContent = `彩色長條是你的題目平均，黑色標記是${referenceLabel}。`;
+        $("#reference-copy").textContent = profile && profile.respondentType === "non-teacher" ? "你選擇以非教師身分填答；本報表仍並列論文中 554 位教師的六點量表平均，僅作探索性參考，不代表非教師常模或能力診斷。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組。" : "本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。";
+       $("#factor-results").innerHTML = FACTORS.map((factor, index) => {
+         const score = scores.factors[factor.id];
+          const factorDelta = getDeltaCopy(score.difference, referenceLabel);
+         const userPercent = Math.min(100, Math.max(0, score.mean / 6 * 100));
+         const referencePercent = Math.min(100, Math.max(0, factor.referenceMean / 6 * 100));
+         return `<article class="factor-result-card" style="--factor-color:${factor.color}">
+           <div class="factor-result-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>${factor.english}</small></div></div><div class="factor-score">${score.mean.toFixed(2)}<small> / 6</small></div></div>
+           <p>${factor.description}</p>
+            <div class="compare-block"><div class="compare-labels"><span>你的題目平均</span><strong>${score.mean.toFixed(2)}</strong></div><div class="compare-track"><div class="compare-user-bar" style="width:${userPercent}%"></div><span class="compare-marker" style="left:${referencePercent}%" title="${referenceLabel} ${factor.referenceMean.toFixed(2)}"></span></div><div class="compare-legend"><span><i></i>你的結果</span><span><i class="reference-dot"></i>${referenceLabel} ${factor.referenceMean.toFixed(2)}</span></div></div>
+           <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
+         </article>`;
+       }).join("");
 
-        const sorted = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
-        const strongest = sorted[0];
-        const practice = sorted[sorted.length - 1];
-        const closest = [...FACTORS].sort((a, b) => Math.abs(scores.factors[a.id].difference) - Math.abs(scores.factors[b.id].difference))[0];
-        $("#insight-list").innerHTML = [
-          `目前四個因素中，${strongest.name}平均 ${scores.factors[strongest.id].mean.toFixed(2)}，是你的相對優勢線索。`,
-          `${practice.name}平均 ${scores.factors[practice.id].mean.toFixed(2)}，可以作為近期自我觀察或練習的起點。`,
-          `和論文平均最接近的是${closest.name}（差距 ${Math.abs(scores.factors[closest.id].difference).toFixed(2)} 分），適合做為穩定表現的參照。`
-        ].map((text) => `<li>${text}</li>`).join("");
-        const saveMessage = saveResult && saveResult.warning ? `雲端暫時無法寫入，已先保存在本機：${saveResult.warning}` : (saveResult && saveResult.mode === "cloud" ? "已匿名寫入雲端試算表" : "已匿名保存在這個瀏覽器");
-        $("#report-stamp").textContent = `完成時間 ${formatDate(submittedAt || recordTime())} · ${saveMessage}`;
-      }
+       const sorted = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
+       const strongest = sorted[0];
+       const practice = sorted[sorted.length - 1];
+       const closest = [...FACTORS].sort((a, b) => Math.abs(scores.factors[a.id].difference) - Math.abs(scores.factors[b.id].difference))[0];
+       $("#insight-list").innerHTML = [
+         `目前四個因素中，${strongest.name}平均 ${scores.factors[strongest.id].mean.toFixed(2)}，是你的相對優勢線索。`,
+         `${practice.name}平均 ${scores.factors[practice.id].mean.toFixed(2)}，可以作為近期自我觀察或練習的起點。`,
+          `和${referenceLabel}最接近的是${closest.name}（差距 ${Math.abs(scores.factors[closest.id].difference).toFixed(2)} 分），適合做為穩定表現的參照。`
+       ].map((text) => `<li>${text}</li>`).join("");
+       const saveMessage = saveResult && saveResult.warning ? `雲端暫時無法寫入，已先保存在本機：${saveResult.warning}` : (saveResult && saveResult.mode === "cloud" ? "已匿名寫入雲端試算表" : "已匿名保存在這個瀏覽器");
+       $("#report-stamp").textContent = `完成時間 ${formatDate(submittedAt || recordTime())} · ${saveMessage}`;
+     }
 
       function recordTime() { return new Date().toISOString(); }
 
@@ -1130,18 +1406,17 @@
         const submitButton = $("#submit-button");
         submitButton.disabled = true;
         submitButton.innerHTML = "正在整理你的報表…";
-        const scores = calculateScores(state.answers);
-        const record = makeRecord(scores);
-        const saveResult = await persistRecord(record);
+       const scores = calculateScores(state.answers);
+       const record = makeRecord(scores);
+       const saveResult = await persistRecord(record);
+        renderResults(scores, saveResult, record.submittedAt, record.profile);
         clearDraft();
-        renderResults(scores, saveResult, record.submittedAt);
         submitButton.disabled = false;
         submitButton.innerHTML = "查看我的報表 <span aria-hidden=\"true\">→</span>";
         showView("results");
       }
 
-      function buildAdminSummary(records) {
-        const list = records.filter((record) => record && record.scores && record.scores.overall);
+      function summarizeRecordList(list) {
         const factorAverages = {};
         FACTORS.forEach((factor) => {
           const values = list.map((record) => Number(record.scores.factors[factor.id]?.mean)).filter(Number.isFinite);
@@ -1151,6 +1426,13 @@
         const distribution = { high: 0, mid: 0, low: 0 };
         overallValues.forEach((mean) => distribution[getBand(mean).key]++);
         return { list, factorAverages, overallMean: overallValues.length ? overallValues.reduce((a, b) => a + b, 0) / overallValues.length : 0, distribution };
+      }
+
+      function buildAdminSummary(records) {
+        const list = records.filter((record) => record && record.scores && record.scores.overall);
+        const teacherRecords = list.filter((record) => record.profile && record.profile.respondentType === "teacher");
+        const nonTeacherRecords = list.filter((record) => record.profile && record.profile.respondentType === "non-teacher");
+        return { ...summarizeRecordList(list), groups: { teacher: summarizeRecordList(teacherRecords), nonTeacher: summarizeRecordList(nonTeacherRecords) } };
       }
 
       function renderAdmin() {
@@ -1196,12 +1478,21 @@
         const summary = buildAdminSummary(records);
         $("#admin-dashboard").hidden = false;
         $("#admin-count").textContent = summary.list.length;
-        $("#admin-overall-mean").textContent = summary.overallMean ? summary.overallMean.toFixed(2) : "–";
-        $("#admin-high-count").textContent = summary.distribution.high;
-        $("#admin-latest-date").textContent = summary.list[0] ? formatDate(summary.list[0].submittedAt, false) : "–";
-        $("#admin-factor-table").innerHTML = summary.list.length ? `<table class="admin-factor-table"><thead><tr><th>因素</th><th style="width:35%">累積平均</th><th>論文平均</th><th>差距</th></tr></thead><tbody>${FACTORS.map((factor) => { const mean = summary.factorAverages[factor.id]; const diff = mean - factor.referenceMean; const delta = getDeltaCopy(diff); return `<tr><td><span class="factor-name"><i class="factor-dot" style="--factor-color:${factor.color}"></i>${factor.name}</span></td><td><div style="display:grid;grid-template-columns:42px 1fr;align-items:center;gap:9px"><strong>${mean.toFixed(2)}</strong><div class="admin-bar"><span style="width:${Math.min(100, mean / 6 * 100)}%;background:${factor.color}"></span></div></div></td><td>${factor.referenceMean.toFixed(2)}</td><td class="${delta.className}">${diff >= 0 ? "+" : ""}${diff.toFixed(2)}</td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">還沒有累積回覆。完成一份填答後，這裡會出現統計摘要。</div>`;
+       $("#admin-overall-mean").textContent = summary.overallMean ? summary.overallMean.toFixed(2) : "–";
+       $("#admin-high-count").textContent = summary.distribution.high;
+       $("#admin-latest-date").textContent = summary.list[0] ? formatDate(summary.list[0].submittedAt, false) : "–";
+        const groupDefinitions = [
+          { key: "teacher", label: "教師", description: "教師／師培生填答" },
+          { key: "nonTeacher", label: "非教師", description: "其他身分填答" }
+        ];
+        $("#admin-groups").innerHTML = groupDefinitions.map((definition) => {
+          const group = summary.groups[definition.key];
+          const factorRows = FACTORS.map((factor) => `<div class="admin-group-factor" style="--factor-color:${factor.color}"><i></i><span>${factor.name}</span><strong>${group.factorAverages[factor.id] ? group.factorAverages[factor.id].toFixed(2) : "–"}</strong></div>`).join("");
+          return `<article class="admin-group-card"><div class="admin-group-head"><div><h3>${definition.label}</h3><p>${definition.description} · 分組統計</p></div><div class="admin-group-count">${group.list.length}<small>筆回覆</small></div></div><div class="admin-group-stats"><div class="admin-group-stat"><small>總量表平均</small><strong>${group.overallMean ? group.overallMean.toFixed(2) : "–"}</strong></div><div class="admin-group-stat"><small>高分組</small><strong>${group.distribution.high}</strong></div></div>${group.list.length ? `<div class="admin-group-factors">${factorRows}</div>` : `<p class="admin-group-empty">尚未有${definition.label}資料。</p>`}</article>`;
+        }).join("");
+       $("#admin-factor-table").innerHTML = summary.list.length ? `<table class="admin-factor-table"><thead><tr><th>因素</th><th style="width:35%">累積平均</th><th>論文平均</th><th>差距</th></tr></thead><tbody>${FACTORS.map((factor) => { const mean = summary.factorAverages[factor.id]; const diff = mean - factor.referenceMean; const delta = getDeltaCopy(diff); return `<tr><td><span class="factor-name"><i class="factor-dot" style="--factor-color:${factor.color}"></i>${factor.name}</span></td><td><div style="display:grid;grid-template-columns:42px 1fr;align-items:center;gap:9px"><strong>${mean.toFixed(2)}</strong><div class="admin-bar"><span style="width:${Math.min(100, mean / 6 * 100)}%;background:${factor.color}"></span></div></div></td><td>${factor.referenceMean.toFixed(2)}</td><td class="${delta.className}">${diff >= 0 ? "+" : ""}${diff.toFixed(2)}</td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">還沒有累積回覆。完成一份填答後，這裡會出現統計摘要。</div>`;
         const recent = summary.list.slice(0, 10);
-        $("#admin-recent-table").innerHTML = recent.length ? `<table class="admin-recent-table"><thead><tr><th>匿名編號</th><th>完成時間</th><th>總量表平均</th><th>分組</th></tr></thead><tbody>${recent.map((record) => { const band = getBand(record.scores.overall.mean); return `<tr><td>${record.id}</td><td>${formatDate(record.submittedAt)}</td><td><strong>${Number(record.scores.overall.mean).toFixed(2)}</strong> / 6</td><td><span class="band-tag ${band.key === "mid" ? "mid" : band.key === "low" ? "low" : ""}">${band.key === "high" ? "高分組" : band.key === "mid" ? "中分組" : "低分組"}</span></td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">目前沒有資料可顯示。</div>`;
+        $("#admin-recent-table").innerHTML = recent.length ? `<table class="admin-recent-table"><thead><tr><th>匿名編號</th><th>填答身分</th><th>完成時間</th><th>總量表平均</th><th>分組</th></tr></thead><tbody>${recent.map((record) => { const band = getBand(record.scores.overall.mean); return `<tr><td>${record.id}</td><td>${getRespondentLabel(record.profile)}</td><td>${formatDate(record.submittedAt)}</td><td><strong>${Number(record.scores.overall.mean).toFixed(2)}</strong> / 6</td><td><span class="band-tag ${band.key === "mid" ? "mid" : band.key === "low" ? "low" : ""}">${band.key === "high" ? "高分組" : band.key === "mid" ? "中分組" : "低分組"}</span></td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">目前沒有資料可顯示。</div>`;
         $("#clear-local-button").hidden = state.adminMode !== "local";
       }
 
@@ -1225,12 +1516,12 @@
       function exportRecords(format) {
         const records = state.adminRecords.length ? state.adminRecords : getLocalRecords();
         if (!records.length) { showToast("目前沒有可匯出的資料", "error"); return; }
-        if (format === "json") {
-          makeDownload(`情緒素養量表回覆_${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(records, null, 2), "application/json;charset=utf-8");
-          return;
-        }
-        const headers = ["匿名編號", "填答時間", "總分", "總量表平均", ...FACTORS.map((factor) => factor.name + "平均"), ...QUESTIONS.map((question) => "第" + question.id + "題")];
-        const rows = records.map((record) => [record.id, record.submittedAt, record.scores.overall.total, record.scores.overall.mean, ...FACTORS.map((factor) => record.scores.factors[factor.id]?.mean ?? ""), ...QUESTIONS.map((question) => record.answers[question.id] ?? "")]);
+       if (format === "json") {
+         makeDownload(`情緒素養量表回覆_${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(records, null, 2), "application/json;charset=utf-8");
+         return;
+       }
+        const headers = ["匿名編號", "填答時間", "填答身分", "性別", "年齡", "任教階段", "教學年資", "目前主要工作／身分", "總分", "總量表平均", ...FACTORS.map((factor) => factor.name + "平均"), ...QUESTIONS.map((question) => "第" + question.id + "題")];
+        const rows = records.map((record) => { const profile = record.profile || {}; return [record.id, record.submittedAt, getRespondentLabel(profile), profile.gender || "", profile.age || "", profile.teachingStage || "", profile.teachingExperience || "", profile.occupation || "", record.scores.overall.total, record.scores.overall.mean, ...FACTORS.map((factor) => record.scores.factors[factor.id]?.mean ?? ""), ...QUESTIONS.map((question) => record.answers[question.id] ?? "")]; });
         const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
         makeDownload(`情緒素養量表回覆_${new Date().toISOString().slice(0,10)}.csv`, csv, "text/csv;charset=utf-8");
       }
@@ -1249,8 +1540,9 @@
       $("#survey-back-button").addEventListener("click", () => showView("welcome"));
       $("#retake-button").addEventListener("click", () => { state.answers = {}; clearDraft(); showView("survey"); });
       $("#results-home-button").addEventListener("click", () => showView("welcome"));
-      $("#print-button").addEventListener("click", () => window.print());
-      $("#survey-form").addEventListener("submit", handleSubmit);
+     $("#print-button").addEventListener("click", () => window.print());
+      $("#profile-form").addEventListener("submit", handleProfileSubmit);
+     $("#survey-form").addEventListener("submit", handleSubmit);
       $("#admin-login-button").addEventListener("click", loadCloudAdmin);
       $("#admin-code").addEventListener("keydown", (event) => { if (event.key === "Enter") loadCloudAdmin(); });
       $("#export-csv-button").addEventListener("click", () => exportRecords("csv"));
@@ -1264,10 +1556,15 @@
         showToast("本機累積資料已清除");
       });
 
-      document.addEventListener("change", (event) => {
-        const input = event.target;
+     document.addEventListener("change", (event) => {
+       const input = event.target;
+        if (input.matches('input[name="respondent-type"]')) {
+          updateProfileFields();
+          $("#profile-validation").textContent = "";
+          return;
+        }
         if (!input.matches("input[type=radio][name^=q-]")) return;
-        const id = Number(input.name.replace("q-", ""));
+       const id = Number(input.name.replace("q-", ""));
         state.answers[id] = Number(input.value);
         saveDraft();
         const card = input.closest(".question-card");
