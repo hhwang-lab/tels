@@ -727,6 +727,7 @@
     .admin-login button { min-width: 88px; color: white; background: var(--accent); border: 1px solid var(--accent); border-radius: 0 11px 11px 0; font-size: 13px; font-weight: 800; }
     .admin-login-message { min-height: 22px; margin: 10px 0 0; color: #b46050; font-size: 11px; }
     .admin-login-message.is-info { color: var(--ink-soft); }
+    .admin-login[hidden], #admin-dashboard[hidden], #clear-local-button[hidden] { display: none !important; }
 
     .admin-summary { display: grid; gap: 28px; }
     .admin-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -1535,6 +1536,7 @@
         if (mode === "cloud") {
           $("#admin-lock").hidden = false;
           $("#admin-dashboard").hidden = true;
+          $("#clear-local-button").hidden = true;
           $("#admin-lock-description").textContent = "雲端模式會要求 Apps Script 中設定的管理者代碼。沒有代碼就無法讀取試算表資料。";
           $("#admin-login").hidden = false;
           $("#admin-login-message").className = "admin-login-message";
@@ -1543,6 +1545,8 @@
         }
         $("#admin-lock").hidden = false;
         $("#admin-dashboard").hidden = true;
+        state.adminRecords = [];
+        $("#clear-local-button").hidden = true;
         $("#admin-lock-description").textContent = "這個網站尚未連接 Google Sheets。為保護填答者資料，GitHub Pages 預覽版不顯示任何本機或雲端後台內容。";
         $("#admin-login").hidden = true;
         $("#admin-login-message").className = "admin-login-message is-info";
