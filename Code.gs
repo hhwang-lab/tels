@@ -2,7 +2,7 @@
  * 情緒素養量表｜Google Sheets + Apps Script 後端
  *
  * 使用方式：
- * 1. 將這份檔案與 index.html 放進「由試算表開啟」的 Apps Script 專案。
+ * 1. 將這份檔案與 index.html 放進 Apps Script 專案；可使用試算表綁定專案，也可使用獨立專案。
  * 2. 先執行 setupScaleBackend() 建立「回覆」分頁。
  * 3. 執行 setAdminToken()，在試算表授權視窗輸入一組後台代碼。
  * 4. 部署為網頁應用程式：執行身分選「我」、誰可以存取選「所有人」。
@@ -10,6 +10,8 @@
 
 const SHEET_NAME = '回覆';
 const TIME_ZONE = 'Asia/Taipei';
+// 若是獨立 Apps Script 專案，請在這裡填入試算表網址中的 ID；綁定專案可維持原樣。
+const SPREADSHEET_ID = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
 const HEADERS = [
   '時間', '匿名編號', '填答身分', '性別', '年齡', '任教階段', '教學年資', '目前主要工作／身分',
   '總分', '總量表平均',
@@ -174,8 +176,19 @@ function getAdminData(token) {
 }
 
 function getSheet_() {
-  // 本檔案預設為「由試算表開啟」的容器繫結腳本，因此不需要硬寫試算表 ID。
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  // 綁定專案可直接取得目前試算表；獨立專案則使用上方設定的試算表 ID。
+  let spreadsheet = null;
+  try {
+    spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  } catch (error) {
+    spreadsheet = null;
+  }
+  if (!spreadsheet) {
+    if (!SPREADSHEET_ID || SPREADSHEET_ID === 'PASTE_YOUR_SPREADSHEET_ID_HERE') {
+      throw new Error('請先在 Code.gs 設定 SPREADSHEET_ID。');
+    }
+    spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+  }
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = spreadsheet.insertSheet(SHEET_NAME);
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
