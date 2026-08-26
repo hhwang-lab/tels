@@ -4,7 +4,7 @@
  * 使用方式：
  * 1. 將這份檔案與 index.html 放進 Apps Script 專案；可使用試算表綁定專案，也可使用獨立專案。
  * 2. 先執行 setupScaleBackend() 建立「回覆」分頁。
- * 3. 執行 setAdminToken()，在試算表授權視窗輸入一組後台代碼。
+ * 3. 在「專案設定 → 指令碼屬性」新增 ADMIN_TOKEN，設定至少 8 碼的管理者代碼。
  * 4. 部署為網頁應用程式：執行身分選「我」、誰可以存取選「所有人」。
  */
 
@@ -98,17 +98,6 @@ function setupScaleBackend() {
   Logger.log('工作表就緒：' + sheet.getName() + '，目前有 ' + Math.max(0, sheet.getLastRow() - 1) + ' 筆資料');
 }
 
-/** 只在第一次設定或要更換代碼時手動執行。代碼只會存於 Script Properties。 */
-function setAdminToken() {
-  const ui = SpreadsheetApp.getUi();
-  const result = ui.prompt('設定情緒素養量表後台代碼', '請輸入至少 8 碼的代碼（不要使用姓名或容易猜到的內容）', ui.ButtonSet.OK_CANCEL);
-  if (result.getSelectedButton() !== ui.Button.OK) return;
-  const token = String(result.getResponseText() || '').trim();
-  if (token.length < 8) throw new Error('後台代碼至少需要 8 碼。');
-  PropertiesService.getScriptProperties().setProperty('ADMIN_TOKEN', token);
-  ui.alert('後台代碼已儲存。');
-}
-
 /** 填答者送出後呼叫：在鎖定狀態下驗證並新增一列。 */
 function submitResponse(payload) {
   const lock = LockService.getScriptLock();
@@ -143,7 +132,7 @@ function submitResponse(payload) {
 /** 後台呼叫：只有輸入 Script Properties 中的代碼才會回傳個別回覆。 */
 function getAdminData(token) {
   const savedToken = PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN');
-  if (!savedToken) return { ok: false, error: '尚未設定後台代碼，請先在 Apps Script 執行 setAdminToken()。'};
+  if (!savedToken) return { ok: false, error: '尚未設定後台代碼，請到「專案設定 → 指令碼屬性」新增 ADMIN_TOKEN。'};
   if (String(token || '') !== savedToken) return { ok: false, error: '後台代碼不正確。' };
 
   const sheet = getSheet_();
