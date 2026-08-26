@@ -6,6 +6,7 @@
  * 2. 先執行 setupScaleBackend() 建立「回覆」分頁。
  * 3. 在「專案設定 → 指令碼屬性」新增 ADMIN_TOKEN，設定至少 8 碼的管理者代碼。
  * 4. 部署為網頁應用程式：執行身分選「我」、誰可以存取選「所有人」。
+ * 5. 公開 GitHub Pages 會以 POST 呼叫 doPost()；一般填答者不需要直接開啟 Apps Script 頁面。
  */
 
 const SHEET_NAME = '回覆';
@@ -43,6 +44,23 @@ function doGet(e) {
   return HtmlService.createHtmlOutputFromFile('index')
     .setTitle('情緒素養量表｜35 題自我檢視')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+/**
+ * 公開 GitHub Pages 的無登入送出入口。
+ * 前端使用 text/plain POST，避免跨網域 JSON 預檢；回覆內容不含任何試算表資料。
+ */
+function doPost(e) {
+  try {
+    const request = parsePostRequest_(e);
+    if (!request) return jsonOutput_({ ok: false, error: '無法解析送出資料。' });
+    if (request.action && request.action !== 'submitResponse') {
+      return jsonOutput_({ ok: false, error: '不支援的雲端操作。' });
+    }
+    return jsonOutput_(submitResponse(request.payload || request));
+  } catch (error) {
+    return jsonOutput_({ ok: false, error: '資料暫時無法寫入，請稍後再試。' });
+  }
 }
 
 /**
@@ -109,8 +127,13 @@ function submitResponse(payload) {
     if (!profile) return { ok: false, error: '基本資料不完整，請返回前一步重新填寫。' };
 
     const scores = scoreAnswers_(answers);
-    const id = 'EL-' + Utilities.getUuid().slice(0, 8).toUpperCase();
     const sheet = getSheet_();
+    // 公開頁面可能在網路逾時後重試；以同一個前端 ID 去重，避免重複寫入。
+    const requestedId = String(payload && payload.id || '').trim().slice(0, 80);
+    if (requestedId && responseIdExists_(sheet, requestedId)) {
+      return { ok: true, id: requestedId, duplicate: true };
+    }
+    const id = requestedId || 'EL-' + Utilities.getUuid().slice(0, 8).toUpperCase();
     sheet.appendRow([
       new Date(), id, profile.respondentType, profile.gender, profile.age,
       profile.teachingStage, profile.teachingExperience, profile.occupation,
@@ -127,6 +150,39 @@ function submitResponse(payload) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function parsePostRequest_(e) {
+  const raw = e && e.postData && e.postData.contents;
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') return parsed;
+    } catch (error) {
+      // 也接受表單 fallback 的 payload 欄位。
+    }
+  }
+  const formPayload = e && e.parameter && e.parameter.payload;
+  if (!formPayload) return null;
+  try {
+    const parsed = JSON.parse(String(formPayload));
+    return parsed && typeof parsed === 'object' ? { action: 'submitResponse', payload: parsed } : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function jsonOutput_(value) {
+  return ContentService.createTextOutput(JSON.stringify(value))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function responseIdExists_(sheet, id) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return false;
+  return sheet.getRange(2, 2, lastRow - 1, 1).getDisplayValues().some(function (row) {
+    return String(row[0] || '') === id;
+  });
 }
 
 /** 後台呼叫：只有輸入 Script Properties 中的代碼才會回傳個別回覆。 */
