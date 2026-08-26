@@ -31,8 +31,8 @@
 
 專案內的 `Code.gs` 是 Apps Script 後端範本。它會把回覆寫入 Google 試算表的 `回覆` 分頁，並用 Script Properties 保存管理者代碼。後端只對填答者開放「新增回覆」；讀取後台資料前一定要提供正確管理者代碼。
 
-1. 建立一份 Google 試算表，從「擴充功能 → Apps Script」開啟綁定腳本。
-2. 將 `Code.gs` 內容貼入 Apps Script 的 `Code.gs`。
+1. 建立一份 Google 試算表，分頁名稱使用 `回覆`。優先從「擴充功能 → Apps Script」開啟綁定腳本；若該入口無法開啟，直接前往 <https://script.google.com/home> 建立獨立 Apps Script 專案。
+2. 將 `Code.gs` 內容貼入 Apps Script 的 `Code.gs`。若使用獨立專案，將試算表網址 `/spreadsheets/d/` 與 `/edit` 之間的文字填入 `SPREADSHEET_ID`；這個 ID 只放在你的私有 Apps Script 專案，不要貼回公開 GitHub。
 3. 新增一個 HTML 檔案，檔名只填 `index`，將本專案 `index.html` 完整貼入。
 4. 儲存後，先執行 `setupScaleBackend()`，再執行 `setAdminToken()` 設定至少 8 碼的後台代碼。
 5. 「部署 → 新增部署作業 → 網頁應用程式」：執行身分選「我」、誰可以存取選「所有人」。
