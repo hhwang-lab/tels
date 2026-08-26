@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: emotional-literacy-scale-pages
   cancel-in-progress: true
 
 jobs:
