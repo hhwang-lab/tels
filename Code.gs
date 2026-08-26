@@ -35,10 +35,57 @@ const FACTORS = [
   { id: 'relationship-skills', items: [28, 29, 30, 31, 32, 33, 34, 35] }
 ];
 
-/** 公開頁面入口 */
-function doGet() {
+/** 公開頁面入口；mode=bridge 是給 GitHub Pages 呼叫 Apps Script 的隱藏橋接頁。 */
+function doGet(e) {
+  if (e && e.parameter && e.parameter.mode === 'bridge') return createBridge_();
   return HtmlService.createHtmlOutputFromFile('index')
     .setTitle('情緒素養量表｜35 題自我檢視')
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+/**
+ * 讓 GitHub Pages 在不使用 CORS、不暴露試算表資料的情況下呼叫後端。
+ * 這個頁面只接受兩個白名單操作：送出回覆、以管理者代碼讀取後台。
+ */
+function createBridge_() {
+  const html = `<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><title>情緒素養量表資料服務</title></head>
+<body>
+<script>
+(function () {
+  function reply(requestId, response) {
+    window.parent.postMessage({
+      source: 'el-scale-gas-bridge',
+      type: 'response',
+      requestId: requestId,
+      response: response
+    }, '*');
+  }
+
+  window.addEventListener('message', function (event) {
+    var data = event.data || {};
+    if (data.source !== 'el-scale-gas-client' || data.type !== 'call') return;
+
+    var runner = google.script.run
+      .withSuccessHandler(function (response) { reply(data.requestId, response); })
+      .withFailureHandler(function (error) {
+        reply(data.requestId, { ok: false, error: error && error.message ? error.message : '雲端服務發生錯誤。' });
+      });
+
+    if (data.method === 'submitResponse') runner.submitResponse(data.payload);
+    else if (data.method === 'getAdminData') runner.getAdminData(data.payload);
+    else reply(data.requestId, { ok: false, error: '不支援的雲端操作。' });
+  });
+
+  window.parent.postMessage({ source: 'el-scale-gas-bridge', type: 'ready' }, '*');
+}());
+</script>
+</body>
+</html>`;
+  return HtmlService.createHtmlOutput(html)
+    .setTitle('情緒素養量表資料服務')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
@@ -202,4 +249,3 @@ function scoreAnswers_(answers) {
     factors: factors
   };
 }
-
