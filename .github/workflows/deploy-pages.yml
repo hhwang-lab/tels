@@ -1,0 +1,67 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 取出網站檔案
+        uses: actions/checkout@v4
+
+      - name: 設定 GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 建立公開網站
+        env:
+          GAS_ENDPOINT: ${{ secrets.GAS_ENDPOINT }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${GAS_ENDPOINT}" ]]; then
+            echo "請先在 repository secret 設定 GAS_ENDPOINT。"
+            exit 1
+          fi
+          if [[ ! "${GAS_ENDPOINT}" =~ ^https://script\.google\.com/macros/s/[^/]+/exec$ ]]; then
+            echo "GAS_ENDPOINT 必須是 Apps Script 的 /exec 網址。"
+            exit 1
+          fi
+          mkdir -p _site
+          cp index.html _site/index.html
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          endpoint = os.environ["GAS_ENDPOINT"].strip()
+          path = Path("_site/index.html")
+          source = path.read_text(encoding="utf-8")
+          marker = 'gasEndpoint: "__GAS_ENDPOINT__"'
+          if marker not in source:
+              raise SystemExit("找不到 GAS_ENDPOINT 注入標記。")
+          path.write_text(source.replace(marker, "gasEndpoint: " + json.dumps(endpoint), 1), encoding="utf-8")
+          PY
+
+      - name: 上傳 Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: 發布網站
+        id: deployment
+        uses: actions/deploy-pages@v4
