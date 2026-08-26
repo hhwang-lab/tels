@@ -11,12 +11,22 @@
 const SHEET_NAME = '回覆';
 const TIME_ZONE = 'Asia/Taipei';
 const HEADERS = [
-  '時間', '匿名編號', '總分', '總量表平均',
+  '時間', '匿名編號', '填答身分', '性別', '年齡', '任教階段', '教學年資', '目前主要工作／身分',
+  '總分', '總量表平均',
   '自我覺察總分', '自我覺察平均',
   '自我管理總分', '自我管理平均',
   '社會覺察總分', '社會覺察平均',
   '人際技能總分', '人際技能平均', '答案JSON'
 ];
+
+const PROFILE_OPTIONS = {
+  respondentTypes: ['teacher', 'non-teacher'],
+  genders: ['女性', '男性', '其他／不便回答'],
+  ages: ['25 歲以下', '26-30 歲', '31-40 歲', '41-50 歲', '51 歲以上', '不便回答'],
+  teachingStages: ['幼兒園', '國小', '國中', '高中', '其他教育階段'],
+  teachingExperiences: ['０師培生', '初任教師（未滿 2 年）', '2 年以上未達 5 年', '5 年以上未達 10 年', '10 年以上未達 15 年', '15 年以上未達 20 年', '20 年以上'],
+  occupations: ['學生／在學者', '公務／軍警', '教育／研究（非教師）', '醫療／健康／社會照顧', '科技／工程／製造', '商業／金融／行政', '服務／銷售／餐旅', '文化／媒體／自由業', '農林漁牧／營建／運輸', '家務／退休／待業', '其他']
+};
 
 const FACTORS = [
   { id: 'self-awareness', items: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
@@ -57,12 +67,15 @@ function submitResponse(payload) {
   try {
     const answers = normalizeAnswers_(payload && payload.answers);
     if (!answers) return { ok: false, error: '答案資料不完整，請重新填答。' };
+    const profile = normalizeProfile_(payload && payload.profile);
+    if (!profile) return { ok: false, error: '基本資料不完整，請返回前一步重新填寫。' };
 
     const scores = scoreAnswers_(answers);
     const id = 'EL-' + Utilities.getUuid().slice(0, 8).toUpperCase();
     const sheet = getSheet_();
     sheet.appendRow([
-      new Date(), id,
+      new Date(), id, profile.respondentType, profile.gender, profile.age,
+      profile.teachingStage, profile.teachingExperience, profile.occupation,
       scores.overall.total, scores.overall.mean,
       scores.factors['self-awareness'].total, scores.factors['self-awareness'].mean,
       scores.factors['self-management'].total, scores.factors['self-management'].mean,
@@ -90,13 +103,22 @@ function getAdminData(token) {
 
   const values = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
   const rows = values.map(function (row) {
-    const answers = parseAnswers_(row[12]);
+    const answers = parseAnswers_(row[HEADERS.indexOf('答案JSON')]);
     if (!answers) return null;
     const scores = scoreAnswers_(answers);
     const time = row[0] instanceof Date ? row[0] : new Date(row[0]);
+    const profile = normalizeProfile_({
+      respondentType: row[2],
+      gender: row[3],
+      age: row[4],
+      teachingStage: row[5],
+      teachingExperience: row[6],
+      occupation: row[7]
+    });
     return {
       id: String(row[1] || ''),
       submittedAt: Utilities.formatDate(time, TIME_ZONE, "yyyy-MM-dd'T'HH:mm:ss"),
+      profile: profile,
       answers: answers,
       scores: scores
     };
@@ -120,6 +142,30 @@ function normalizeAnswers_(answers) {
     const value = Number(answers[id]);
     if (!Number.isInteger(value) || value < 1 || value > 6) return null;
     normalized[id] = value;
+  }
+  return normalized;
+}
+
+function normalizeProfile_(profile) {
+  if (!profile || typeof profile !== 'object') return null;
+  const respondentType = String(profile.respondentType || '').trim();
+  const gender = String(profile.gender || '').trim();
+  const age = String(profile.age || '').trim();
+  if (PROFILE_OPTIONS.respondentTypes.indexOf(respondentType) === -1) return null;
+  if (PROFILE_OPTIONS.genders.indexOf(gender) === -1) return null;
+  if (PROFILE_OPTIONS.ages.indexOf(age) === -1) return null;
+  const normalized = { respondentType: respondentType, gender: gender, age: age, teachingStage: '', teachingExperience: '', occupation: '' };
+  if (respondentType === 'teacher') {
+    const teachingStage = String(profile.teachingStage || '').trim();
+    const teachingExperience = String(profile.teachingExperience || '').trim();
+    if (PROFILE_OPTIONS.teachingStages.indexOf(teachingStage) === -1) return null;
+    if (PROFILE_OPTIONS.teachingExperiences.indexOf(teachingExperience) === -1) return null;
+    normalized.teachingStage = teachingStage;
+    normalized.teachingExperience = teachingExperience;
+  } else {
+    const occupation = String(profile.occupation || '').trim();
+    if (PROFILE_OPTIONS.occupations.indexOf(occupation) === -1) return null;
+    normalized.occupation = occupation;
   }
   return normalized;
 }
