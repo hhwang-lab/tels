@@ -1,0 +1,13 @@
+# Research source files stay local and are not published to the public website.
+*.doc
+*.docx
+*.pdf
+~$*
+
+# Local tooling and generated files.
+.DS_Store
+Thumbs.db
+tmp/
+dist/
+build/
+
