@@ -726,6 +726,7 @@
     .admin-login input { flex: 1; min-width: 0; min-height: 45px; padding: 0 13px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 11px 0 0 11px; }
     .admin-login button { min-width: 88px; color: white; background: var(--accent); border: 1px solid var(--accent); border-radius: 0 11px 11px 0; font-size: 13px; font-weight: 800; }
     .admin-login-message { min-height: 22px; margin: 10px 0 0; color: #b46050; font-size: 11px; }
+    .admin-login-message.is-info { color: var(--ink-soft); }
 
     .admin-summary { display: grid; gap: 28px; }
     .admin-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -972,7 +973,7 @@
 
       <section id="admin-view" class="view" hidden aria-labelledby="admin-title">
         <div class="admin-top"><div><span class="eyebrow">Step 03 · Admin</span><h1 id="admin-title">資料後台</h1><p>查看匿名回覆的累積狀態、整體趨勢與因素平均。</p></div><span id="data-mode" class="data-mode">本機資料模式</span></div>
-        <div id="admin-lock" class="admin-lock" hidden><div class="lock-icon" aria-hidden="true">⌁</div><h2>後台資料需要代碼</h2><p>雲端模式會要求 Apps Script 中設定的後台代碼。這只保護報表讀取，不會影響一般填答。</p><div class="admin-login"><input id="admin-code" type="password" autocomplete="current-password" placeholder="輸入後台代碼"><button id="admin-login-button" type="button">登入</button></div><p id="admin-login-message" class="admin-login-message" aria-live="polite"></p></div>
+        <div id="admin-lock" class="admin-lock" hidden><div class="lock-icon" aria-hidden="true">⌁</div><h2>後台資料需要管理者代碼</h2><p id="admin-lock-description">雲端模式會要求 Apps Script 中設定的後台代碼。這只保護報表讀取，不會影響一般填答。</p><div id="admin-login" class="admin-login"><input id="admin-code" type="password" autocomplete="current-password" placeholder="輸入後台代碼"><button id="admin-login-button" type="button">登入</button></div><p id="admin-login-message" class="admin-login-message" aria-live="polite"></p></div>
         <div id="admin-dashboard" class="admin-summary" hidden>
           <div class="admin-metrics"><div class="admin-metric"><small>累積回覆</small><strong id="admin-count">0</strong><span>匿名填答筆數</span></div><div class="admin-metric"><small>整體平均</small><strong id="admin-overall-mean">–</strong><span>總量表題目平均</span></div><div class="admin-metric"><small>高分組</small><strong id="admin-high-count">0</strong><span>平均 5 分以上</span></div><div class="admin-metric"><small>最近回覆</small><strong id="admin-latest-date">–</strong><span>最後一筆送出日期</span></div></div>
           <div id="admin-groups" class="admin-groups" aria-label="教師與非教師分組統計"></div>
@@ -1050,6 +1051,11 @@
 
       const OVERALL_REFERENCE = 4.74;
       const TOTAL_ITEMS = QUESTIONS.length;
+      // Apps Script 版本會直接使用 google.script.run；若要保留 GitHub Pages 作為填答入口，
+      // 請在部署 Apps Script 後，把 /exec 網址填到這裡。這不是管理者代碼，不會暴露後台資料。
+      const APP_CONFIG = {
+        gasEndpoint: ""
+      };
       const STORAGE = {
         draft: "el-scale-draft-v1",
         profile: "el-scale-profile-v1",
@@ -1068,8 +1074,96 @@
       const $ = (selector) => document.querySelector(selector);
       const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
-      function hasGasBackend() {
+      const gasBridge = {
+        frame: null,
+        ready: false,
+        queue: [],
+        pending: new Map()
+      };
+
+      function hasNativeGasBackend() {
         return typeof google !== "undefined" && google.script && google.script.run;
+      }
+
+      function getGasEndpoint() {
+        const endpoint = String(APP_CONFIG.gasEndpoint || "").trim();
+        return /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(endpoint) ? endpoint : "";
+      }
+
+      function hasGasBackend() {
+        return hasNativeGasBackend() || Boolean(getGasEndpoint());
+      }
+
+      function sendBridgeRequest(request) {
+        if (!gasBridge.frame || !gasBridge.ready) {
+          gasBridge.queue.push(request);
+          return;
+        }
+        gasBridge.pending.set(request.requestId, request.resolve);
+        gasBridge.frame.contentWindow.postMessage({
+          source: "el-scale-gas-client",
+          type: "call",
+          requestId: request.requestId,
+          method: request.method,
+          payload: request.payload
+        }, "*");
+        window.setTimeout(() => {
+          if (!gasBridge.pending.has(request.requestId)) return;
+          gasBridge.pending.delete(request.requestId);
+          request.resolve({ ok: false, error: "雲端服務逾時，請稍後再試。" });
+        }, 20000);
+      }
+
+      function ensureGasBridge() {
+        if (gasBridge.frame || !getGasEndpoint()) return;
+        const frame = document.createElement("iframe");
+        frame.title = "Google Sheets connection";
+        frame.setAttribute("aria-hidden", "true");
+        frame.tabIndex = -1;
+        frame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;";
+        const separator = getGasEndpoint().includes("?") ? "&" : "?";
+        frame.src = getGasEndpoint() + separator + "mode=bridge";
+        gasBridge.frame = frame;
+        document.body.appendChild(frame);
+      }
+
+      window.addEventListener("message", (event) => {
+        const data = event.data;
+        if (!data || data.source !== "el-scale-gas-bridge") return;
+        if (data.type === "ready") {
+          gasBridge.ready = true;
+          const pendingQueue = gasBridge.queue.splice(0);
+          pendingQueue.forEach(sendBridgeRequest);
+          return;
+        }
+        if (data.type !== "response" || !data.requestId) return;
+        const resolve = gasBridge.pending.get(data.requestId);
+        if (!resolve) return;
+        gasBridge.pending.delete(data.requestId);
+        resolve(data.response || { ok: false, error: "雲端服務沒有回傳結果。" });
+      });
+
+      function callGas(method, payload) {
+        if (hasNativeGasBackend()) {
+          return new Promise((resolve) => {
+            const runner = google.script.run
+              .withSuccessHandler(resolve)
+              .withFailureHandler((error) => resolve({ ok: false, error: error && error.message ? error.message : "無法連線至雲端資料庫" }));
+            if (method === "submitResponse") runner.submitResponse(payload);
+            else if (method === "getAdminData") runner.getAdminData(payload);
+            else resolve({ ok: false, error: "不支援的雲端操作。" });
+          });
+        }
+        if (!getGasEndpoint()) return Promise.resolve({ ok: false, error: "尚未連接 Google Sheets 後端。" });
+        ensureGasBridge();
+        return new Promise((resolve) => {
+          sendBridgeRequest({
+            requestId: "req-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+            method,
+            payload,
+            resolve
+          });
+        });
       }
 
       function readStorage(key, fallback) {
@@ -1295,23 +1389,14 @@
      }
 
       function submitToGas(record) {
-        return new Promise((resolve) => {
-          google.script.run
-            .withSuccessHandler((response) => resolve(response && response.ok ? { ok: true, mode: "cloud" } : { ok: false, error: response && response.error ? response.error : "雲端儲存失敗" }))
-            .withFailureHandler((error) => resolve({ ok: false, error: error && error.message ? error.message : "無法連線至雲端資料庫" }))
-            .submitResponse(record);
-        });
+        return callGas("submitResponse", record).then((response) => response && response.ok
+          ? { ok: true, mode: "cloud" }
+          : { ok: false, error: response && response.error ? response.error : "雲端儲存失敗" });
       }
 
       async function persistRecord(record) {
-        if (!hasGasBackend()) {
-          saveLocalRecord(record);
-          return { ok: true, mode: "local" };
-        }
-        const cloudResult = await submitToGas(record);
-        if (cloudResult.ok) return cloudResult;
-        saveLocalRecord(record);
-        return { ok: true, mode: "local-fallback", warning: cloudResult.error };
+        if (!hasGasBackend()) return { ok: false, mode: "not-configured", error: "目前尚未連接 Google Sheets，這份填答不會送出。請使用 Apps Script 網頁應用程式網址，或先完成後端設定。" };
+        return submitToGas(record);
       }
 
       function getBand(mean) {
@@ -1366,7 +1451,7 @@
          `${practice.name}平均 ${scores.factors[practice.id].mean.toFixed(2)}，可以作為近期自我觀察或練習的起點。`,
           `和${referenceLabel}最接近的是${closest.name}（差距 ${Math.abs(scores.factors[closest.id].difference).toFixed(2)} 分），適合做為穩定表現的參照。`
        ].map((text) => `<li>${text}</li>`).join("");
-       const saveMessage = saveResult && saveResult.warning ? `雲端暫時無法寫入，已先保存在本機：${saveResult.warning}` : (saveResult && saveResult.mode === "cloud" ? "已匿名寫入雲端試算表" : "已匿名保存在這個瀏覽器");
+       const saveMessage = saveResult && saveResult.mode === "cloud" ? "已匿名寫入雲端試算表" : "尚未寫入雲端試算表";
        $("#report-stamp").textContent = `完成時間 ${formatDate(submittedAt || recordTime())} · ${saveMessage}`;
      }
 
@@ -1409,7 +1494,14 @@
        const scores = calculateScores(state.answers);
        const record = makeRecord(scores);
        const saveResult = await persistRecord(record);
-        renderResults(scores, saveResult, record.submittedAt, record.profile);
+       if (!saveResult.ok) {
+         submitButton.disabled = false;
+         submitButton.innerHTML = "查看我的報表 <span aria-hidden=\"true\">→</span>";
+         showToast(saveResult.error || "資料未能寫入雲端，請稍後再試。", "error");
+         $("#validation-message").textContent = "資料尚未送出；請確認已使用連接 Google Sheets 的正式網址。";
+         return;
+       }
+       renderResults(scores, saveResult, record.submittedAt, record.profile);
         clearDraft();
         submitButton.disabled = false;
         submitButton.innerHTML = "查看我的報表 <span aria-hidden=\"true\">→</span>";
@@ -1436,19 +1528,25 @@
       }
 
       function renderAdmin() {
-        const mode = hasGasBackend() ? "cloud" : "local";
+        const mode = hasGasBackend() ? "cloud" : "unavailable";
         state.adminMode = mode;
-        $("#data-mode").textContent = mode === "cloud" ? "Google Sheets 雲端模式" : "本機資料模式";
+        $("#data-mode").textContent = mode === "cloud" ? "Google Sheets 雲端模式" : "尚未連接雲端";
         $("#data-mode").classList.toggle("is-cloud", mode === "cloud");
         if (mode === "cloud") {
           $("#admin-lock").hidden = false;
           $("#admin-dashboard").hidden = true;
+          $("#admin-lock-description").textContent = "雲端模式會要求 Apps Script 中設定的管理者代碼。沒有代碼就無法讀取試算表資料。";
+          $("#admin-login").hidden = false;
+          $("#admin-login-message").className = "admin-login-message";
           $("#admin-login-message").textContent = "";
           return;
         }
-        $("#admin-lock").hidden = true;
-        state.adminRecords = getLocalRecords().sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
-        renderAdminDashboard(state.adminRecords);
+        $("#admin-lock").hidden = false;
+        $("#admin-dashboard").hidden = true;
+        $("#admin-lock-description").textContent = "這個網站尚未連接 Google Sheets。為保護填答者資料，GitHub Pages 預覽版不顯示任何本機或雲端後台內容。";
+        $("#admin-login").hidden = true;
+        $("#admin-login-message").className = "admin-login-message is-info";
+        $("#admin-login-message").textContent = "管理者請使用已部署 Apps Script 的 /exec 網址，再輸入管理者代碼。";
       }
 
       function loadCloudAdmin() {
@@ -1457,8 +1555,8 @@
         const button = $("#admin-login-button");
         button.disabled = true;
         button.textContent = "讀取中";
-        google.script.run
-          .withSuccessHandler((response) => {
+        callGas("getAdminData", code)
+          .then((response) => {
             button.disabled = false;
             button.textContent = "登入";
             if (!response || !response.ok) { $("#admin-login-message").textContent = (response && response.error) || "代碼不正確或無法讀取資料。"; return; }
@@ -1466,12 +1564,11 @@
             $("#admin-lock").hidden = true;
             renderAdminDashboard(state.adminRecords);
           })
-          .withFailureHandler((error) => {
+          .catch((error) => {
             button.disabled = false;
             button.textContent = "登入";
             $("#admin-login-message").textContent = error && error.message ? error.message : "無法連線至雲端後台。";
-          })
-          .getAdminData(code);
+          });
       }
 
       function renderAdminDashboard(records) {
@@ -1493,7 +1590,7 @@
        $("#admin-factor-table").innerHTML = summary.list.length ? `<table class="admin-factor-table"><thead><tr><th>因素</th><th style="width:35%">累積平均</th><th>論文平均</th><th>差距</th></tr></thead><tbody>${FACTORS.map((factor) => { const mean = summary.factorAverages[factor.id]; const diff = mean - factor.referenceMean; const delta = getDeltaCopy(diff); return `<tr><td><span class="factor-name"><i class="factor-dot" style="--factor-color:${factor.color}"></i>${factor.name}</span></td><td><div style="display:grid;grid-template-columns:42px 1fr;align-items:center;gap:9px"><strong>${mean.toFixed(2)}</strong><div class="admin-bar"><span style="width:${Math.min(100, mean / 6 * 100)}%;background:${factor.color}"></span></div></div></td><td>${factor.referenceMean.toFixed(2)}</td><td class="${delta.className}">${diff >= 0 ? "+" : ""}${diff.toFixed(2)}</td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">還沒有累積回覆。完成一份填答後，這裡會出現統計摘要。</div>`;
         const recent = summary.list.slice(0, 10);
         $("#admin-recent-table").innerHTML = recent.length ? `<table class="admin-recent-table"><thead><tr><th>匿名編號</th><th>填答身分</th><th>完成時間</th><th>總量表平均</th><th>分組</th></tr></thead><tbody>${recent.map((record) => { const band = getBand(record.scores.overall.mean); return `<tr><td>${record.id}</td><td>${getRespondentLabel(record.profile)}</td><td>${formatDate(record.submittedAt)}</td><td><strong>${Number(record.scores.overall.mean).toFixed(2)}</strong> / 6</td><td><span class="band-tag ${band.key === "mid" ? "mid" : band.key === "low" ? "low" : ""}">${band.key === "high" ? "高分組" : band.key === "mid" ? "中分組" : "低分組"}</span></td></tr>`; }).join("")}</tbody></table>` : `<div class="empty-state">目前沒有資料可顯示。</div>`;
-        $("#clear-local-button").hidden = state.adminMode !== "local";
+        $("#clear-local-button").hidden = true;
       }
 
       function makeDownload(filename, content, type) {
@@ -1587,4 +1684,3 @@
   </script>
 </body>
 </html>
-
