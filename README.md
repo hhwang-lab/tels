@@ -14,7 +14,7 @@
 
 ## 立即使用
 
-直接用瀏覽器開啟 `index.html` 可預覽填答流程。正式收件時，請使用已部署的 Apps Script `/exec` 網址，或在下方完成設定後繼續使用 GitHub Pages。開始作答時，填答者會先選擇「教師／非教師」，並填寫性別、年齡；教師另填任教階段與教學年資，非教師填寫廣義工作／身分類別。網站會：
+直接用瀏覽器開啟 `index.html` 可預覽填答流程。正式收件時，建議使用 GitHub Pages 公開網址；Apps Script `/exec` 只作為資料服務與管理者備用入口。開始作答時，填答者會先選擇「教師／非教師」，並填寫性別、年齡；教師另填任教階段與教學年資，非教師填寫廣義工作／身分類別。網站會：
 
 - 在首頁摘要論文對教師情緒素養與心理健康、教學品質的說明，並呈現研究引用與經費支持資訊。
 - 將 35 題以固定混合順序呈現，畫面題號仍連續顯示 01–35；因素歸屬只用於計分，不在作答前揭露。
@@ -25,7 +25,7 @@
 - 在「資料後台」依教師／非教師分組顯示累積回覆，並匯出含基本分組資料的 CSV／JSON；後台資料必須通過管理者代碼驗證。
 - 支援列印或另存成 PDF 的個人報表。
 
-尚未連接後端時，GitHub Pages 不會顯示任何本機後台資料，也不會把填答假裝成已送到雲端；只會保留尚未完成作答的草稿。正式回覆必須使用 Google Sheets 雲端模式。
+尚未連接後端時，GitHub Pages 不會顯示任何本機後台資料，也不會把填答假裝成已送到雲端；只會保留尚未完成作答的草稿。正式回覆必須使用已注入 Apps Script 後端的 GitHub Pages 版本，或直接使用 Apps Script `/exec`。
 
 ## 讓回覆集中累積到 Google 試算表
 
@@ -37,15 +37,26 @@
 4. 儲存後，先執行 `setupScaleBackend()`。
 5. 左側開啟「專案設定」→「指令碼屬性」→「新增指令碼屬性」，名稱填 `ADMIN_TOKEN`，值填一組至少 8 碼的管理者代碼。這樣做可同時支援獨立專案，不必使用只適用於試算表綁定腳本的彈出視窗。
 6. 「部署 → 新增部署作業 → 網頁應用程式」：執行身分選「我」、誰可以存取選「所有人」。
-7. 以部署網址（結尾為 `/exec`）開啟網站；此時填答會寫入試算表，後台會要求剛才設定的代碼。這是最簡單、也是正式收件建議使用的網址。
+7. 先以部署網址（結尾為 `/exec`）確認 Apps Script 後端可正常開啟；完成 GitHub Pages 設定後，正式收件請使用 GitHub Pages 公開網址，`/exec` 保留給管理者與後端測試。
 
-若仍要使用 GitHub Pages 網址：
+## 讓 GitHub Pages 成為穩定的公開填答入口
 
-1. 先完成上述 Apps Script 部署，複製 `/exec` 網址。
-2. 在 `index.html` 的 `APP_CONFIG.gasEndpoint` 填入該網址（只填 `/exec` 網址，不要填管理者代碼）。
-3. 將更新後的 `index.html` 發布到 GitHub Pages。前端會透過隱藏橋接頁送出回覆，不會直接暴露試算表內容。
+直接把 Apps Script `/exec` 當成首頁時，Google 的多重帳戶登入可能造成 404。現在前端會留在 GitHub Pages，送出時以不需登入的純文字 POST 呼叫 Apps Script；填答者不必進入 Google 頁面，也不會取得試算表權限。
 
-管理者安全性：試算表本身維持私有；Apps Script 部署選「以我執行」；一般填答只能呼叫新增回覆，`getAdminData` 只有在管理者代碼正確時才回傳資料。GitHub Pages 未設定後端時，後台只會顯示「尚未連接雲端」，不會顯示任何瀏覽器累積紀錄。
+請依序設定：
+
+1. 先完成上述 Apps Script 部署，確認 `/exec` 可用，並將最新的 `Code.gs` 貼回你的私有 Apps Script 專案；它新增了 `doPost()`，用來接收 GitHub Pages 的回覆。
+2. 在 GitHub repository 開啟 **Settings → Secrets and variables → Actions → New repository secret**。
+3. 名稱填 `GAS_ENDPOINT`；值貼上 Apps Script 的完整 `/exec` 網址。這個網址只放在 GitHub Actions secret，不寫入公開原始碼；不要填管理者代碼或試算表 ID。
+4. 開啟 **Settings → Pages**，將 **Source** 設為 **GitHub Actions**。
+5. 將本專案檔案發布到 `main` 分支；`.github/workflows/deploy-pages.yml` 會在建置時把 secret 注入公開版本，然後發布 GitHub Pages。
+6. 用無痕視窗、手機瀏覽器各測一次填答與送出，再到私有試算表確認新資料列。
+
+公開版本的 `APP_CONFIG` 只保留 `__GAS_ENDPOINT__` 標記，部署網址會在 GitHub Actions 建置時才注入。後端回覆採用同一個匿名編號去重，避免網路重試造成重複資料。
+
+如果 GitHub Pages 尚未切換到 Actions，舊版頁面仍會是預覽模式，不會寫入雲端；這是刻意的安全預設。
+
+管理者安全性：試算表本身維持私有；Apps Script 部署選「以我執行」；一般填答只能呼叫新增回覆，`getAdminData` 只有在管理者代碼正確時才回傳資料。GitHub Pages 未設定 Actions secret 時，後台只會顯示「尚未連接雲端」，不會顯示任何瀏覽器累積紀錄。
 
 修改內容後，請在「管理部署作業」用鉛筆編輯同一個部署並選新版本，網址才會維持不變。
 
