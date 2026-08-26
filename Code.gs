@@ -13,14 +13,16 @@ const SHEET_NAME = '回覆';
 const TIME_ZONE = 'Asia/Taipei';
 // 若是獨立 Apps Script 專案，請在這裡填入試算表網址中的 ID；綁定專案可維持原樣。
 const SPREADSHEET_ID = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
-const HEADERS = [
+const BASE_HEADERS = [
   '時間', '匿名編號', '填答身分', '性別', '年齡', '任教階段', '教學年資', '目前主要工作／身分',
   '總分', '總量表平均',
   '自我覺察總分', '自我覺察平均',
   '自我管理總分', '自我管理平均',
   '社會覺察總分', '社會覺察平均',
-  '人際技能總分', '人際技能平均', '答案JSON'
+  '人際技能總分', '人際技能平均'
 ];
+const ANSWER_HEADERS = Array.from({ length: 35 }, function (_, index) { return '第' + (index + 1) + '題'; });
+const HEADERS = BASE_HEADERS.concat(ANSWER_HEADERS);
 
 const PROFILE_OPTIONS = {
   respondentTypes: ['teacher', 'non-teacher'],
@@ -109,10 +111,10 @@ function createBridge_() {
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
-/** 第一次設定：建立資料分頁並檢查表頭。 */
+/** 第一次設定：建立資料分頁，並將舊版「答案JSON」轉成 35 個題目欄位。 */
 function setupScaleBackend() {
   const sheet = getSheet_();
-  if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
+  ensureHeaders_(sheet);
   Logger.log('工作表就緒：' + sheet.getName() + '，目前有 ' + Math.max(0, sheet.getLastRow() - 1) + ' 筆資料');
 }
 
@@ -134,16 +136,17 @@ function submitResponse(payload) {
       return { ok: true, id: requestedId, duplicate: true };
     }
     const id = requestedId || 'EL-' + Utilities.getUuid().slice(0, 8).toUpperCase();
-    sheet.appendRow([
+    const row = [
       new Date(), id, profile.respondentType, profile.gender, profile.age,
       profile.teachingStage, profile.teachingExperience, profile.occupation,
       scores.overall.total, scores.overall.mean,
       scores.factors['self-awareness'].total, scores.factors['self-awareness'].mean,
       scores.factors['self-management'].total, scores.factors['self-management'].mean,
       scores.factors['social-awareness'].total, scores.factors['social-awareness'].mean,
-      scores.factors['relationship-skills'].total, scores.factors['relationship-skills'].mean,
-      JSON.stringify(answers)
-    ]);
+      scores.factors['relationship-skills'].total, scores.factors['relationship-skills'].mean
+    ];
+    for (let item = 1; item <= 35; item += 1) row.push(answers[item]);
+    sheet.appendRow(row);
     return { ok: true, id: id };
   } catch (error) {
     return { ok: false, error: '資料暫時無法寫入，請稍後再試。' };
@@ -197,7 +200,7 @@ function getAdminData(token) {
 
   const values = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
   const rows = values.map(function (row) {
-    const answers = parseAnswers_(row[HEADERS.indexOf('答案JSON')]);
+    const answers = answersFromRow_(row);
     if (!answers) return null;
     const scores = scoreAnswers_(answers);
     const time = row[0] instanceof Date ? row[0] : new Date(row[0]);
@@ -236,8 +239,47 @@ function getSheet_() {
   }
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = spreadsheet.insertSheet(SHEET_NAME);
-  if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
+  ensureHeaders_(sheet);
   return sheet;
+}
+
+/**
+ * 確保試算表使用目前欄位格式。
+ * 舊版最後一欄若是「答案JSON」，第一次執行時會自動拆成第 1 題至第 35 題。
+ */
+function ensureHeaders_(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    return;
+  }
+
+  const existingColumnCount = Math.max(1, sheet.getLastColumn());
+  const existingHeaders = sheet.getRange(1, 1, 1, existingColumnCount).getDisplayValues()[0];
+  const alreadyCurrent = HEADERS.every(function (header, index) {
+    return existingHeaders[index] === header;
+  });
+  if (alreadyCurrent) return;
+
+  const legacyJsonIndex = existingHeaders.indexOf('答案JSON');
+  const lastRow = sheet.getLastRow();
+  const oldRows = lastRow > 1
+    ? sheet.getRange(2, 1, lastRow - 1, existingColumnCount).getValues()
+    : [];
+
+  const migratedRows = oldRows.map(function (oldRow) {
+    const legacyAnswers = legacyJsonIndex >= 0 ? parseAnswers_(oldRow[legacyJsonIndex]) : null;
+    return HEADERS.map(function (header, index) {
+      if (index >= BASE_HEADERS.length) {
+        const item = index - BASE_HEADERS.length + 1;
+        return legacyAnswers ? legacyAnswers[item] : '';
+      }
+      const oldIndex = existingHeaders.indexOf(header);
+      return oldIndex >= 0 ? oldRow[oldIndex] : '';
+    });
+  });
+
+  sheet.getRange(1, 1, migratedRows.length + 1, HEADERS.length)
+    .setValues([HEADERS].concat(migratedRows));
 }
 
 function normalizeAnswers_(answers) {
@@ -249,6 +291,15 @@ function normalizeAnswers_(answers) {
     normalized[id] = value;
   }
   return normalized;
+}
+
+/** 從目前的 35 個題目欄位讀回答案，供管理者報表重算。 */
+function answersFromRow_(row) {
+  const answers = {};
+  for (let item = 1; item <= 35; item += 1) {
+    answers[item] = row[BASE_HEADERS.length + item - 1];
+  }
+  return normalizeAnswers_(answers);
 }
 
 function normalizeProfile_(profile) {
@@ -275,6 +326,7 @@ function normalizeProfile_(profile) {
   return normalized;
 }
 
+/** 僅供舊版「答案JSON」資料遷移時使用。 */
 function parseAnswers_(json) {
   try {
     return normalizeAnswers_(JSON.parse(String(json || '{}')));
