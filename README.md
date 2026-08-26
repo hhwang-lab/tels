@@ -29,7 +29,7 @@
 
 ## 讓回覆集中累積到 Google 試算表
 
-專案內的 `Code.gs` 是 Apps Script 後端範本。它會把回覆寫入 Google 試算表的 `回覆` 分頁，並用 Script Properties 保存管理者代碼。後端只對填答者開放「新增回覆」；讀取後台資料前一定要提供正確管理者代碼。
+專案內的 `Code.gs` 是 Apps Script 後端範本。它會把回覆寫入 Google 試算表的 `回覆` 分頁，並用 Script Properties 保存管理者代碼。每一題會各自寫入「第 1 題」至「第 35 題」欄位，不再把答案塞在單一 `答案JSON` 欄位，方便後續用試算表直接篩選、統計與匯出。後端只對填答者開放「新增回覆」；讀取後台資料前一定要提供正確管理者代碼。
 
 1. 建立一份 Google 試算表，分頁名稱使用 `回覆`。優先從「擴充功能 → Apps Script」開啟綁定腳本；若該入口無法開啟，直接前往 <https://script.google.com/home> 建立獨立 Apps Script 專案。
 2. 將 `Code.gs` 內容貼入 Apps Script 的 `Code.gs`。若使用獨立專案，將試算表網址 `/spreadsheets/d/` 與 `/edit` 之間的文字填入 `SPREADSHEET_ID`；這個 ID 只放在你的私有 Apps Script 專案，不要貼回公開 GitHub。
@@ -38,6 +38,8 @@
 5. 左側開啟「專案設定」→「指令碼屬性」→「新增指令碼屬性」，名稱填 `ADMIN_TOKEN`，值填一組至少 8 碼的管理者代碼。這樣做可同時支援獨立專案，不必使用只適用於試算表綁定腳本的彈出視窗。
 6. 「部署 → 新增部署作業 → 網頁應用程式」：執行身分選「我」、誰可以存取選「所有人」。
 7. 先以部署網址（結尾為 `/exec`）確認 Apps Script 後端可正常開啟；完成 GitHub Pages 設定後，正式收件請使用 GitHub Pages 公開網址，`/exec` 保留給管理者與後端測試。
+
+如果 `回覆` 分頁原本使用舊版的 `答案JSON` 欄位，第一次執行 `setupScaleBackend()` 會自動將既有 JSON 答案拆成「第 1 題」至「第 35 題」；既有填答資料不會被刪除。之後新資料也會直接寫入 35 個題目欄位。
 
 ## 讓 GitHub Pages 成為穩定的公開填答入口
 
