@@ -43,7 +43,7 @@
 
 ## 讓 GitHub Pages 成為穩定的公開填答入口
 
-直接把 Apps Script `/exec` 當成首頁時，Google 的多重帳戶登入可能造成 404。現在前端會留在 GitHub Pages，送出時以不需登入的純文字 POST 呼叫 Apps Script；填答者不必進入 Google 頁面，也不會取得試算表權限。
+直接把 Apps Script `/exec` 當成首頁時，Google 的多重帳戶登入可能造成 404。現在前端會留在 GitHub Pages，送出時以不需登入的純文字 POST 呼叫 Apps Script；管理者查詢則透過隱藏表單 POST 取得受 token 保護的回覆。填答者不必進入 Google 頁面，也不會取得試算表權限。
 
 請依序設定：
 
