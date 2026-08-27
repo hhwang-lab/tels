@@ -706,7 +706,7 @@
     .factor-radar-chart svg { display: block; width: min(100%, 760px); height: 500px; overflow: visible; }
     .radar-ring { fill: none; stroke: #dfeee8; stroke-width: 1.2; }
     .radar-ring:nth-of-type(even) { stroke: #e9f3ef; }
-    .radar-max-circle { fill: none; stroke: #6fae9f; stroke-width: 4; pointer-events: none; }
+    .radar-max-circle { fill: none; stroke: #6fae9f; stroke-width: 4; pointer-events: none; vector-effect: non-scaling-stroke; }
     .radar-max-label { fill: #4e887c; font-weight: 900; }
     .radar-axis { stroke: #d5e9e1; stroke-width: 1.5; }
     .radar-axis-dot { stroke: white; stroke-width: 3; }
@@ -719,6 +719,7 @@
     .radar-factor-value { font-size: 13px; font-weight: 850; }
     .radar-factor-hit { cursor: pointer; outline: none; }
     .radar-factor-hit-area { fill: transparent; stroke: none; pointer-events: all; }
+    .radar-factor-label-highlight { fill: transparent; stroke: none; pointer-events: none; transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease; }
     .radar-factor-label, .radar-factor-value, .radar-axis, .radar-axis-dot, .radar-value-dot { transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease, font-size 180ms ease, opacity 180ms ease; }
     .radar-user-area, .radar-reference-area, .radar-value-dot { animation: radarDataIn 560ms ease both; }
     .radar-factor-hit:hover .radar-factor-label, .radar-factor-hit:focus .radar-factor-label, .radar-factor-hit.is-active .radar-factor-label { fill: var(--factor-color); }
@@ -727,7 +728,7 @@
     .radar-factor-label-group.is-active { animation: radarLabelLift 420ms ease both; }
     .radar-axis-group.is-active .radar-axis { stroke: var(--factor-color); stroke-width: 3; }
     .radar-axis-group.is-active .radar-axis-dot { stroke: var(--factor-color); stroke-width: 4; }
-    .radar-factor-label-group.is-active .radar-factor-hit-area { fill: color-mix(in srgb, var(--factor-color) 13%, white); stroke: var(--factor-color); stroke-width: 2; }
+    .radar-factor-label-group.is-active .radar-factor-label-highlight { fill: color-mix(in srgb, var(--factor-color) 13%, white); stroke: var(--factor-color); stroke-width: 2; }
     .radar-value-dot.is-active { stroke: var(--ink); stroke-width: 4; animation: radarValuePulse 1.25s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
     .factor-radar-chart.has-radar-selection .radar-factor-hit:not(.is-active) { opacity: 0.4; }
     .factor-radar-chart.has-radar-selection .radar-value-dot:not(.is-active) { opacity: 0.32; }
@@ -760,18 +761,29 @@
     .radar-detail-components li { padding: 5px 8px; color: var(--ink-soft); background: var(--factor-tint); border: 1px solid color-mix(in srgb, var(--factor-color) 18%, white); border-radius: 7px; font-size: 11px; }
     .radar-factor-detail.is-updating { animation: radarDetailIn 360ms ease both; }
     @keyframes radarDetailIn { from { opacity: 0.2; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
-    .radar-reading-note { margin: 15px 0 0; padding-top: 13px; color: var(--muted); border-top: 1px dashed var(--line); font-size: 12px; line-height: 1.7; text-align: center; }
     @media (prefers-reduced-motion: reduce) {
       .radar-factor-label, .radar-factor-value, .radar-axis, .radar-axis-dot, .radar-value-dot { transition: none; }
-      .radar-user-area, .radar-reference-area, .radar-value-dot, .radar-factor-label-group.is-active, .radar-value-dot.is-active, .radar-focus-ring, .radar-factor-detail.is-updating { animation: none; }
+      .radar-user-area, .radar-reference-area, .radar-value-dot, .radar-factor-label-group.is-active, .radar-value-dot.is-active, .radar-focus-ring, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-radar-selected-dot { animation: none; }
     }
 
     .factor-definitions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .factor-definition-card { padding: 22px 24px; background: white; border: 1px solid var(--line); border-left: 4px solid var(--factor-color); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
-    .factor-definition-head { display: flex; align-items: center; gap: 12px; }
+    .factor-definition-card { position: relative; padding: 22px 24px; background: white; border: 1px solid var(--line); border-left: 4px solid var(--factor-color); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); cursor: pointer; transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
+    .factor-definition-card:hover, .factor-definition-card:focus-visible, .factor-definition-card.is-focused { border-top-color: color-mix(in srgb, var(--factor-color) 48%, var(--line)); border-right-color: color-mix(in srgb, var(--factor-color) 48%, var(--line)); border-bottom-color: color-mix(in srgb, var(--factor-color) 48%, var(--line)); border-left-color: var(--factor-color); box-shadow: 0 16px 34px color-mix(in srgb, var(--factor-color) 15%, transparent); transform: translateY(-2px); }
+    .factor-definition-head { display: grid; grid-template-columns: minmax(0, 1fr) 98px; align-items: center; gap: 12px; }
+    .factor-definition-title { display: flex; align-items: center; min-width: 0; gap: 12px; }
     .factor-definition-head .factor-number { display: grid; place-items: center; flex: 0 0 auto; width: 31px; height: 31px; color: white; background: var(--factor-color); border-radius: 9px; font-size: 11px; font-weight: 850; }
     .factor-definition-head h3 { margin: 0; color: var(--ink); font-size: 19px; letter-spacing: -0.05em; }
     .factor-definition-head small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
+    .factor-mini-radar { display: grid; place-items: center; justify-self: end; width: 98px; height: 88px; padding: 3px; background: color-mix(in srgb, var(--factor-tint) 64%, white); border: 1px solid color-mix(in srgb, var(--factor-color) 15%, white); border-radius: 14px; }
+    .factor-mini-radar svg { display: block; width: 92px; height: 82px; overflow: visible; }
+    .mini-radar-grid { fill: none; stroke: #e3efea; stroke-width: 1; }
+    .mini-radar-max { fill: none; stroke: #9fcbbd; stroke-width: 2; }
+    .mini-radar-axis { stroke: #dcebe5; stroke-width: 1; }
+    .mini-radar-user { fill: color-mix(in srgb, var(--factor-color) 12%, white); stroke: var(--factor-color); stroke-width: 2.5; stroke-linejoin: round; }
+    .mini-radar-dot { stroke: white; stroke-width: 2; }
+    .mini-radar-selected-dot { stroke: var(--factor-color); stroke-width: 2.5; transform-box: fill-box; transform-origin: center; }
+    .factor-definition-card.is-focused .mini-radar-selected-dot { animation: radarValuePulse 1.25s ease-in-out infinite; }
+    .mini-radar-scale { fill: #6f9188; font-size: 8px; font-weight: 850; }
     .factor-definition-copy { margin: 18px 0 17px; color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
     .factor-component-label { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: var(--muted); font-size: 11px; font-weight: 850; letter-spacing: 0.06em; }
     .factor-component-label::before { width: 18px; height: 2px; content: ""; background: var(--factor-color); border-radius: 99px; }
@@ -980,14 +992,18 @@
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
       .radar-card { padding: 12px 12px 16px; }
       .factor-radar-chart svg { width: 100%; height: 330px; }
-      .radar-factor-label { font-size: 21px; }
-      .radar-factor-value { font-size: 18px; }
-      .radar-scale-label { font-size: 16px; }
+      .radar-factor-label { font-size: 28px; }
+      .radar-factor-value { font-size: 23px; }
+      .radar-scale-label { font-size: 22px; }
+      .radar-factor-hit.is-active .radar-factor-label { font-size: 32px; }
+      .radar-factor-hit.is-active .radar-factor-value { font-size: 25px; }
       .radar-detail-head { align-items: flex-start; }
       .radar-detail-score { margin-left: 0; }
       .radar-detail-head h3 { font-size: 17px; }
+      .factor-definition-head { grid-template-columns: minmax(0, 1fr) 88px; gap: 8px; }
+      .factor-mini-radar { width: 88px; height: 82px; }
+      .factor-mini-radar svg { width: 82px; height: 76px; }
       .radar-legend { justify-content: flex-start; gap: 9px 14px; font-size: 11px; }
-      .radar-reading-note { text-align: left; }
       .factor-definition-card { padding: 20px 18px; }
       .share-card-modal { padding: 10px; }
       .share-card-dialog { max-height: 95vh; padding: 19px; border-radius: 21px; }
@@ -1115,11 +1131,11 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>點選因素名稱或軸線，讓圖形聚焦並查看該因素的表 3 資訊。</p></div><span class="radar-scale-badge">1–6 六點量尺 · 圓形外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖上的因素</strong><span>查看該因素的分數、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="雷達圖圖例"><span><i class="radar-key-user"></i>你的結果</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span><i class="radar-key-limit"></i>圓形外圈＝固定 6 分上限</span></div><p class="radar-reading-note">圓形外圈是六點量尺的固定上限，不是論文平均；論文教師樣本平均以灰綠色虛線顯示。四軸用來看目前輪廓，實際差距請搭配下方分數卡閱讀。</p></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>點選因素名稱或軸線，讓圖形聚焦並查看該因素的表 3 資訊。</p></div><span class="radar-scale-badge">1–6 六點量尺 · 圓形外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖上的因素</strong><span>查看該因素的分數、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="雷達圖圖例"><span><i class="radar-key-user"></i>你的結果</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span><i class="radar-key-limit"></i>圓形外圈＝固定 6 分上限</span></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
-        <section class="result-section" aria-labelledby="factor-definition-title"><div class="result-section-header"><div><h2 id="factor-definition-title">四因素定義與重要成分</h2><p>依《Manuscript_Jun19.26》表 3 的向度定義與重要成分呈現。</p></div></div><div id="factor-definitions" class="factor-definitions-grid"></div><p class="factor-definition-note">為避免影響填答，35 題作答時不顯示題目所屬因素；完成後才提供這份架構說明。</p></section>
+        <section class="result-section" aria-labelledby="factor-definition-title"><div class="result-section-header"><div><h2 id="factor-definition-title">四因素定義與重要成分</h2><p>詳見王宣惠、洪儷瑜（付梓中）</p></div></div><div id="factor-definitions" class="factor-definitions-grid"></div><p class="factor-definition-note">為避免影響填答，35 題作答時不顯示題目所屬因素；完成後才提供這份架構說明。</p></section>
 
         <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
 
@@ -1770,7 +1786,11 @@
           const valueY = isBottom ? labelPoint.y - 9 : nameY + 19;
           const mean = Number(userValues[index]) || 0;
           const accessibleLabel = "選擇" + factor.name + "，目前 " + mean.toFixed(2) + " 分";
-          return '<g class="radar-factor-label-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><circle class="radar-factor-hit-area" cx="' + labelPoint.x.toFixed(1) + '" cy="' + (labelPoint.y - 13).toFixed(1) + '" r="43"></circle><text class="radar-factor-label" x="' + labelPoint.x.toFixed(1) + '" y="' + nameY.toFixed(1) + '" text-anchor="' + anchor + '" pointer-events="none">' + factor.name + '</text><text class="radar-factor-value" x="' + labelPoint.x.toFixed(1) + '" y="' + valueY.toFixed(1) + '" text-anchor="' + anchor + '" fill="' + factor.color + '" pointer-events="none">' + mean.toFixed(2) + '</text></g>';
+          const chipWidth = 132;
+          const chipHeight = 48;
+          const chipX = anchor === "start" ? labelPoint.x - 8 : anchor === "end" ? labelPoint.x - chipWidth + 8 : labelPoint.x - chipWidth / 2;
+          const chipY = nameY - 16;
+          return '<g class="radar-factor-label-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="radar-factor-hit-area" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><rect class="radar-factor-label-highlight" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><text class="radar-factor-label" x="' + labelPoint.x.toFixed(1) + '" y="' + nameY.toFixed(1) + '" text-anchor="' + anchor + '" pointer-events="none">' + factor.name + '</text><text class="radar-factor-value" x="' + labelPoint.x.toFixed(1) + '" y="' + valueY.toFixed(1) + '" text-anchor="' + anchor + '" fill="' + factor.color + '" pointer-events="none">' + mean.toFixed(2) + '</text></g>';
         }).join("");
         container.innerHTML = '<svg class="radar-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="radar-svg-title" aria-describedby="radar-svg-desc" focusable="false"><title id="radar-svg-title">四因素情緒素養雷達圖</title><desc id="radar-svg-desc">實線填色區域是你的結果，灰綠色虛線是' + safeReferenceLabel + '；圓形外圈是固定 6 分上限，內部刻度由 1 分至 5 分。</desc><g class="radar-grid">' + ringMarkup + '</g><g class="radar-axes">' + axisMarkup + '</g><polygon class="radar-reference-area" points="' + polygonPoints(referenceValues) + '"></polygon><polygon class="radar-user-area" points="' + polygonPoints(userValues) + '"></polygon><g class="radar-value-dots">' + FACTORS.map((factor, index) => { const point = pointAt(userValues[index], index); return '<circle class="radar-value-dot" data-factor-id="' + factor.id + '" cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="8" fill="' + factor.color + '"></circle>'; }).join("") + '</g>' + maxCircleMarkup + '<circle id="radar-focus-ring" class="radar-focus-ring" cx="' + centerX + '" cy="' + centerY + '" r="15" hidden></circle><g class="radar-labels">' + labelMarkup + '</g><circle cx="' + centerX + '" cy="' + centerY + '" r="3" fill="#173c38"></circle></svg>';
 
@@ -1778,6 +1798,7 @@
           const factor = FACTORS.find((item) => item.id === factorId);
           if (!factor) return;
           container.classList.add("has-radar-selection");
+          syncFactorDefinitionSelection(factor.id);
           const index = FACTORS.indexOf(factor);
           const score = scores.factors[factor.id] || {};
           const mean = Number(score.mean) || 0;
@@ -1825,10 +1846,77 @@
         if (container && typeof container.selectFactor === "function") container.selectFactor(factorId);
       }
 
-      function renderFactorDefinitions() {
+      function renderMiniFactorRadar(factor, scores) {
+        const centerX = 50;
+        const centerY = 44;
+        const radius = 30;
+        const axisCount = FACTORS.length;
+        const values = FACTORS.map((item) => {
+          const score = scores && scores.factors && scores.factors[item.id];
+          return Number(score && score.mean) || 0;
+        });
+        const pointAt = (value, index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
+          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        };
+        const outerPointAt = (index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
+        };
+        const fixedPolygonPoints = (scale) => FACTORS.map((item, index) => {
+          const point = outerPointAt(index, scale);
+          return point.x.toFixed(1) + "," + point.y.toFixed(1);
+        }).join(" ");
+        const ringMarkup = [10, 20].map((scale) => '<polygon class="mini-radar-grid" points="' + fixedPolygonPoints(scale) + '"></polygon>').join("");
+        const axisMarkup = FACTORS.map((item, index) => {
+          const point = outerPointAt(index);
+          return '<line class="mini-radar-axis" x1="' + centerX + '" y1="' + centerY + '" x2="' + point.x.toFixed(1) + '" y2="' + point.y.toFixed(1) + '"></line>';
+        }).join("");
+        const userPoints = values.map((value, index) => {
+          const point = pointAt(value, index);
+          return point.x.toFixed(1) + "," + point.y.toFixed(1);
+        }).join(" ");
+        const dotMarkup = FACTORS.map((item, index) => {
+          const point = pointAt(values[index], index);
+          const selectedClass = item.id === factor.id ? " mini-radar-selected-dot" : "";
+          return '<circle class="mini-radar-dot' + selectedClass + '" cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="' + (item.id === factor.id ? 4 : 2.8) + '" fill="' + item.color + '"></circle>';
+        }).join("");
+        return '<div class="factor-mini-radar" aria-hidden="true"><svg viewBox="0 0 100 88" focusable="false"><g>' + ringMarkup + '</g><circle class="mini-radar-max" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><g>' + axisMarkup + '</g><polygon class="mini-radar-user" points="' + userPoints + '"></polygon><g>' + dotMarkup + '</g><text class="mini-radar-scale" x="' + (centerX + 4) + '" y="' + (centerY - radius - 3) + '">6</text></svg></div>';
+      }
+
+      function syncFactorDefinitionSelection(factorId) {
         const container = $("#factor-definitions");
         if (!container) return;
-        container.innerHTML = FACTORS.map((factor) => `<article class="factor-definition-card" style="--factor-color:${factor.color};--factor-tint:${factor.tint}"><div class="factor-definition-head"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>Table 3 · 向度定義</small></div></div><p class="factor-definition-copy">${factor.table3Definition}</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">${factor.components.map((component) => `<li>${component}</li>`).join("")}</ul></article>`).join("");
+        container.classList.add("has-definition-selection");
+        container.querySelectorAll("[data-definition-factor]").forEach((card) => {
+          const isActive = card.dataset.definitionFactor === factorId;
+          card.classList.toggle("is-focused", isActive);
+          card.setAttribute("aria-pressed", String(isActive));
+        });
+      }
+
+      function renderFactorDefinitions(scores) {
+        const container = $("#factor-definitions");
+        if (!container) return;
+        container.innerHTML = FACTORS.map((factor) => {
+          const accessibleLabel = "選擇" + factor.name + "以聚焦雷達圖";
+          return '<article class="factor-definition-card" data-definition-factor="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + '" tabindex="0" role="button" aria-pressed="false" aria-label="' + accessibleLabel + '"><div class="factor-definition-head"><div class="factor-definition-title"><span class="factor-number">' + factor.number + '</span><div><h3>' + factor.name + '</h3><small>Table 3 · 點選卡片聚焦雷達圖</small></div></div>' + renderMiniFactorRadar(factor, scores) + '</div><p class="factor-definition-copy">' + factor.table3Definition + '</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></article>';
+        }).join("");
+        container.querySelectorAll("[data-definition-factor]").forEach((card) => {
+          const activate = () => {
+            selectRenderedRadarFactor(card.dataset.definitionFactor);
+            const radar = $("#factor-radar-chart");
+            if (radar) radar.scrollIntoView({ behavior: "smooth", block: "center" });
+          };
+          card.addEventListener("click", activate);
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              activate();
+            }
+          });
+        });
       }
 
       function renderResults(scores, saveResult, submittedAt, profile = state.profile) {
@@ -1864,7 +1952,7 @@
          </article>`;
        }).join("");
        renderFactorRadar(scores, referenceLabel);
-       renderFactorDefinitions();
+       renderFactorDefinitions(scores);
        $("#factor-results").querySelectorAll("[data-radar-select]").forEach((button) => button.addEventListener("click", () => {
          selectRenderedRadarFactor(button.dataset.radarSelect);
          const detail = $("#radar-factor-detail");
