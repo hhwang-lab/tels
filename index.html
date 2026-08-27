@@ -711,7 +711,55 @@
     .reference-source { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid rgba(205, 220, 213, 0.9); color: var(--muted) !important; font-size: 11px !important; line-height: 1.7 !important; }
 
     .report-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 32px; }
+    .share-card-button { color: white; background: var(--ink); border-color: var(--ink); }
+    .share-card-button:hover { background: #0d2b28; border-color: #0d2b28; box-shadow: 0 14px 26px rgba(23, 60, 56, 0.2); }
     .report-stamp { margin-top: 20px; color: var(--muted); font-size: 11px; text-align: center; }
+
+    .share-card-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .share-card-modal[hidden] { display: none !important; }
+    body.modal-open { overflow: hidden; }
+
+    .share-card-backdrop { position: absolute; inset: 0; background: rgba(18, 48, 44, 0.48); backdrop-filter: blur(6px); }
+
+    .share-card-dialog {
+      position: relative;
+      z-index: 1;
+      width: min(900px, 100%);
+      max-height: min(94vh, 980px);
+      overflow: auto;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid rgba(220, 235, 229, 0.96);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 26px 80px rgba(18, 48, 44, 0.25);
+    }
+
+    .share-card-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .share-card-dialog-head h2 { margin: 10px 0 6px; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.06em; line-height: 1.2; }
+    .share-card-dialog-head p { max-width: 570px; margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
+    .share-card-close { display: grid; place-items: center; flex: 0 0 auto; width: 38px; height: 38px; color: var(--ink-soft); background: white; border: 1px solid var(--line); border-radius: 50%; font-size: 25px; line-height: 1; }
+    .share-card-close:hover { color: var(--accent-deep); background: var(--accent-soft); }
+
+    .share-card-content { display: grid; grid-template-columns: minmax(190px, 310px) minmax(0, 1fr); align-items: center; gap: 30px; margin-top: 24px; }
+    .share-card-preview-shell { width: min(100%, 310px); aspect-ratio: 9 / 16; margin: 0 auto; overflow: hidden; background: #eaf5f0; border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 16px 34px rgba(31, 79, 69, 0.15); }
+    .share-card-preview { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .share-card-tools { min-width: 0; }
+    .share-card-tools h3 { margin: 0 0 8px; font-size: 20px; letter-spacing: -0.05em; }
+    .share-card-tools > p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
+    .share-card-note { margin-top: 15px !important; padding: 13px 14px; color: #7d642d !important; background: var(--sun-soft); border: 1px solid #f2deb1; border-radius: 12px; font-size: 12px !important; }
+    .share-card-status { min-height: 22px; margin-top: 14px !important; color: var(--accent-deep) !important; font-size: 12px !important; font-weight: 750; }
+    .share-card-status.is-error { color: #a34f42 !important; }
+    .share-card-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+    .share-card-actions .button { flex: 1 1 170px; min-height: 45px; padding-inline: 14px; }
+    .share-card-hint { margin-top: 14px !important; color: var(--muted) !important; font-size: 11px !important; line-height: 1.65 !important; }
 
     .admin-top { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
     .data-mode { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; color: var(--ink-soft); background: var(--wash); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; font-weight: 750; white-space: nowrap; }
@@ -845,6 +893,13 @@
       .score-ring-inner strong { font-size: 37px; }
       .factor-results-grid, .insight-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .share-card-modal { padding: 10px; }
+      .share-card-dialog { max-height: 95vh; padding: 19px; border-radius: 21px; }
+      .share-card-dialog-head h2 { font-size: 25px; }
+      .share-card-content { grid-template-columns: 1fr; gap: 18px; margin-top: 17px; }
+      .share-card-preview-shell { width: min(100%, 245px); }
+      .share-card-actions { flex-direction: column; }
+      .share-card-actions .button { width: 100%; flex-basis: auto; }
       .admin-metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
       .admin-groups { grid-template-columns: 1fr; }
       .admin-metric { padding: 15px; }
@@ -856,7 +911,7 @@
 
     @media print {
       body { background: white; }
-      .site-header, .site-footer, .report-actions, .toast, .admin-view, #welcome-view, #survey-view { display: none !important; }
+      .site-header, .site-footer, .report-actions, .toast, .admin-view, #welcome-view, #survey-view, .share-card-modal { display: none !important; }
       .main-content { width: 100%; margin: 0; padding: 0; }
       #results-view { display: block !important; }
       .result-hero, .factor-result-card, .insight-card, .reference-card { box-shadow: none; break-inside: avoid; }
@@ -968,9 +1023,23 @@
 
         <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
 
-        <div class="report-actions"><button id="print-button" class="button" type="button">列印／儲存 PDF</button><button id="retake-button" class="button secondary" type="button">重新填答</button><button id="results-home-button" class="button ghost" type="button">回到首頁</button></div>
+        <div class="report-actions"><button id="print-button" class="button" type="button">列印／儲存 PDF</button><button id="share-card-button" class="button share-card-button" type="button">生成 9:16 圖卡</button><button id="retake-button" class="button secondary" type="button">重新填答</button><button id="results-home-button" class="button ghost" type="button">回到首頁</button></div>
         <p id="report-stamp" class="report-stamp"></p>
       </section>
+
+      <div id="share-card-modal" class="share-card-modal" hidden role="dialog" aria-modal="true" aria-labelledby="share-card-title">
+        <div class="share-card-backdrop" data-share-close="true"></div>
+        <div class="share-card-dialog">
+          <div class="share-card-dialog-head">
+            <div><span class="eyebrow">09:16 · Social card</span><h2 id="share-card-title">分享你的情緒素養圖卡</h2><p>把這份自我檢視結果整理成一張適合手機觀看的直式圖卡；圖卡不包含姓名或聯絡方式。</p></div>
+            <button id="share-card-close" class="share-card-close" type="button" aria-label="關閉圖卡預覽">×</button>
+          </div>
+          <div class="share-card-content">
+            <div class="share-card-preview-shell"><img id="share-card-preview" class="share-card-preview" alt="情緒素養 9:16 圖卡預覽"></div>
+            <div class="share-card-tools"><h3>已準備好你的視覺報表</h3><p>下載後可以保存到手機相簿；在支援檔案分享的手機瀏覽器中，也可以直接從系統分享選單選擇 Instagram 或其他社群平台。</p><p class="share-card-note">Instagram 是否出現在分享選單，取決於裝置與 App 是否已安裝。網站不會代替你直接發布貼文。</p><p id="share-card-status" class="share-card-status" aria-live="polite"></p><div class="share-card-actions"><button id="download-share-card-button" class="button" type="button">下載 9:16 圖卡</button><button id="share-share-card-button" class="button secondary" type="button">分享圖卡</button><button id="share-card-close-bottom" class="button ghost" type="button">回到報表</button></div><p class="share-card-hint">建議：若瀏覽器不支援直接分享，先下載 PNG，再於 Instagram 的限時動態或貼文中選取圖片。</p></div>
+          </div>
+        </div>
+      </div>
 
       <section id="admin-view" class="view" hidden aria-labelledby="admin-title">
         <div class="admin-top"><div><span class="eyebrow">Step 03 · Admin</span><h1 id="admin-title">資料後台</h1><p>查看匿名回覆的累積狀態、整體趨勢與因素平均。</p></div><span id="data-mode" class="data-mode">本機資料模式</span></div>
@@ -1068,6 +1137,7 @@
         answers: loadDraft(),
         profile: loadProfile(),
         results: null,
+        shareCard: null,
         adminRecords: [],
         adminMode: "local"
       };
@@ -1531,6 +1601,7 @@
 
       function renderResults(scores, saveResult, submittedAt, profile = state.profile) {
        state.results = scores;
+       state.shareCard = null;
        const overall = scores.overall;
        const band = getBand(overall.mean);
         const referenceLabel = getReferenceLabel(profile);
@@ -1572,6 +1643,354 @@
        const saveMessage = saveResult && saveResult.mode === "cloud" ? "已匿名寫入雲端試算表" : "尚未寫入雲端試算表";
        $("#report-stamp").textContent = `完成時間 ${formatDate(submittedAt || recordTime())} · ${saveMessage}`;
      }
+
+      function drawCanvasRoundedRect(ctx, x, y, width, height, radius, fill, stroke, strokeWidth = 1) {
+        const r = Math.min(radius, width / 2, height / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + width, y, x + width, y + height, r);
+        ctx.arcTo(x + width, y + height, x, y + height, r);
+        ctx.arcTo(x, y + height, x, y, r);
+        ctx.arcTo(x, y, x + width, y, r);
+        ctx.closePath();
+        if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+        if (stroke) { ctx.lineWidth = strokeWidth; ctx.strokeStyle = stroke; ctx.stroke(); }
+      }
+
+      function canvasSetFont(ctx, size, weight = 600) {
+        ctx.font = `${weight} ${size}px "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif`;
+      }
+
+      function drawCanvasWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
+        let currentY = y;
+        let linesUsed = 0;
+        const paragraphs = String(text || "").split("\n");
+        for (const paragraph of paragraphs) {
+          let line = "";
+          const chars = Array.from(paragraph);
+          for (const char of chars) {
+            const candidate = line + char;
+            if (line && ctx.measureText(candidate).width > maxWidth) {
+              if (linesUsed >= maxLines) return currentY;
+              ctx.fillText(line, x, currentY);
+              currentY += lineHeight;
+              linesUsed += 1;
+              line = char;
+            } else {
+              line = candidate;
+            }
+          }
+          if (line || !chars.length) {
+            if (linesUsed >= maxLines) return currentY;
+            ctx.fillText(line, x, currentY);
+            currentY += lineHeight;
+            linesUsed += 1;
+          }
+        }
+        return currentY;
+      }
+
+      function drawCanvasPill(ctx, text, x, y, fill, color, size = 20) {
+        canvasSetFont(ctx, size, 800);
+        const width = ctx.measureText(text).width + 30;
+        drawCanvasRoundedRect(ctx, x, y, width, size + 22, (size + 22) / 2, fill);
+        ctx.fillStyle = color;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillText(text, x + 15, y + 10);
+        return width;
+      }
+
+      function drawCanvasRadar(ctx, scores, centerX, centerY, radius) {
+        const axisCount = FACTORS.length;
+        const pointAt = (value, index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
+          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        };
+        const outerPointAt = (index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
+        };
+        const drawPolygon = (values, stroke, fill, lineWidth = 2, dash = []) => {
+          ctx.beginPath();
+          values.forEach((value, index) => {
+            const point = pointAt(value, index);
+            if (index === 0) ctx.moveTo(point.x, point.y);
+            else ctx.lineTo(point.x, point.y);
+          });
+          ctx.closePath();
+          ctx.setLineDash(dash);
+          ctx.lineWidth = lineWidth;
+          ctx.strokeStyle = stroke;
+          if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+          ctx.stroke();
+          ctx.setLineDash([]);
+        };
+
+        for (let level = 1; level <= 3; level += 1) {
+          const ringRadius = radius * (level * 2 / 6);
+          ctx.beginPath();
+          FACTORS.forEach((factor, index) => {
+            const point = outerPointAt(index, ringRadius);
+            if (index === 0) ctx.moveTo(point.x, point.y);
+            else ctx.lineTo(point.x, point.y);
+          });
+          ctx.closePath();
+          ctx.lineWidth = level === 3 ? 2 : 1.5;
+          ctx.strokeStyle = level === 3 ? "#d5e8df" : "#e7f1ed";
+          ctx.stroke();
+        }
+
+        FACTORS.forEach((factor, index) => {
+          const point = outerPointAt(index);
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(point.x, point.y);
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = "#e1eee9";
+          ctx.stroke();
+        });
+
+        drawPolygon(FACTORS.map((factor) => factor.referenceMean), "#8fa7a0", null, 3, [9, 8]);
+        drawPolygon(FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0), "#208478", "rgba(32,132,120,0.22)", 4);
+
+        FACTORS.forEach((factor, index) => {
+          const valuePoint = pointAt(scores.factors[factor.id]?.mean || 0, index);
+          ctx.beginPath();
+          ctx.arc(valuePoint.x, valuePoint.y, 8, 0, Math.PI * 2);
+          ctx.fillStyle = factor.color;
+          ctx.fill();
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = "white";
+          ctx.stroke();
+
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          const labelPoint = outerPointAt(index, radius + 43);
+          ctx.textAlign = Math.cos(angle) > 0.35 ? "left" : Math.cos(angle) < -0.35 ? "right" : "center";
+          ctx.textBaseline = "top";
+          canvasSetFont(ctx, 25, 800);
+          ctx.fillStyle = "#173c38";
+          ctx.fillText(factor.name, labelPoint.x, labelPoint.y - 14);
+        });
+        ctx.textAlign = "left";
+      }
+
+      function createShareCardDataUrl(scores, profile) {
+        const width = 1080;
+        const height = 1920;
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("目前瀏覽器無法建立圖卡。");
+        ctx.imageSmoothingEnabled = true;
+        ctx.textBaseline = "top";
+
+        const background = ctx.createLinearGradient(0, 0, width, height);
+        background.addColorStop(0, "#eaf8f2");
+        background.addColorStop(0.56, "#f9fdfb");
+        background.addColorStop(1, "#fff4e9");
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.globalAlpha = 0.56;
+        ctx.fillStyle = "#cce9df";
+        ctx.beginPath(); ctx.arc(1000, 70, 190, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#fbe8e1";
+        ctx.beginPath(); ctx.arc(46, 1660, 160, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 24, 850);
+        ctx.fillText("EL  ·  EMOTIONAL LITERACY", 72, 67);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#7d9590";
+        canvasSetFont(ctx, 21, 750);
+        ctx.fillText("35 題定稿版", 1008, 70);
+        ctx.textAlign = "left";
+
+        drawCanvasRoundedRect(ctx, 72, 137, 936, 382, 40, "rgba(255,255,255,0.82)", "#dcebe5", 2);
+        ctx.fillStyle = "#208478";
+        canvasSetFont(ctx, 22, 850);
+        ctx.fillText("MY SELF-REFLECTION", 112, 183);
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 66, 850);
+        ctx.fillText("我的情緒素養", 112, 236);
+        ctx.fillStyle = "#55716d";
+        canvasSetFont(ctx, 34, 600);
+        ctx.fillText("現在的整體輪廓", 114, 320);
+
+        const overallMean = Number(scores.overall.mean) || 0;
+        const overallBand = getBand(overallMean);
+        ctx.beginPath();
+        ctx.fillStyle = "#dff2e9";
+        ctx.arc(820, 285, 126, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#12645b";
+        canvasSetFont(ctx, 70, 850);
+        ctx.fillText(overallMean.toFixed(2), 820, 251);
+        ctx.fillStyle = "#55716d";
+        canvasSetFont(ctx, 21, 750);
+        ctx.fillText("/ 6 題目平均", 820, 337);
+        ctx.textAlign = "left";
+
+        drawCanvasPill(ctx, overallBand.label, 112, 430, overallBand.key === "mid" ? "#fff5d8" : "#eaf7f1", overallBand.key === "mid" ? "#8b6b2b" : "#12645b", 19);
+        ctx.fillStyle = "#55716d";
+        canvasSetFont(ctx, 21, 700);
+        ctx.fillText(`總分 ${scores.overall.total} / ${scores.overall.max}  ·  ${getRespondentLabel(profile)}填答`, 112, 481);
+
+        drawCanvasRoundedRect(ctx, 72, 555, 936, 650, 40, "rgba(255,255,255,0.82)", "#dcebe5", 2);
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 29, 850);
+        ctx.fillText("四因素雷達圖", 112, 596);
+        ctx.fillStyle = "#7d9590";
+        canvasSetFont(ctx, 19, 650);
+        ctx.fillText("分數越靠外，代表該面向的題目平均越高", 112, 639);
+        drawCanvasRadar(ctx, scores, 540, 907, 190);
+        ctx.fillStyle = "#208478";
+        ctx.fillRect(112, 1153, 18, 18);
+        ctx.fillStyle = "#55716d";
+        canvasSetFont(ctx, 19, 700);
+        ctx.fillText("我的結果", 143, 1150);
+        ctx.strokeStyle = "#8fa7a0";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([8, 7]);
+        ctx.beginPath(); ctx.moveTo(294, 1162); ctx.lineTo(326, 1162); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#55716d";
+        ctx.fillText("論文教師樣本平均", 339, 1150);
+
+        drawCanvasRoundedRect(ctx, 72, 1242, 936, 430, 40, "rgba(255,255,255,0.86)", "#dcebe5", 2);
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 29, 850);
+        ctx.fillText("四因素平均", 112, 1284);
+        ctx.fillStyle = "#7d9590";
+        canvasSetFont(ctx, 18, 650);
+        ctx.fillText("彩色長條是你的結果 · 黑色刻度是論文教師樣本平均", 112, 1325);
+
+        const rowY = [1372, 1440, 1508, 1576];
+        FACTORS.forEach((factor, index) => {
+          const score = scores.factors[factor.id];
+          const mean = Number(score?.mean) || 0;
+          const barX = 342;
+          const barWidth = 350;
+          const barY = rowY[index] + 12;
+          ctx.fillStyle = factor.color;
+          ctx.beginPath(); ctx.arc(124, rowY[index] + 23, 8, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#173c38";
+          canvasSetFont(ctx, 25, 800);
+          ctx.fillText(factor.name, 146, rowY[index] + 7);
+          drawCanvasRoundedRect(ctx, barX, barY, barWidth, 15, 8, "#edf4f1");
+          drawCanvasRoundedRect(ctx, barX, barY, Math.max(5, Math.min(barWidth, mean / 6 * barWidth)), 15, 8, factor.color);
+          const referenceX = barX + Math.min(1, factor.referenceMean / 6) * barWidth;
+          ctx.strokeStyle = "#173c38";
+          ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.moveTo(referenceX, barY - 6); ctx.lineTo(referenceX, barY + 21); ctx.stroke();
+          ctx.textAlign = "right";
+          ctx.fillStyle = factor.color;
+          canvasSetFont(ctx, 32, 850);
+          ctx.fillText(mean.toFixed(2), 815, rowY[index] + 1);
+          ctx.fillStyle = "#7d9590";
+          canvasSetFont(ctx, 17, 700);
+          ctx.fillText(`參考 ${factor.referenceMean.toFixed(2)}`, 984, rowY[index] + 12);
+          ctx.textAlign = "left";
+        });
+
+        drawCanvasRoundedRect(ctx, 72, 1702, 936, 170, 32, "rgba(255,255,255,0.72)", "#dcebe5", 2);
+        ctx.fillStyle = "#12645b";
+        canvasSetFont(ctx, 23, 850);
+        ctx.fillText("看見自己，讓下一步更有方向。", 104, 1733);
+        ctx.fillStyle = "#7d9590";
+        canvasSetFont(ctx, 17, 600);
+        drawCanvasWrappedText(ctx, "王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。", 104, 1771, 860, 25, 2);
+        drawCanvasWrappedText(ctx, "研究支持：教育部高等教育深耕計畫特色領域研究中心／國立臺灣師範大學社會情緒教育與發展研究中心。", 104, 1820, 860, 24, 2);
+
+        return canvas.toDataURL("image/png");
+      }
+
+      function shareCardFilename() {
+        return `情緒素養圖卡_${new Date().toISOString().slice(0, 10)}.png`;
+      }
+
+      function setShareCardStatus(message, type = "success") {
+        const status = $("#share-card-status");
+        status.textContent = message;
+        status.className = "share-card-status" + (type === "error" ? " is-error" : "");
+      }
+
+      function openShareCardModal() {
+        if (!state.results) {
+          showToast("請先完成填答，再生成圖卡。", "error");
+          return;
+        }
+        const trigger = $("#share-card-button");
+        trigger.disabled = true;
+        trigger.textContent = "正在製作圖卡…";
+        try {
+          const dataUrl = createShareCardDataUrl(state.results, state.profile);
+          state.shareCard = { dataUrl, filename: shareCardFilename() };
+          $("#share-card-preview").src = dataUrl;
+          $("#share-card-preview").alt = `情緒素養 9:16 圖卡預覽，總量表平均 ${state.results.overall.mean.toFixed(2)} 分`;
+          setShareCardStatus("圖卡已完成，可以下載或分享。", "success");
+          $("#share-card-modal").hidden = false;
+          document.body.classList.add("modal-open");
+          $("#share-card-close").focus();
+        } catch (error) {
+          setShareCardStatus(error && error.message ? error.message : "目前無法生成圖卡。", "error");
+          showToast("目前無法生成圖卡，請稍後再試。", "error");
+        } finally {
+          trigger.disabled = false;
+          trigger.textContent = "生成 9:16 圖卡";
+        }
+      }
+
+      function closeShareCardModal(returnFocus = true) {
+        $("#share-card-modal").hidden = true;
+        document.body.classList.remove("modal-open");
+        if (returnFocus) $("#share-card-button").focus();
+      }
+
+      function downloadShareCard() {
+        if (!state.shareCard) {
+          openShareCardModal();
+          return;
+        }
+        const link = document.createElement("a");
+        link.href = state.shareCard.dataUrl;
+        link.download = state.shareCard.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setShareCardStatus("已下載 PNG 圖卡，可從手機相簿上傳到 Instagram。", "success");
+      }
+
+      async function shareShareCard() {
+        if (!state.shareCard) {
+          openShareCardModal();
+          return;
+        }
+        if (!navigator.share || typeof File === "undefined") {
+          downloadShareCard();
+          setShareCardStatus("此瀏覽器不支援直接分享，已改為下載 PNG 圖卡。", "success");
+          return;
+        }
+        try {
+          const blob = await (await fetch(state.shareCard.dataUrl)).blob();
+          const file = new File([blob], state.shareCard.filename, { type: "image/png" });
+          if (navigator.canShare && !navigator.canShare({ files: [file] })) throw new Error("此裝置目前不支援檔案分享。");
+          await navigator.share({ title: "我的情緒素養報表", text: "我的情緒素養自我檢視結果", files: [file] });
+          setShareCardStatus("已開啟分享選單，可以選擇 Instagram 或其他社群平台。", "success");
+        } catch (error) {
+          if (error && error.name === "AbortError") {
+            setShareCardStatus("已取消分享。", "success");
+            return;
+          }
+          downloadShareCard();
+          setShareCardStatus("此裝置無法直接分享檔案，已改為下載 PNG 圖卡。", "success");
+        }
+      }
 
       function recordTime() { return new Date().toISOString(); }
 
@@ -1759,6 +2178,17 @@
       $("#retake-button").addEventListener("click", () => { state.answers = {}; clearDraft(); showView("survey"); });
       $("#results-home-button").addEventListener("click", () => showView("welcome"));
      $("#print-button").addEventListener("click", () => window.print());
+      $("#share-card-button").addEventListener("click", openShareCardModal);
+      $("#download-share-card-button").addEventListener("click", downloadShareCard);
+      $("#share-share-card-button").addEventListener("click", shareShareCard);
+      $("#share-card-close").addEventListener("click", () => closeShareCardModal());
+      $("#share-card-close-bottom").addEventListener("click", () => closeShareCardModal());
+      $("#share-card-modal").addEventListener("click", (event) => {
+        if (event.target.closest("[data-share-close]")) closeShareCardModal();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !$("#share-card-modal").hidden) closeShareCardModal();
+      });
       $("#profile-form").addEventListener("submit", handleProfileSubmit);
      $("#survey-form").addEventListener("submit", handleSubmit);
       $("#admin-login-button").addEventListener("click", loadCloudAdmin);
