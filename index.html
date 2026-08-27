@@ -696,6 +696,43 @@
     .delta-negative { color: #b46050; font-weight: 850; }
     .delta-neutral { color: #9b7830; font-weight: 850; }
 
+    .radar-section { margin-top: 34px; }
+    .radar-section .result-section-header { align-items: center; }
+    .radar-scale-badge { flex: 0 0 auto; padding: 7px 11px; color: var(--accent-deep); background: var(--accent-soft); border: 1px solid #b9dfd2; border-radius: 999px; font-size: 11px; font-weight: 800; }
+    .radar-card { padding: 18px 22px 20px; background: linear-gradient(135deg, #fbfefd 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
+    .factor-radar-chart { display: flex; justify-content: center; width: 100%; min-height: 0; }
+    .factor-radar-chart svg { display: block; width: min(100%, 760px); height: 500px; overflow: visible; }
+    .radar-ring { fill: none; stroke: #dfeee8; stroke-width: 1.2; }
+    .radar-ring:nth-of-type(even) { stroke: #e9f3ef; }
+    .radar-ring-outer { stroke: #c9e2d9; stroke-width: 2; }
+    .radar-axis { stroke: #d5e9e1; stroke-width: 1.5; }
+    .radar-axis-dot { stroke: white; stroke-width: 3; }
+    .radar-scale-label { fill: #8aa29c; font-size: 11px; font-weight: 750; }
+    .radar-user-area { fill: rgba(32, 132, 120, 0.18); stroke: #208478; stroke-width: 4; stroke-linejoin: round; }
+    .radar-reference-area { fill: rgba(92, 119, 111, 0.04); stroke: #6f8881; stroke-width: 2.5; stroke-dasharray: 8 7; stroke-linejoin: round; }
+    .radar-value-dot { stroke: white; stroke-width: 3; }
+    .radar-factor-label { fill: var(--ink); font-size: 15px; font-weight: 850; }
+    .radar-factor-value { font-size: 13px; font-weight: 850; }
+    .radar-legend { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: -4px; color: var(--ink-soft); font-size: 12px; }
+    .radar-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .radar-key-user { display: inline-block; width: 22px; height: 9px; background: rgba(32, 132, 120, 0.22); border: 2px solid var(--accent); border-radius: 3px; }
+    .radar-key-reference { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #6f8881; }
+    .radar-scale-copy { color: var(--muted); }
+    .radar-reading-note { margin: 15px 0 0; padding-top: 13px; color: var(--muted); border-top: 1px dashed var(--line); font-size: 12px; line-height: 1.7; text-align: center; }
+
+    .factor-definitions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .factor-definition-card { padding: 22px 24px; background: white; border: 1px solid var(--line); border-left: 4px solid var(--factor-color); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
+    .factor-definition-head { display: flex; align-items: center; gap: 12px; }
+    .factor-definition-head .factor-number { display: grid; place-items: center; flex: 0 0 auto; width: 31px; height: 31px; color: white; background: var(--factor-color); border-radius: 9px; font-size: 11px; font-weight: 850; }
+    .factor-definition-head h3 { margin: 0; color: var(--ink); font-size: 19px; letter-spacing: -0.05em; }
+    .factor-definition-head small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
+    .factor-definition-copy { margin: 18px 0 17px; color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
+    .factor-component-label { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: var(--muted); font-size: 11px; font-weight: 850; letter-spacing: 0.06em; }
+    .factor-component-label::before { width: 18px; height: 2px; content: ""; background: var(--factor-color); border-radius: 99px; }
+    .factor-component-list { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .factor-component-list li { padding: 6px 9px; color: var(--ink-soft); background: var(--factor-tint); border: 1px solid color-mix(in srgb, var(--factor-color) 18%, white); border-radius: 8px; font-size: 12px; line-height: 1.35; }
+    .factor-definition-note { margin: 14px 2px 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+
     .insight-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr); gap: 16px; }
     .insight-card, .reference-card { padding: 24px; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); }
     .insight-card h3, .reference-card h3 { margin: 0 0 14px; font-size: 18px; letter-spacing: -0.05em; }
@@ -850,6 +887,7 @@
       .survey-top, .admin-top { align-items: flex-start; flex-direction: column; }
       .progress-box { width: 100%; min-width: 0; }
       .result-hero { grid-template-columns: 1fr; gap: 28px; }
+      .factor-definitions-grid { grid-template-columns: 1fr; }
       .admin-metrics { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -892,7 +930,16 @@
       .score-ring::before, .score-ring-inner { width: 114px; height: 114px; }
       .score-ring-inner strong { font-size: 37px; }
       .factor-results-grid, .insight-grid { grid-template-columns: 1fr; }
+      .factor-definitions-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .radar-card { padding: 12px 12px 16px; }
+      .factor-radar-chart svg { width: 100%; height: 330px; }
+      .radar-factor-label { font-size: 21px; }
+      .radar-factor-value { font-size: 18px; }
+      .radar-scale-label { font-size: 16px; }
+      .radar-legend { justify-content: flex-start; gap: 9px 14px; font-size: 11px; }
+      .radar-reading-note { text-align: left; }
+      .factor-definition-card { padding: 20px 18px; }
       .share-card-modal { padding: 10px; }
       .share-card-dialog { max-height: 95vh; padding: 19px; border-radius: 21px; }
       .share-card-dialog-head h2 { font-size: 25px; }
@@ -1019,7 +1066,11 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>用形狀看見四個面向的相對位置，再搭配下方分數閱讀。</p></div><span class="radar-scale-badge">中心 1 · 外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart" role="img" aria-label="四因素情緒素養雷達圖"></div><div class="radar-legend" aria-label="雷達圖圖例"><span><i class="radar-key-user"></i>你的結果</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span class="radar-scale-copy">刻度由中心 1 分至外圈 6 分</span></div><p class="radar-reading-note">四軸並不是用來判定好壞，而是協助你看見目前的整體輪廓；實際分數與論文平均的差距，請以四因素卡片為準。</p></div></section>
+
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
+
+        <section class="result-section" aria-labelledby="factor-definition-title"><div class="result-section-header"><div><h2 id="factor-definition-title">四因素定義與重要成分</h2><p>依《Manuscript_Jun19.26》表 3 的向度定義與重要成分呈現。</p></div></div><div id="factor-definitions" class="factor-definitions-grid"></div><p class="factor-definition-note">為避免影響填答，35 題作答時不顯示題目所屬因素；完成後才提供這份架構說明。</p></section>
 
         <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
 
@@ -1100,11 +1151,36 @@
         { id: 35, text: "當我做出與他人不同的決定時，我會克服困難" }
       ];
 
+      // 四因素定義與重要成分依 Manuscript_Jun19.26 表 3；表 3 的「生、心理」在介面中依語意補作「生理、心理」，避免一般填答者誤讀。
       const FACTORS = [
-        { id: "self-awareness", number: "F1", name: "自我覺察", english: "Self-awareness", items: [1,2,3,4,5,6,7,8,9], referenceMean: 4.94, color: "#208478", tint: "#eaf7f1", description: "辨識自己的情緒、特質、經驗與觀點，理解它們如何影響行動。" },
-        { id: "self-management", number: "F2", name: "自我管理", english: "Self-management", items: [10,11,12,13,14,15,16,17,18,19,20], referenceMean: 4.46, color: "#e9826d", tint: "#fff0eb", description: "在壓力、目標與日常需求之間，調節情緒、資源與行動方向。" },
-        { id: "social-awareness", number: "F3", name: "社會覺察", english: "Social awareness", items: [21,22,23,24,25,26,27], referenceMean: 5.00, color: "#6f9cc1", tint: "#eef5fb", description: "理解他人的情緒與觀點，尊重背景差異，發展同理與多元視角。" },
-        { id: "relationship-skills", number: "F4", name: "人際技能", english: "Relationship skills", items: [28,29,30,31,32,33,34,35], referenceMean: 4.67, color: "#c59a45", tint: "#fff8e6", description: "清楚溝通、合作與處理衝突，在關係中平衡自己與他人的需求。" }
+        {
+          id: "self-awareness", number: "F1", name: "自我覺察", english: "Self-awareness",
+          items: [1,2,3,4,5,6,7,8,9], referenceMean: 4.94, color: "#208478", tint: "#eaf7f1",
+          description: "辨識自己的情緒、特質、經驗與觀點，理解它們如何影響行動。",
+          table3Definition: "能了解自己的優勢、限制與資源，包括對自己情緒、想法與價值觀的覺察、辨識與理解，以及對自己生理、心理資源與預算的覺察與掌握，並正向看待自己，以自信感與目的感面對生活。",
+          components: ["自我概念", "自我效能／成長心態", "情緒覺察"]
+        },
+        {
+          id: "self-management", number: "F2", name: "自我管理", english: "Self-management",
+          items: [10,11,12,13,14,15,16,17,18,19,20], referenceMean: 4.46, color: "#e9826d", tint: "#fff0eb",
+          description: "在壓力、目標與日常需求之間，調節情緒、資源與行動方向。",
+          table3Definition: "能管理個人的情緒、想法與行為，並適切調度個人內在資源，以達成個人目標，包括在困難情境中保持心理健康與情緒平衡，並正向面對壓力、挑戰與逆境。",
+          components: ["情緒管理", "自我資源管理", "計畫與組織", "韌性與決心"]
+        },
+        {
+          id: "social-awareness", number: "F3", name: "社會覺察", english: "Social awareness",
+          items: [21,22,23,24,25,26,27], referenceMean: 5.00, color: "#6f9cc1", tint: "#eef5fb",
+          description: "理解他人的情緒與觀點，尊重背景差異，發展同理與多元視角。",
+          table3Definition: "能覺察他人感受，理解他人觀點，並以尊重、同理的方式對待他人。",
+          components: ["同理", "觀點取替"]
+        },
+        {
+          id: "relationship-skills", number: "F4", name: "人際技能", english: "Relationship skills",
+          items: [28,29,30,31,32,33,34,35], referenceMean: 4.67, color: "#c59a45", tint: "#fff8e6",
+          description: "清楚溝通、合作與處理衝突，在關係中平衡自己與他人的需求。",
+          table3Definition: "能在互動中有效溝通，建立平衡或互惠的關係，並建設性地進行合作、問題解決或衝突協商。",
+          components: ["自主性", "有效溝通", "建立關係", "衝突管理"]
+        }
       ];
 
       // 作答畫面採固定混合順序，避免填答者從題目排列看出因素分組；計分仍依 FACTORS 對應題號進行。
@@ -1599,6 +1675,59 @@
         return { label: `接近${referenceLabel}`, className: "delta-neutral" };
       }
 
+      function renderFactorRadar(scores, referenceLabel) {
+        const container = $("#factor-radar-chart");
+        if (!container) return;
+        const width = 700;
+        const height = 500;
+        const centerX = 350;
+        const centerY = 250;
+        const radius = 160;
+        const axisCount = FACTORS.length;
+        const pointAt = (value, index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
+          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        };
+        const outerPointAt = (index, scale = radius) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
+        };
+        const polygonPoints = (values, scale = radius) => values.map((value, index) => {
+          const point = pointAt(value, index, scale);
+          return `${point.x.toFixed(1)},${point.y.toFixed(1)}`;
+        }).join(" ");
+        const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
+        const referenceValues = FACTORS.map((factor) => factor.referenceMean);
+        const safeReferenceLabel = referenceLabel || "論文平均";
+        const userSummary = FACTORS.map((factor, index) => `${factor.name} ${Number(userValues[index]).toFixed(2)} 分`).join("、");
+        const ringMarkup = Array.from({ length: 6 }, (_, index) => {
+          const level = index + 1;
+          return `<polygon class="radar-ring${level === 6 ? " radar-ring-outer" : ""}" points="${polygonPoints([level, level, level, level])}"></polygon><text class="radar-scale-label" x="${centerX + 8}" y="${(centerY - radius * level / 6 + 4).toFixed(1)}">${level}</text>`;
+        }).join("");
+        const axisMarkup = FACTORS.map((factor, index) => {
+          const point = outerPointAt(index);
+          return `<line class="radar-axis" x1="${centerX}" y1="${centerY}" x2="${point.x.toFixed(1)}" y2="${point.y.toFixed(1)}"></line><circle class="radar-axis-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="6" fill="${factor.color}"></circle>`;
+        }).join("");
+        const labelMarkup = FACTORS.map((factor, index) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          const labelPoint = outerPointAt(index, radius + 58);
+          const anchor = Math.cos(angle) > 0.35 ? "start" : Math.cos(angle) < -0.35 ? "end" : "middle";
+          const isBottom = Math.sin(angle) > 0.5;
+          const nameY = isBottom ? labelPoint.y - 28 : Math.sin(angle) < -0.5 ? labelPoint.y : labelPoint.y - 9;
+          const valueY = isBottom ? labelPoint.y - 9 : nameY + 19;
+          const mean = Number(userValues[index]) || 0;
+          return `<text class="radar-factor-label" x="${labelPoint.x.toFixed(1)}" y="${nameY.toFixed(1)}" text-anchor="${anchor}">${factor.name}</text><text class="radar-factor-value" x="${labelPoint.x.toFixed(1)}" y="${valueY.toFixed(1)}" text-anchor="${anchor}" fill="${factor.color}">${mean.toFixed(2)}</text>`;
+        }).join("");
+        container.innerHTML = `<svg class="radar-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="四因素雷達圖：${userSummary}" focusable="false"><title>四因素情緒素養雷達圖</title><desc>實線填色區域是你的結果，灰綠色虛線是${safeReferenceLabel}；刻度由中心 1 分至外圈 6 分。</desc><g>${ringMarkup}${axisMarkup}<polygon class="radar-reference-area" points="${polygonPoints(referenceValues)}"></polygon><polygon class="radar-user-area" points="${polygonPoints(userValues)}"></polygon>${FACTORS.map((factor, index) => { const point = pointAt(userValues[index], index); return `<circle class="radar-value-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="8" fill="${factor.color}"></circle>`; }).join("")}${labelMarkup}<circle cx="${centerX}" cy="${centerY}" r="3" fill="#173c38"></circle></g></svg>`;
+      }
+
+      function renderFactorDefinitions() {
+        const container = $("#factor-definitions");
+        if (!container) return;
+        container.innerHTML = FACTORS.map((factor) => `<article class="factor-definition-card" style="--factor-color:${factor.color};--factor-tint:${factor.tint}"><div class="factor-definition-head"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>Table 3 · 向度定義</small></div></div><p class="factor-definition-copy">${factor.table3Definition}</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">${factor.components.map((component) => `<li>${component}</li>`).join("")}</ul></article>`).join("");
+      }
+
       function renderResults(scores, saveResult, submittedAt, profile = state.profile) {
        state.results = scores;
        state.shareCard = null;
@@ -1630,6 +1759,8 @@
            <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
          </article>`;
        }).join("");
+       renderFactorRadar(scores, referenceLabel);
+       renderFactorDefinitions();
 
        const sorted = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
        const strongest = sorted[0];
@@ -1703,6 +1834,8 @@
 
       function drawCanvasRadar(ctx, scores, centerX, centerY, radius) {
         const axisCount = FACTORS.length;
+        const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
+        const referenceValues = FACTORS.map((factor) => factor.referenceMean);
         const pointAt = (value, index, scale = radius) => {
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
           const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
@@ -1728,8 +1861,8 @@
           ctx.setLineDash([]);
         };
 
-        for (let level = 1; level <= 3; level += 1) {
-          const ringRadius = radius * (level * 2 / 6);
+        for (let level = 1; level <= 6; level += 1) {
+          const ringRadius = radius * (level / 6);
           ctx.beginPath();
           FACTORS.forEach((factor, index) => {
             const point = outerPointAt(index, ringRadius);
@@ -1737,9 +1870,14 @@
             else ctx.lineTo(point.x, point.y);
           });
           ctx.closePath();
-          ctx.lineWidth = level === 3 ? 2 : 1.5;
-          ctx.strokeStyle = level === 3 ? "#d5e8df" : "#e7f1ed";
+          ctx.lineWidth = level === 6 ? 2.5 : level % 2 === 0 ? 1.5 : 1;
+          ctx.strokeStyle = level === 6 ? "#c9e2d9" : level % 2 === 0 ? "#dcece5" : "#e9f3ef";
           ctx.stroke();
+          ctx.fillStyle = "#8aa29c";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+          canvasSetFont(ctx, 13, 750);
+          ctx.fillText(String(level), centerX + 10, centerY - ringRadius - 8);
         }
 
         FACTORS.forEach((factor, index) => {
@@ -1747,31 +1885,44 @@
           ctx.beginPath();
           ctx.moveTo(centerX, centerY);
           ctx.lineTo(point.x, point.y);
-          ctx.lineWidth = 1.5;
-          ctx.strokeStyle = "#e1eee9";
+          ctx.lineWidth = 1.7;
+          ctx.strokeStyle = "#d5e9e1";
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+          ctx.fillStyle = factor.color;
+          ctx.fill();
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "white";
           ctx.stroke();
         });
 
-        drawPolygon(FACTORS.map((factor) => factor.referenceMean), "#8fa7a0", null, 3, [9, 8]);
-        drawPolygon(FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0), "#208478", "rgba(32,132,120,0.22)", 4);
+        drawPolygon(referenceValues, "#6f8881", "rgba(95,120,112,0.04)", 3, [10, 8]);
+        drawPolygon(userValues, "#208478", "rgba(32,132,120,0.18)", 5);
 
         FACTORS.forEach((factor, index) => {
-          const valuePoint = pointAt(scores.factors[factor.id]?.mean || 0, index);
+          const valuePoint = pointAt(userValues[index], index);
           ctx.beginPath();
-          ctx.arc(valuePoint.x, valuePoint.y, 8, 0, Math.PI * 2);
+          ctx.arc(valuePoint.x, valuePoint.y, 10, 0, Math.PI * 2);
           ctx.fillStyle = factor.color;
           ctx.fill();
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 3.5;
           ctx.strokeStyle = "white";
           ctx.stroke();
 
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const labelPoint = outerPointAt(index, radius + 43);
+          const labelPoint = outerPointAt(index, radius + 47);
           ctx.textAlign = Math.cos(angle) > 0.35 ? "left" : Math.cos(angle) < -0.35 ? "right" : "center";
           ctx.textBaseline = "top";
-          canvasSetFont(ctx, 25, 800);
+          const isBottom = Math.sin(angle) > 0.5;
+          const nameY = isBottom ? labelPoint.y - 28 : Math.sin(angle) < -0.5 ? labelPoint.y : labelPoint.y - 12;
+          const valueY = isBottom ? labelPoint.y - 9 : nameY + 25;
+          canvasSetFont(ctx, 24, 800);
           ctx.fillStyle = "#173c38";
-          ctx.fillText(factor.name, labelPoint.x, labelPoint.y - 14);
+          ctx.fillText(factor.name, labelPoint.x, nameY);
+          ctx.fillStyle = factor.color;
+          canvasSetFont(ctx, 18, 850);
+          ctx.fillText(Number(userValues[index]).toFixed(2), labelPoint.x, valueY);
         });
         ctx.textAlign = "left";
       }
@@ -1846,21 +1997,21 @@
         canvasSetFont(ctx, 29, 850);
         ctx.fillText("四因素雷達圖", 112, 596);
         ctx.fillStyle = "#7d9590";
-        canvasSetFont(ctx, 19, 650);
-        ctx.fillText("分數越靠外，代表該面向的題目平均越高", 112, 639);
+        canvasSetFont(ctx, 18, 650);
+        ctx.fillText("實線填色是我的結果 · 灰綠虛線是論文教師樣本平均 · 中心 1／外圈 6", 112, 639);
         drawCanvasRadar(ctx, scores, 540, 907, 190);
         ctx.fillStyle = "#208478";
-        ctx.fillRect(112, 1153, 18, 18);
+        ctx.fillRect(112, 1172, 18, 18);
         ctx.fillStyle = "#55716d";
         canvasSetFont(ctx, 19, 700);
-        ctx.fillText("我的結果", 143, 1150);
+        ctx.fillText("我的結果", 143, 1169);
         ctx.strokeStyle = "#8fa7a0";
         ctx.lineWidth = 3;
         ctx.setLineDash([8, 7]);
-        ctx.beginPath(); ctx.moveTo(294, 1162); ctx.lineTo(326, 1162); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(294, 1181); ctx.lineTo(326, 1181); ctx.stroke();
         ctx.setLineDash([]);
         ctx.fillStyle = "#55716d";
-        ctx.fillText("論文教師樣本平均", 339, 1150);
+        ctx.fillText("論文教師樣本平均", 339, 1169);
 
         drawCanvasRoundedRect(ctx, 72, 1242, 936, 430, 40, "rgba(255,255,255,0.86)", "#dcebe5", 2);
         ctx.fillStyle = "#173c38";
@@ -2247,3 +2398,4 @@
   </script>
 </body>
 </html>
+
