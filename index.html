@@ -701,9 +701,11 @@
     .radar-section { margin-top: 34px; }
     .radar-section .result-section-header { align-items: center; }
     .radar-scale-badge { flex: 0 0 auto; padding: 7px 11px; color: var(--accent-deep); background: var(--accent-soft); border: 1px solid #b9dfd2; border-radius: 999px; font-size: 11px; font-weight: 800; }
-    .radar-card { padding: 18px 22px 20px; background: linear-gradient(135deg, #fbfefd 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
+    .radar-card { padding: 22px; background: linear-gradient(135deg, #fbfefd 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
+    .radar-layout { display: grid; grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr); align-items: stretch; gap: 24px; }
+    .radar-chart-column { display: grid; align-content: center; min-width: 0; gap: 10px; }
     .factor-diverging-chart { display: flex; justify-content: center; width: 100%; min-height: 0; }
-    .factor-diverging-chart svg { display: block; width: min(100%, 780px); height: auto; aspect-ratio: 760 / 480; overflow: visible; }
+    .factor-diverging-chart svg { display: block; width: min(100%, 820px); height: auto; aspect-ratio: 760 / 480; overflow: visible; }
     .diverging-row { cursor: pointer; outline: none; }
     .diverging-row-band { fill: transparent; stroke: transparent; stroke-width: 1.5; transition: fill 200ms ease, stroke 200ms ease, opacity 200ms ease; }
     .diverging-row-separator { stroke: #edf4f1; stroke-width: 1; }
@@ -745,21 +747,22 @@
     .radar-key-negative { background: #d77b6a; }
     .radar-key-baseline { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #173c38; }
     .radar-scale-copy { color: var(--muted); }
-    .radar-factor-detail { display: grid; gap: 12px; max-width: 760px; min-height: 72px; margin: 13px auto 0; padding: 16px 18px; background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); border-radius: 15px; }
+    .radar-factor-detail { display: grid; align-content: center; gap: 16px; min-height: 100%; margin: 0; padding: 25px 24px; background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(245, 252, 249, 0.84)); border: 1px solid var(--line); border-left: 4px solid var(--factor-color, var(--accent)); border-radius: 19px; box-shadow: 0 14px 30px rgba(31, 79, 69, 0.06); }
     .radar-factor-detail:focus { outline: 3px solid rgba(32, 132, 120, 0.2); outline-offset: 3px; }
     .radar-detail-empty { display: grid; gap: 4px; color: var(--muted); font-size: 12px; line-height: 1.65; }
     .radar-detail-empty strong { color: var(--accent-deep); font-size: 14px; }
-    .radar-detail-head { display: flex; align-items: center; gap: 11px; }
-    .radar-detail-head .factor-number { display: grid; place-items: center; flex: 0 0 auto; width: 33px; height: 33px; color: white; background: var(--factor-color); border-radius: 10px; font-size: 11px; font-weight: 850; }
+    .radar-detail-head { display: flex; align-items: flex-start; gap: 12px; }
+    .radar-detail-head .factor-number { display: grid; place-items: center; flex: 0 0 auto; width: 38px; height: 38px; color: white; background: var(--factor-color); border-radius: 12px; font-size: 11px; font-weight: 850; box-shadow: 0 8px 15px color-mix(in srgb, var(--factor-color) 22%, transparent); }
     .radar-detail-head small { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-    .radar-detail-head h3 { margin: 2px 0 0; color: var(--ink); font-size: 18px; letter-spacing: -0.04em; }
-    .radar-detail-score { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 8px; margin-left: auto; color: var(--muted); font-size: 11px; text-align: right; }
-    .radar-detail-score strong { color: var(--factor-color); font-size: 22px; }
-    .radar-detail-definition { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
+    .radar-detail-head h3 { margin: 2px 0 0; color: var(--ink); font-size: 22px; letter-spacing: -0.05em; }
+    .radar-detail-score { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 7px; margin-left: auto; color: var(--muted); font-size: 11px; text-align: right; }
+    .radar-detail-score strong { color: var(--factor-color); font-size: 27px; letter-spacing: -0.06em; }
+    .radar-detail-score small { display: block; flex-basis: 100%; margin-top: 2px; }
+    .radar-detail-definition { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
     .radar-detail-definition strong, .radar-detail-components > strong { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: 0.05em; }
     .radar-detail-components { display: grid; gap: 5px; }
     .radar-detail-components ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-    .radar-detail-components li { padding: 5px 8px; color: var(--ink-soft); background: var(--factor-tint); border: 1px solid color-mix(in srgb, var(--factor-color) 18%, white); border-radius: 7px; font-size: 11px; }
+    .radar-detail-components li { padding: 7px 10px; color: var(--ink-soft); background: var(--factor-tint); border: 1px solid color-mix(in srgb, var(--factor-color) 18%, white); border-radius: 8px; font-size: 12px; }
     .radar-factor-detail.is-updating { animation: radarDetailIn 360ms ease both; }
     @keyframes radarDetailIn { from { opacity: 0.2; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) {
@@ -953,6 +956,9 @@
       .survey-top, .admin-top { align-items: flex-start; flex-direction: column; }
       .progress-box { width: 100%; min-width: 0; }
       .result-hero { grid-template-columns: 1fr; gap: 28px; }
+      .radar-layout { grid-template-columns: 1fr; }
+      .radar-chart-column { order: 1; }
+      .radar-factor-detail { order: 2; min-height: 0; }
       .factor-definitions-grid { grid-template-columns: 1fr; }
       .admin-metrics { grid-template-columns: repeat(2, 1fr); }
     }
@@ -999,6 +1005,7 @@
       .factor-definitions-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
       .radar-card { padding: 12px 12px 16px; }
+      .radar-layout { gap: 14px; }
       .factor-diverging-chart svg { width: 100%; height: auto; }
       .diverging-factor-code { font-size: 19px; }
       .diverging-factor-label { font-size: 28px; }
@@ -1011,6 +1018,7 @@
       .radar-detail-head { align-items: flex-start; }
       .radar-detail-score { margin-left: 0; }
       .radar-detail-head h3 { font-size: 17px; }
+      .radar-factor-detail { padding: 20px 18px; }
       .factor-definition-head { grid-template-columns: minmax(0, 1fr) 104px; gap: 8px; }
       .factor-mini-compare { width: 104px; height: 56px; }
       .factor-mini-compare svg { width: 98px; height: 50px; }
@@ -1142,7 +1150,7 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；點選列可查看表 3 資訊。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖表中的因素</strong><span>查看該因素的分數、對照平均、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看表 3 資訊。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
@@ -1817,6 +1825,7 @@
 
         container.selectFactor = selectRadarFactor;
         container.querySelectorAll(".radar-factor-hit").forEach((target) => {
+          target.addEventListener("pointerenter", () => selectRadarFactor(target.dataset.factorId));
           target.addEventListener("click", () => selectRadarFactor(target.dataset.factorId));
           target.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
