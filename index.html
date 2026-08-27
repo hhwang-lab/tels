@@ -1150,7 +1150,7 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看表 3 資訊。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看該因素的說明。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
@@ -1235,34 +1235,34 @@
         { id: 35, text: "當我做出與他人不同的決定時，我會克服困難" }
       ];
 
-      // 四因素定義與重要成分依 Manuscript_Jun19.26 表 3；表 3 的「生、心理」在介面中依語意補作「生理、心理」，避免一般填答者誤讀。
+      // 四因素定義與重要成分取自研究內容；介面中的文字依語意整理，避免一般填答者誤讀。
       const FACTORS = [
         {
           id: "self-awareness", number: "F1", name: "自我覺察", english: "Self-awareness",
           items: [1,2,3,4,5,6,7,8,9], referenceMean: 4.94, color: "#208478", tint: "#eaf7f1",
           description: "辨識自己的情緒、特質、經驗與觀點，理解它們如何影響行動。",
-          table3Definition: "能了解自己的優勢、限制與資源，包括對自己情緒、想法與價值觀的覺察、辨識與理解，以及對自己生理、心理資源與預算的覺察與掌握，並正向看待自己，以自信感與目的感面對生活。",
+          definition: "能了解自己的優勢、限制與資源，包括對自己情緒、想法與價值觀的覺察、辨識與理解，以及對自己生理、心理資源與預算的覺察與掌握，並正向看待自己，以自信感與目的感面對生活。",
           components: ["自我概念", "自我效能／成長心態", "情緒覺察"]
         },
         {
           id: "self-management", number: "F2", name: "自我管理", english: "Self-management",
           items: [10,11,12,13,14,15,16,17,18,19,20], referenceMean: 4.46, color: "#e9826d", tint: "#fff0eb",
           description: "在壓力、目標與日常需求之間，調節情緒、資源與行動方向。",
-          table3Definition: "能管理個人的情緒、想法與行為，並適切調度個人內在資源，以達成個人目標，包括在困難情境中保持心理健康與情緒平衡，並正向面對壓力、挑戰與逆境。",
+          definition: "能管理個人的情緒、想法與行為，並適切調度個人內在資源，以達成個人目標，包括在困難情境中保持心理健康與情緒平衡，並正向面對壓力、挑戰與逆境。",
           components: ["情緒管理", "自我資源管理", "計畫與組織", "韌性與決心"]
         },
         {
           id: "social-awareness", number: "F3", name: "社會覺察", english: "Social awareness",
           items: [21,22,23,24,25,26,27], referenceMean: 5.00, color: "#6f9cc1", tint: "#eef5fb",
           description: "理解他人的情緒與觀點，尊重背景差異，發展同理與多元視角。",
-          table3Definition: "能覺察他人感受，理解他人觀點，並以尊重、同理的方式對待他人。",
+          definition: "能覺察他人感受，理解他人觀點，並以尊重、同理的方式對待他人。",
           components: ["同理", "觀點取替"]
         },
         {
           id: "relationship-skills", number: "F4", name: "人際技能", english: "Relationship skills",
           items: [28,29,30,31,32,33,34,35], referenceMean: 4.67, color: "#c59a45", tint: "#fff8e6",
           description: "清楚溝通、合作與處理衝突，在關係中平衡自己與他人的需求。",
-          table3Definition: "能在互動中有效溝通，建立平衡或互惠的關係，並建設性地進行合作、問題解決或衝突協商。",
+          definition: "能在互動中有效溝通，建立平衡或互惠的關係，並建設性地進行合作、問題解決或衝突協商。",
           components: ["自主性", "有效溝通", "建立關係", "衝突管理"]
         }
       ];
@@ -1815,11 +1815,11 @@
           if (detail) {
             detail.style.setProperty("--factor-color", factor.color);
             detail.style.setProperty("--factor-tint", factor.tint);
-            detail.innerHTML = '<div class="radar-detail-head"><span class="factor-number">' + factor.number + '</span><div><small>Selected factor · 表 3</small><h3>' + factor.name + '</h3></div><div class="radar-detail-score"><span>你的平均</span><strong>' + mean.toFixed(2) + '</strong><span>/ 6</span><small>' + safeReferenceLabel + ' ' + factor.referenceMean.toFixed(2) + '</small></div></div><p class="radar-detail-definition"><strong>定義</strong>' + factor.table3Definition + '</p><div class="radar-detail-components"><strong>重要成分</strong><ul>' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></div>';
+            detail.innerHTML = '<div class="radar-detail-head"><span class="factor-number">' + factor.number + '</span><div><small>目前查看</small><h3>' + factor.name + '</h3></div><div class="radar-detail-score"><span>你的平均</span><strong>' + mean.toFixed(2) + '</strong><span>/ 6</span><small>' + safeReferenceLabel + ' ' + factor.referenceMean.toFixed(2) + '</small></div></div><p class="radar-detail-definition"><strong>定義</strong>' + factor.definition + '</p><div class="radar-detail-components"><strong>重要成分</strong><ul>' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></div>';
             detail.classList.remove("is-updating");
             void detail.offsetWidth;
             detail.classList.add("is-updating");
-            detail.setAttribute("aria-label", factor.name + "的表 3 定義與重要成分");
+            detail.setAttribute("aria-label", factor.name + "的定義與重要成分");
           }
         };
 
@@ -1874,8 +1874,8 @@
         const container = $("#factor-definitions");
         if (!container) return;
         container.innerHTML = FACTORS.map((factor) => {
-          const accessibleLabel = "選擇" + factor.name + "以聚焦四因素圖";
-          return '<article class="factor-definition-card" data-definition-factor="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + '" tabindex="0" role="button" aria-pressed="false" aria-label="' + accessibleLabel + '"><div class="factor-definition-head"><div class="factor-definition-title"><span class="factor-number">' + factor.number + '</span><div><h3>' + factor.name + '</h3><small>Table 3 · 點選卡片聚焦圖形</small></div></div>' + renderMiniFactorRadar(factor, scores) + '</div><p class="factor-definition-copy">' + factor.table3Definition + '</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></article>';
+          const accessibleLabel = "查看" + factor.name + "的圖形與說明";
+          return '<article class="factor-definition-card" data-definition-factor="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + '" tabindex="0" role="button" aria-pressed="false" aria-label="' + accessibleLabel + '"><div class="factor-definition-head"><div class="factor-definition-title"><span class="factor-number">' + factor.number + '</span><div><h3>' + factor.name + '</h3><small>點選卡片查看圖形</small></div></div>' + renderMiniFactorRadar(factor, scores) + '</div><p class="factor-definition-copy">' + factor.definition + '</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></article>';
         }).join("");
         container.querySelectorAll("[data-definition-factor]").forEach((card) => {
           const activate = () => {
@@ -1921,7 +1921,7 @@
            <div class="factor-result-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>${factor.english}</small></div></div><div class="factor-score">${score.mean.toFixed(2)}<small> / 6</small></div></div>
            <p>${factor.description}</p>
             <div class="compare-block"><div class="compare-labels"><span>你的題目平均</span><strong>${score.mean.toFixed(2)}</strong></div><div class="compare-track"><div class="compare-user-bar" style="width:${userPercent}%"></div><span class="compare-marker" style="left:${referencePercent}%" title="${referenceLabel} ${factor.referenceMean.toFixed(2)}"></span></div><div class="compare-legend"><span><i></i>你的結果</span><span><i class="reference-dot"></i>${referenceLabel} ${factor.referenceMean.toFixed(2)}</span></div></div>
-           <button class="factor-card-link" type="button" data-radar-select="${factor.id}">聚焦四因素圖 · 查看此因素</button>
+           <button class="factor-card-link" type="button" data-radar-select="${factor.id}">查看${factor.name}的圖形</button>
            <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
          </article>`;
        }).join("");
