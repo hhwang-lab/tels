@@ -702,49 +702,48 @@
     .radar-section .result-section-header { align-items: center; }
     .radar-scale-badge { flex: 0 0 auto; padding: 7px 11px; color: var(--accent-deep); background: var(--accent-soft); border: 1px solid #b9dfd2; border-radius: 999px; font-size: 11px; font-weight: 800; }
     .radar-card { padding: 18px 22px 20px; background: linear-gradient(135deg, #fbfefd 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
-    .factor-radar-chart { display: flex; justify-content: center; width: 100%; min-height: 0; }
-    .factor-radar-chart svg { display: block; width: min(100%, 760px); height: 500px; overflow: visible; }
-    .radar-grid-circle { fill: none; stroke: #dfeee8; stroke-width: 1.2; }
-    .radar-grid-circle:nth-of-type(even) { stroke: #e9f3ef; }
-    .radar-max-circle { fill: none; stroke: #6fae9f; stroke-width: 4; pointer-events: none; vector-effect: non-scaling-stroke; }
-    .radar-max-label { fill: #4e887c; font-weight: 900; }
-    .radar-scale-label { fill: #8aa29c; font-size: 11px; font-weight: 750; }
-    .radar-sector-group { cursor: pointer; outline: none; }
-    .radar-sector-track { fill: var(--factor-tint); stroke: rgba(255, 255, 255, 0.96); stroke-width: 3; stroke-linejoin: round; opacity: 0.92; transition: fill 220ms ease, opacity 220ms ease, filter 220ms ease; }
-    .radar-sector-user { fill: var(--factor-color); stroke: rgba(255, 255, 255, 0.88); stroke-width: 2.5; stroke-linejoin: round; opacity: 0.8; animation: radarDataIn 560ms ease both; animation-delay: var(--radar-delay, 0ms); transition: opacity 220ms ease, filter 220ms ease; }
-    .radar-reference-arc { fill: none; stroke: #6f8881; stroke-width: 2.5; stroke-dasharray: 8 7; stroke-linecap: round; opacity: 0.95; transition: opacity 220ms ease, stroke-width 220ms ease; }
-    .radar-sector-focus { fill: none; stroke: var(--factor-color); stroke-width: 4; stroke-dasharray: 5 5; stroke-linejoin: round; opacity: 0; pointer-events: none; }
-    .radar-sector-hit-area { fill: transparent; stroke: transparent; pointer-events: all; }
-    .radar-center-disc { fill: rgba(255, 255, 255, 0.94); stroke: #d5e9e1; stroke-width: 2; }
-    .radar-center-title { fill: var(--ink); font-size: 14px; font-weight: 900; text-anchor: middle; }
-    .radar-center-subtitle { fill: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-anchor: middle; }
-    .radar-factor-label { fill: var(--ink); font-size: 15px; font-weight: 850; }
-    .radar-factor-value { font-size: 13px; font-weight: 850; }
+    .factor-diverging-chart { display: flex; justify-content: center; width: 100%; min-height: 0; }
+    .factor-diverging-chart svg { display: block; width: min(100%, 780px); height: auto; aspect-ratio: 760 / 480; overflow: visible; }
+    .diverging-row { cursor: pointer; outline: none; }
+    .diverging-row-band { fill: transparent; stroke: transparent; stroke-width: 1.5; transition: fill 200ms ease, stroke 200ms ease, opacity 200ms ease; }
+    .diverging-row-separator { stroke: #edf4f1; stroke-width: 1; }
+    .diverging-track { fill: #edf4f1; }
+    .diverging-bar { fill: var(--factor-color); opacity: 0.88; animation: divergingBarIn 560ms var(--bar-delay, 0ms) ease both; transition: fill 200ms ease, opacity 200ms ease, filter 200ms ease; }
+    .diverging-bar.is-below { fill: #d77b6a; }
+    .diverging-bar.is-neutral { fill: #9ab3ac; }
+    .diverging-end { fill: var(--factor-color); stroke: white; stroke-width: 2.5; opacity: 0.92; transition: opacity 200ms ease, stroke 200ms ease, stroke-width 200ms ease; }
+    .diverging-end.is-below { fill: #d77b6a; }
+    .diverging-end.is-neutral { fill: #9ab3ac; }
+    .diverging-baseline { stroke: #173c38; stroke-width: 2.5; stroke-dasharray: 6 6; }
+    .diverging-gridline { stroke: #dbece5; stroke-width: 1; }
+    .diverging-scale-label { fill: #8aa29c; font-size: 11px; font-weight: 750; }
+    .diverging-baseline-label { fill: #173c38; font-size: 11px; font-weight: 850; }
+    .diverging-factor-chip { fill: var(--factor-color); }
+    .diverging-factor-code { fill: white; font-size: 10px; font-weight: 900; text-anchor: middle; }
+    .diverging-factor-label { fill: var(--ink); font-size: 15px; font-weight: 850; }
+    .diverging-score { fill: var(--factor-color); font-size: 15px; font-weight: 900; text-anchor: middle; transition: fill 180ms ease, font-size 180ms ease; }
+    .diverging-reference { fill: var(--muted); font-size: 10px; font-weight: 750; text-anchor: middle; }
+    .diverging-delta { font-size: 11px; font-weight: 900; transition: fill 180ms ease, font-size 180ms ease, opacity 180ms ease; }
+    .diverging-delta.is-positive { fill: var(--factor-color); }
+    .diverging-delta.is-below { fill: #b46050; }
+    .diverging-delta.is-neutral { fill: #8aa29c; }
     .radar-factor-hit { cursor: pointer; outline: none; }
-    .radar-factor-hit-area { fill: transparent; stroke: none; pointer-events: all; }
-    .radar-factor-label-highlight { fill: transparent; stroke: none; pointer-events: none; transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease; }
-    .radar-factor-label, .radar-factor-value { transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease, font-size 180ms ease, opacity 180ms ease; }
-    .radar-sector-group:hover .radar-sector-user, .radar-sector-group:focus .radar-sector-user { opacity: 0.96; filter: drop-shadow(0 5px 8px rgba(23, 60, 56, 0.15)); }
-    .radar-sector-group:hover .radar-sector-track, .radar-sector-group:focus .radar-sector-track { opacity: 1; }
-    .radar-sector-group.is-active .radar-sector-track { opacity: 0.66; }
-    .radar-sector-group.is-active .radar-sector-user { opacity: 1; filter: drop-shadow(0 7px 10px rgba(23, 60, 56, 0.2)); }
-    .radar-sector-group.is-active .radar-reference-arc { stroke-width: 3.5; }
-    .radar-sector-group.is-active .radar-sector-focus { opacity: 1; animation: radarSectorFocusPulse 1.5s ease-in-out infinite; }
-    .radar-factor-hit:hover .radar-factor-label, .radar-factor-hit:focus .radar-factor-label, .radar-factor-hit.is-active .radar-factor-label { fill: var(--factor-color); }
-    .radar-factor-hit.is-active .radar-factor-label { font-size: 17px; }
-    .radar-factor-hit.is-active .radar-factor-value { font-size: 15px; }
-    .radar-factor-label-group.is-active { animation: radarLabelLift 420ms ease both; }
-    .radar-factor-label-group.is-active .radar-factor-label-highlight { fill: color-mix(in srgb, var(--factor-color) 13%, white); stroke: var(--factor-color); stroke-width: 2; }
-    .factor-radar-chart.has-radar-selection .radar-factor-hit:not(.is-active) { opacity: 0.4; }
-    .factor-radar-chart.has-radar-selection .radar-sector-group:not(.is-active) { opacity: 0.34; }
-    @keyframes radarDataIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes radarLabelLift { 0% { transform: translateY(0); } 55% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
-    @keyframes radarSectorFocusPulse { 0%, 100% { opacity: 0.38; stroke-width: 3; } 50% { opacity: 1; stroke-width: 6; } }
+    .diverging-row-hit-area { fill: transparent; stroke: none; pointer-events: all; }
+    .radar-factor-hit:hover .diverging-row-band, .radar-factor-hit:focus .diverging-row-band, .radar-factor-hit.is-active .diverging-row-band { fill: color-mix(in srgb, var(--factor-color) 8%, white); stroke: color-mix(in srgb, var(--factor-color) 32%, #dcebe5); }
+    .radar-factor-hit:hover .diverging-bar, .radar-factor-hit:focus .diverging-bar { opacity: 1; filter: drop-shadow(0 4px 7px rgba(23, 60, 56, 0.14)); }
+    .radar-factor-hit.is-active .diverging-bar { opacity: 1; filter: drop-shadow(0 6px 9px rgba(23, 60, 56, 0.2)); }
+    .radar-factor-hit.is-active .diverging-end { stroke: var(--ink); stroke-width: 3.5; animation: divergingEndPulse 1.35s ease-in-out infinite; }
+    .radar-factor-hit.is-active .diverging-score { font-size: 17px; }
+    .radar-factor-hit.is-active .diverging-delta { font-size: 13px; }
+    .factor-diverging-chart.has-radar-selection .radar-factor-hit:not(.is-active) { opacity: 0.36; }
+    @keyframes divergingBarIn { from { opacity: 0; transform: scaleX(0.04); transform-origin: center; } to { opacity: 0.88; transform: scaleX(1); } }
+    @keyframes divergingEndPulse { 0%, 100% { opacity: 0.78; } 50% { opacity: 1; } }
     .radar-legend { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: -4px; color: var(--ink-soft); font-size: 12px; }
     .radar-legend span { display: inline-flex; align-items: center; gap: 7px; }
-    .radar-key-user { display: inline-block; width: 16px; height: 16px; background: var(--accent); border: 2px solid white; border-radius: 4px 11px 4px 11px; transform: rotate(45deg); }
-    .radar-key-reference { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #6f8881; }
-    .radar-key-limit { display: inline-block; width: 16px; height: 16px; border: 3px solid #a9d0c2; border-radius: 50%; }
+    .radar-key-positive, .radar-key-negative { display: inline-block; width: 22px; height: 9px; border-radius: 999px; }
+    .radar-key-positive { background: var(--accent); }
+    .radar-key-negative { background: #d77b6a; }
+    .radar-key-baseline { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #173c38; }
     .radar-scale-copy { color: var(--muted); }
     .radar-factor-detail { display: grid; gap: 12px; max-width: 760px; min-height: 72px; margin: 13px auto 0; padding: 16px 18px; background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); border-radius: 15px; }
     .radar-factor-detail:focus { outline: 3px solid rgba(32, 132, 120, 0.2); outline-offset: 3px; }
@@ -764,8 +763,8 @@
     .radar-factor-detail.is-updating { animation: radarDetailIn 360ms ease both; }
     @keyframes radarDetailIn { from { opacity: 0.2; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) {
-      .radar-factor-label, .radar-factor-value, .radar-sector-track, .radar-sector-user, .radar-reference-arc { transition: none; }
-      .radar-sector-user, .radar-sector-group.is-active .radar-sector-focus, .radar-factor-label-group.is-active, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-radar-selected-sector { animation: none; }
+      .diverging-row-band, .diverging-bar, .diverging-end, .diverging-score, .diverging-delta { transition: none; }
+      .diverging-bar, .radar-factor-hit.is-active .diverging-end, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-compare-bar { animation: none; }
     }
 
     .factor-definitions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -776,16 +775,23 @@
     .factor-definition-head .factor-number { display: grid; place-items: center; flex: 0 0 auto; width: 31px; height: 31px; color: white; background: var(--factor-color); border-radius: 9px; font-size: 11px; font-weight: 850; }
     .factor-definition-head h3 { margin: 0; color: var(--ink); font-size: 19px; letter-spacing: -0.05em; }
     .factor-definition-head small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
-    .factor-mini-radar { display: grid; place-items: center; justify-self: end; width: 98px; height: 88px; padding: 3px; background: color-mix(in srgb, var(--factor-tint) 64%, white); border: 1px solid color-mix(in srgb, var(--factor-color) 15%, white); border-radius: 14px; }
-    .factor-mini-radar svg { display: block; width: 92px; height: 82px; overflow: visible; }
-    .mini-radar-grid-circle { fill: none; stroke: #e3efea; stroke-width: 1; }
-    .mini-radar-max { fill: none; stroke: #9fcbbd; stroke-width: 2; }
-    .mini-radar-sector-track { fill: var(--factor-tint); stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
-    .mini-radar-sector-user { fill: var(--factor-color); opacity: 0.74; stroke: white; stroke-width: 1.2; stroke-linejoin: round; }
-    .mini-radar-sector-focus { fill: none; stroke: var(--factor-color); stroke-width: 2.5; stroke-dasharray: 4 3; opacity: 0; pointer-events: none; }
-    .factor-definition-card.is-focused .mini-radar-selected-sector { opacity: 1; animation: radarSectorFocusPulse 1.5s ease-in-out infinite; }
-    .mini-radar-center { fill: rgba(255, 255, 255, 0.86); stroke: #dcebe5; stroke-width: 1; }
-    .mini-radar-scale { fill: #6f9188; font-size: 8px; font-weight: 850; }
+    .factor-mini-compare { display: grid; place-items: center; justify-self: end; width: 112px; height: 60px; padding: 3px; background: color-mix(in srgb, var(--factor-tint) 64%, white); border: 1px solid color-mix(in srgb, var(--factor-color) 15%, white); border-radius: 14px; }
+    .factor-mini-compare svg { display: block; width: 106px; height: 54px; overflow: visible; }
+    .mini-compare-track { stroke: #dcebe5; stroke-width: 7; stroke-linecap: round; }
+    .mini-compare-grid { stroke: #e5f0ec; stroke-width: 1; }
+    .mini-compare-baseline { stroke: #6f8881; stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .mini-compare-bar { stroke: var(--factor-color); stroke-width: 8; stroke-linecap: round; transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease; }
+    .mini-compare-bar.is-below { stroke: #d77b6a; }
+    .mini-compare-bar.is-neutral { stroke: #9ab3ac; }
+    .mini-compare-dot { fill: var(--factor-color); stroke: white; stroke-width: 1.5; }
+    .mini-compare-dot.is-below { fill: #d77b6a; }
+    .mini-compare-dot.is-neutral { fill: #9ab3ac; }
+    .mini-compare-delta { fill: var(--factor-color); font-size: 9px; font-weight: 900; text-anchor: middle; }
+    .mini-compare-delta.is-below { fill: #b46050; }
+    .mini-compare-delta.is-neutral { fill: #8aa29c; }
+    .mini-compare-score { fill: var(--muted); font-size: 8px; font-weight: 750; text-anchor: end; }
+    .factor-definition-card.is-focused .mini-compare-bar { animation: miniComparePulse 1.35s ease-in-out infinite; }
+    @keyframes miniComparePulse { 0%, 100% { opacity: 0.78; stroke-width: 7; } 50% { opacity: 1; stroke-width: 10; } }
     .factor-definition-copy { margin: 18px 0 17px; color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
     .factor-component-label { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: var(--muted); font-size: 11px; font-weight: 850; letter-spacing: 0.06em; }
     .factor-component-label::before { width: 18px; height: 2px; content: ""; background: var(--factor-color); border-radius: 99px; }
@@ -993,18 +999,21 @@
       .factor-definitions-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
       .radar-card { padding: 12px 12px 16px; }
-      .factor-radar-chart svg { width: 100%; height: 330px; }
-      .radar-factor-label { font-size: 28px; }
-      .radar-factor-value { font-size: 23px; }
-      .radar-scale-label { font-size: 22px; }
-      .radar-factor-hit.is-active .radar-factor-label { font-size: 32px; }
-      .radar-factor-hit.is-active .radar-factor-value { font-size: 25px; }
+      .factor-diverging-chart svg { width: 100%; height: auto; }
+      .diverging-factor-code { font-size: 19px; }
+      .diverging-factor-label { font-size: 28px; }
+      .diverging-score { font-size: 30px; }
+      .diverging-reference { font-size: 20px; }
+      .diverging-scale-label, .diverging-baseline-label { font-size: 19px; }
+      .diverging-delta { font-size: 24px; }
+      .radar-factor-hit.is-active .diverging-score { font-size: 33px; }
+      .radar-factor-hit.is-active .diverging-delta { font-size: 27px; }
       .radar-detail-head { align-items: flex-start; }
       .radar-detail-score { margin-left: 0; }
       .radar-detail-head h3 { font-size: 17px; }
-      .factor-definition-head { grid-template-columns: minmax(0, 1fr) 88px; gap: 8px; }
-      .factor-mini-radar { width: 88px; height: 82px; }
-      .factor-mini-radar svg { width: 82px; height: 76px; }
+      .factor-definition-head { grid-template-columns: minmax(0, 1fr) 104px; gap: 8px; }
+      .factor-mini-compare { width: 104px; height: 56px; }
+      .factor-mini-compare svg { width: 98px; height: 50px; }
       .radar-legend { justify-content: flex-start; gap: 9px 14px; font-size: 11px; }
       .factor-definition-card { padding: 20px 18px; }
       .share-card-modal { padding: 10px; }
@@ -1133,7 +1142,7 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>四個彩色扇區呈現目前輪廓；點選因素區域或名稱，可聚焦並查看表 3 資訊。</p></div><span class="radar-scale-badge">1–6 六點量尺 · 圓形外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖上的因素</strong><span>查看該因素的分數、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="四因素圓形輪廓圖例"><span><i class="radar-key-user"></i>你的分數扇區</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span><i class="radar-key-limit"></i>圓形外圈＝固定 6 分上限</span></div></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；點選列可查看表 3 資訊。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖表中的因素</strong><span>查看該因素的分數、對照平均、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
@@ -1745,71 +1754,42 @@
       function renderFactorRadar(scores, referenceLabel) {
         const container = $("#factor-radar-chart");
         if (!container) return;
-        const width = 700;
-        const height = 500;
-        const centerX = 350;
-        const centerY = 250;
-        const radius = 160;
-        const axisCount = FACTORS.length;
-        const sectorHalfAngle = Math.PI * 39 / 180;
+        const width = 760;
+        const height = 480;
+        const plotLeft = 220;
+        const plotRight = 650;
+        const baselineX = (plotLeft + plotRight) / 2;
+        const rowYs = [110, 190, 270, 350];
+        const halfWidth = (plotRight - plotLeft) / 2;
         const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
-        const pointAtAngle = (distance, angle) => ({ x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance });
-        const sectorAngles = (index) => {
-          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
-        };
-        const outerPointAt = (index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
-        };
-        const sectorPathAtDistance = (distance, index) => {
-          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
-          const angles = sectorAngles(index);
-          const startPoint = pointAtAngle(safeDistance, angles.start);
-          const endPoint = pointAtAngle(safeDistance, angles.end);
-          return "M " + centerX + " " + centerY + " L " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1) + " Z";
-        };
-        const sectorArcAtDistance = (distance, index) => {
-          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
-          const angles = sectorAngles(index);
-          const startPoint = pointAtAngle(safeDistance, angles.start);
-          const endPoint = pointAtAngle(safeDistance, angles.end);
-          return "M " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1);
-        };
-        const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
+        const userValues = FACTORS.map((factor) => Number(scores.factors[factor.id]?.mean) || 0);
         const referenceValues = FACTORS.map((factor) => factor.referenceMean);
+        const differences = userValues.map((value, index) => value - referenceValues[index]);
+        const observedMax = Math.max.apply(null, differences.map((difference) => Math.abs(difference)));
+        const maxAbs = Math.min(5, Math.max(0.75, Math.ceil((observedMax + 0.1) * 2) / 2));
         const safeReferenceLabel = referenceLabel || "論文平均";
-        const ringMarkup = Array.from({ length: 5 }, (_, index) => {
-          const level = index + 1;
-          return '<circle class="radar-grid-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + (radius * level / 6).toFixed(1) + '"></circle>';
-        }).join("");
-        const scaleMarkup = [2, 3, 4, 5].map((level) => '<text class="radar-scale-label" x="' + (centerX + 9) + '" y="' + (centerY - radius * level / 6 + 4).toFixed(1) + '">' + level + '</text>').join("");
-        const maxCircleMarkup = '<circle class="radar-max-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><text class="radar-scale-label radar-max-label" x="' + (centerX + 8) + '" y="' + (centerY - radius - 8).toFixed(1) + '">6</text>';
-        const sectorMarkup = FACTORS.map((factor, index) => {
+        const formatDifference = (difference) => {
+          const safeDifference = Math.abs(difference) < 0.005 ? 0 : difference;
+          return (safeDifference > 0 ? "+" : "") + safeDifference.toFixed(2);
+        };
+        const directionText = (difference) => difference > 0.005 ? "高於" : difference < -0.005 ? "低於" : "等於";
+        const gridMarkup = '<line class="diverging-gridline" x1="' + plotLeft + '" y1="69" x2="' + plotLeft + '" y2="391"></line><line class="diverging-gridline" x1="' + (baselineX - halfWidth / 2) + '" y1="69" x2="' + (baselineX - halfWidth / 2) + '" y2="391"></line><line class="diverging-gridline" x1="' + (baselineX + halfWidth / 2) + '" y1="69" x2="' + (baselineX + halfWidth / 2) + '" y2="391"></line><line class="diverging-gridline" x1="' + plotRight + '" y1="69" x2="' + plotRight + '" y2="391"></line><line class="diverging-baseline" x1="' + baselineX + '" y1="55" x2="' + baselineX + '" y2="399"></line><text class="diverging-baseline-label" x="' + baselineX + '" y="28" text-anchor="middle">' + safeReferenceLabel + '基準線</text><text class="diverging-scale-label" x="' + plotLeft + '" y="53" text-anchor="start">−' + maxAbs.toFixed(2) + '</text><text class="diverging-scale-label" x="' + baselineX + '" y="53" text-anchor="middle">0</text><text class="diverging-scale-label" x="' + plotRight + '" y="53" text-anchor="end">+' + maxAbs.toFixed(2) + '</text>' + rowYs.slice(0, -1).map((rowY) => '<line class="diverging-row-separator" x1="16" y1="' + (rowY + 40) + '" x2="744" y2="' + (rowY + 40) + '"></line>').join("");
+        const rowMarkup = FACTORS.map((factor, index) => {
+          const rowY = rowYs[index];
           const mean = Number(userValues[index]) || 0;
-          const accessibleLabel = "選擇" + factor.name + "，目前 " + mean.toFixed(2) + " 分";
-          const userDistance = radius * clampValue(mean) / 6;
-          const referenceDistance = radius * clampValue(referenceValues[index]) / 6;
-          const focusDistance = Math.min(radius + 3, Math.max(8, userDistance + 5));
-          return '<g class="radar-sector-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + ';--radar-delay:' + (index * 80) + 'ms" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><path class="radar-sector-track" d="' + sectorPathAtDistance(radius, index) + '"></path><path class="radar-sector-user" d="' + sectorPathAtDistance(userDistance, index) + '"></path><path class="radar-reference-arc" d="' + sectorArcAtDistance(referenceDistance, index) + '"></path><path class="radar-sector-focus" d="' + sectorPathAtDistance(focusDistance, index) + '"></path><path class="radar-sector-hit-area" d="' + sectorPathAtDistance(radius, index) + '"></path></g>';
+          const reference = Number(referenceValues[index]) || 0;
+          const difference = differences[index];
+          const safeDifference = Math.abs(difference) < 0.005 ? 0 : difference;
+          const directionClass = safeDifference > 0 ? "is-positive" : safeDifference < 0 ? "is-below" : "is-neutral";
+          const barLength = Math.max(6, Math.min(halfWidth, Math.abs(safeDifference) / maxAbs * halfWidth));
+          const barX = safeDifference < 0 ? baselineX - barLength : baselineX;
+          const endX = safeDifference < 0 ? baselineX - barLength : baselineX + barLength;
+          const deltaX = safeDifference < 0 ? Math.max(plotLeft - 3, endX - 10) : Math.min(plotRight + 3, endX + 10);
+          const deltaAnchor = safeDifference < 0 ? "end" : "start";
+          const accessibleLabel = "選擇" + factor.name + "，你的平均 " + mean.toFixed(2) + " 分，" + directionText(safeDifference) + safeReferenceLabel + " " + reference.toFixed(2) + " 分，差距 " + formatDifference(safeDifference) + " 分";
+          return '<g class="diverging-row radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + ';--bar-delay:' + (index * 80) + 'ms" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="diverging-row-band" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect><rect class="diverging-track" x="' + plotLeft + '" y="' + (rowY - 5) + '" width="' + (plotRight - plotLeft) + '" height="10" rx="5"></rect><rect class="diverging-bar ' + directionClass + '" x="' + barX.toFixed(1) + '" y="' + (rowY - 9) + '" width="' + barLength.toFixed(1) + '" height="18" rx="9"></rect><circle class="diverging-end ' + directionClass + '" cx="' + endX.toFixed(1) + '" cy="' + rowY + '" r="6.5"></circle><rect class="diverging-factor-chip" x="28" y="' + (rowY - 17) + '" width="34" height="34" rx="10"></rect><text class="diverging-factor-code" x="45" y="' + (rowY + 4) + '">' + factor.number + '</text><text class="diverging-factor-label" x="74" y="' + (rowY + 6) + '">' + factor.name + '</text><text class="diverging-delta ' + directionClass + '" x="' + deltaX.toFixed(1) + '" y="' + (rowY - 13) + '" text-anchor="' + deltaAnchor + '">' + formatDifference(safeDifference) + '</text><text class="diverging-score" x="710" y="' + (rowY - 1) + '">' + mean.toFixed(2) + '</text><text class="diverging-reference" x="710" y="' + (rowY + 16) + '">對照 ' + reference.toFixed(2) + '</text><rect class="diverging-row-hit-area" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect></g>';
         }).join("");
-        const labelMarkup = FACTORS.map((factor, index) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const labelPoint = outerPointAt(index, radius + 58);
-          const anchor = Math.cos(angle) > 0.35 ? "start" : Math.cos(angle) < -0.35 ? "end" : "middle";
-          const isBottom = Math.sin(angle) > 0.5;
-          const nameY = isBottom ? labelPoint.y - 28 : Math.sin(angle) < -0.5 ? labelPoint.y : labelPoint.y - 9;
-          const valueY = isBottom ? labelPoint.y - 9 : nameY + 19;
-          const mean = Number(userValues[index]) || 0;
-          const accessibleLabel = "選擇" + factor.name + "，目前 " + mean.toFixed(2) + " 分";
-          const chipWidth = 132;
-          const chipHeight = 48;
-          const chipX = anchor === "start" ? labelPoint.x - 8 : anchor === "end" ? labelPoint.x - chipWidth + 8 : labelPoint.x - chipWidth / 2;
-          const chipY = nameY - 16;
-          return '<g class="radar-factor-label-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="radar-factor-hit-area" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><rect class="radar-factor-label-highlight" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><text class="radar-factor-label" x="' + labelPoint.x.toFixed(1) + '" y="' + nameY.toFixed(1) + '" text-anchor="' + anchor + '" pointer-events="none">' + factor.name + '</text><text class="radar-factor-value" x="' + labelPoint.x.toFixed(1) + '" y="' + valueY.toFixed(1) + '" text-anchor="' + anchor + '" fill="' + factor.color + '" pointer-events="none">' + mean.toFixed(2) + '</text></g>';
-        }).join("");
-        const centerMarkup = '<circle class="radar-center-disc" cx="' + centerX + '" cy="' + centerY + '" r="34"></circle><text class="radar-center-title" x="' + centerX + '" y="' + (centerY - 1) + '">情緒素養</text><text class="radar-center-subtitle" x="' + centerX + '" y="' + (centerY + 16) + '">四因素</text>';
-        container.innerHTML = '<svg class="radar-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="radar-svg-title" aria-describedby="radar-svg-desc" focusable="false"><title id="radar-svg-title">四因素情緒素養圓形輪廓圖</title><desc id="radar-svg-desc">四個彩色扇區呈現你的四因素分數，扇區由中心向外依 1 分至 6 分延伸；灰綠色虛線弧線是' + safeReferenceLabel + '，圓形外圈是固定 6 分上限。</desc><g class="radar-grid">' + ringMarkup + '</g><g class="radar-sectors">' + sectorMarkup + '</g>' + maxCircleMarkup + centerMarkup + '<g class="radar-scale-labels">' + scaleMarkup + '</g><g class="radar-labels">' + labelMarkup + '</g></svg>';
+        container.innerHTML = '<svg class="diverging-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="diverging-svg-title" aria-describedby="diverging-svg-desc" focusable="false"><title id="diverging-svg-title">四因素與論文教師樣本平均發散長條圖</title><desc id="diverging-svg-desc">中央垂直基準線代表' + safeReferenceLabel + '；每一列的長條向左表示低於對照，向右表示高於對照，長度代表差距大小。</desc><g class="diverging-grid">' + gridMarkup + '</g><g class="diverging-rows">' + rowMarkup + '</g></svg>';
 
         const selectRadarFactor = (factorId) => {
           const factor = FACTORS.find((item) => item.id === factorId);
@@ -1853,37 +1833,21 @@
       }
 
       function renderMiniFactorRadar(factor, scores) {
-        const centerX = 50;
-        const centerY = 44;
-        const radius = 30;
-        const axisCount = FACTORS.length;
-        const sectorHalfAngle = Math.PI * 37 / 180;
-        const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
-        const values = FACTORS.map((item) => {
-          const score = scores && scores.factors && scores.factors[item.id];
-          return Number(score && score.mean) || 0;
-        });
-        const pointAtAngle = (distance, angle) => ({ x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance });
-        const sectorAngles = (index) => {
-          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
-        };
-        const sectorPathAtDistance = (distance, index) => {
-          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
-          const angles = sectorAngles(index);
-          const startPoint = pointAtAngle(safeDistance, angles.start);
-          const endPoint = pointAtAngle(safeDistance, angles.end);
-          return "M " + centerX + " " + centerY + " L " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1) + " Z";
-        };
-        const ringMarkup = [10, 20].map((scale) => '<circle class="mini-radar-grid-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + scale + '"></circle>').join("");
-        const sectorMarkup = FACTORS.map((item, index) => {
-          const userDistance = radius * clampValue(values[index]) / 6;
-          const focusDistance = Math.min(radius + 1, Math.max(5, userDistance + 2));
-          const selectedClass = item.id === factor.id ? " is-selected" : "";
-          const selectedPathClass = item.id === factor.id ? " mini-radar-selected-sector" : "";
-          return '<g class="mini-radar-sector-group' + selectedClass + '" style="--factor-color:' + item.color + ';--factor-tint:' + item.tint + '"><path class="mini-radar-sector-track" d="' + sectorPathAtDistance(radius, index) + '"></path><path class="mini-radar-sector-user" d="' + sectorPathAtDistance(userDistance, index) + '"></path><path class="mini-radar-sector-focus' + selectedPathClass + '" d="' + sectorPathAtDistance(focusDistance, index) + '"></path></g>';
-        }).join("");
-        return '<div class="factor-mini-radar" aria-hidden="true"><svg viewBox="0 0 100 88" focusable="false"><g>' + ringMarkup + '</g><g>' + sectorMarkup + '</g><circle class="mini-radar-max" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><circle class="mini-radar-center" cx="' + centerX + '" cy="' + centerY + '" r="9"></circle><text class="mini-radar-scale" x="' + (centerX + 4) + '" y="' + (centerY - radius - 3) + '">6</text></svg></div>';
+        const width = 106;
+        const left = 8;
+        const right = 98;
+        const baseline = 53;
+        const halfWidth = (right - left) / 2;
+        const mean = Number(scores && scores.factors && scores.factors[factor.id]?.mean) || 0;
+        const reference = Number(factor.referenceMean) || 0;
+        const rawDifference = mean - reference;
+        const difference = Math.abs(rawDifference) < 0.005 ? 0 : rawDifference;
+        const maxAbs = Math.min(5, Math.max(0.75, Math.ceil((Math.abs(difference) + 0.1) * 2) / 2));
+        const directionClass = difference > 0 ? "is-positive" : difference < 0 ? "is-below" : "is-neutral";
+        const barLength = Math.max(3, Math.min(halfWidth, Math.abs(difference) / maxAbs * halfWidth));
+        const endX = difference < 0 ? baseline - barLength : baseline + barLength;
+        const deltaText = (difference > 0 ? "+" : "") + difference.toFixed(2);
+        return '<div class="factor-mini-compare" aria-hidden="true"><svg viewBox="0 0 ' + width + ' 54" focusable="false"><line class="mini-compare-track" x1="' + left + '" y1="28" x2="' + right + '" y2="28"></line><line class="mini-compare-grid" x1="' + left + '" y1="19" x2="' + left + '" y2="37"></line><line class="mini-compare-grid" x1="' + right + '" y1="19" x2="' + right + '" y2="37"></line><line class="mini-compare-baseline" x1="' + baseline + '" y1="16" x2="' + baseline + '" y2="40"></line><line class="mini-compare-bar ' + directionClass + '" x1="' + baseline.toFixed(1) + '" y1="28" x2="' + endX.toFixed(1) + '" y2="28"></line><circle class="mini-compare-dot ' + directionClass + '" cx="' + endX.toFixed(1) + '" cy="28" r="4"></circle><text class="mini-compare-delta ' + directionClass + '" x="' + endX.toFixed(1) + '" y="13">' + deltaText + '</text><text class="mini-compare-score" x="' + right + '" y="50">' + mean.toFixed(2) + ' / 6</text></svg></div>';
       }
 
       function syncFactorDefinitionSelection(factorId) {
@@ -2033,110 +1997,115 @@
         return width;
       }
 
-      function drawCanvasRadar(ctx, scores, centerX, centerY, radius) {
-        const axisCount = FACTORS.length;
-        const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
-        const referenceValues = FACTORS.map((factor) => factor.referenceMean);
-        const sectorHalfAngle = Math.PI * 37 / 180;
-        const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
-        const sectorAngles = (index) => {
-          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
+      function drawCanvasDivergingBars(ctx, scores, x, y, width, height) {
+        const plotLeft = x + 270;
+        const plotRight = x + 755;
+        const baselineX = (plotLeft + plotRight) / 2;
+        const halfWidth = (plotRight - plotLeft) / 2;
+        const scoreX = x + 860;
+        const rowYs = [y + 85, y + 165, y + 245, y + 325];
+        const userValues = FACTORS.map((factor) => Number(scores.factors[factor.id]?.mean) || 0);
+        const referenceValues = FACTORS.map((factor) => Number(factor.referenceMean) || 0);
+        const differences = userValues.map((value, index) => value - referenceValues[index]);
+        const observedMax = Math.max.apply(null, differences.map((difference) => Math.abs(difference)));
+        const maxAbs = Math.min(5, Math.max(0.75, Math.ceil((observedMax + 0.1) * 2) / 2));
+        const formatDifference = (difference) => {
+          const safeDifference = Math.abs(difference) < 0.005 ? 0 : difference;
+          return (safeDifference > 0 ? "+" : "") + safeDifference.toFixed(2);
         };
-        const outerPointAt = (index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
-        };
-        const drawSector = (distance, index, fill, stroke = "white", lineWidth = 2) => {
-          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
-          const angles = sectorAngles(index);
-          ctx.beginPath();
-          ctx.moveTo(centerX, centerY);
-          ctx.lineTo(centerX + Math.cos(angles.start) * safeDistance, centerY + Math.sin(angles.start) * safeDistance);
-          ctx.arc(centerX, centerY, safeDistance, angles.start, angles.end, false);
-          ctx.closePath();
-          ctx.fillStyle = fill;
-          ctx.fill();
-          ctx.lineWidth = lineWidth;
-          ctx.strokeStyle = stroke;
-          ctx.stroke();
-        };
-        const drawSectorReferenceArc = (distance, index) => {
-          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
-          const angles = sectorAngles(index);
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, safeDistance, angles.start, angles.end, false);
-          ctx.setLineDash([10, 8]);
-          ctx.lineWidth = 3;
-          ctx.strokeStyle = "#6f8881";
-          ctx.stroke();
-          ctx.setLineDash([]);
-        };
+        const rowTop = y + 51;
+        const rowBottom = y + 358;
 
-        for (let level = 1; level <= 5; level += 1) {
-          const ringRadius = radius * (level / 6);
+        drawCanvasRoundedRect(ctx, x + 16, y + 57, width - 32, 344, 24, "rgba(250,253,251,0.44)");
+        ctx.strokeStyle = "#e0eee9";
+        ctx.lineWidth = 1;
+        [plotLeft, baselineX - halfWidth / 2, baselineX + halfWidth / 2, plotRight].forEach((gridX) => {
           ctx.beginPath();
-          ctx.arc(centerX, centerY, ringRadius, 0, Math.PI * 2);
-          ctx.lineWidth = level % 2 === 0 ? 1.5 : 1;
-          ctx.strokeStyle = level % 2 === 0 ? "#dcece5" : "#e9f3ef";
+          ctx.moveTo(gridX, rowTop);
+          ctx.lineTo(gridX, rowBottom);
           ctx.stroke();
-        }
+        });
+        ctx.setLineDash([8, 8]);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#173c38";
+        ctx.beginPath();
+        ctx.moveTo(baselineX, y + 40);
+        ctx.lineTo(baselineX, y + 374);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.textBaseline = "top";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 18, 850);
+        ctx.fillText("論文教師樣本平均基準線", baselineX, y + 9);
+        ctx.fillStyle = "#8aa29c";
+        canvasSetFont(ctx, 16, 750);
+        ctx.textAlign = "left";
+        ctx.fillText("−" + maxAbs.toFixed(2), plotLeft, y + 40);
+        ctx.textAlign = "center";
+        ctx.fillText("0", baselineX, y + 40);
+        ctx.textAlign = "right";
+        ctx.fillText("+" + maxAbs.toFixed(2), plotRight, y + 40);
 
         FACTORS.forEach((factor, index) => {
-          const userDistance = radius * clampValue(userValues[index]) / 6;
-          drawSector(radius, index, factor.tint, "rgba(255,255,255,0.96)", 3);
-          drawSector(userDistance, index, factor.color, "rgba(255,255,255,0.88)", 2.5);
-          drawSectorReferenceArc(radius * clampValue(referenceValues[index]) / 6, index);
-        });
+          const rowY = rowYs[index];
+          const mean = userValues[index];
+          const reference = referenceValues[index];
+          const rawDifference = differences[index];
+          const difference = Math.abs(rawDifference) < 0.005 ? 0 : rawDifference;
+          const directionClass = difference > 0 ? "is-positive" : difference < 0 ? "is-below" : "is-neutral";
+          const barLength = Math.max(7, Math.min(halfWidth, Math.abs(difference) / maxAbs * halfWidth));
+          const endX = difference < 0 ? baselineX - barLength : baselineX + barLength;
+          const barX = difference < 0 ? endX : baselineX;
+          const barColor = difference < 0 ? "#d77b6a" : difference > 0 ? factor.color : "#9ab3ac";
 
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "#6fae9f";
-        ctx.stroke();
-        ctx.fillStyle = "#8aa29c";
+          if (index < FACTORS.length - 1) {
+            ctx.strokeStyle = "#edf4f1";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x + 16, rowY + 40);
+            ctx.lineTo(x + width - 16, rowY + 40);
+            ctx.stroke();
+          }
+          drawCanvasRoundedRect(ctx, x + 16, rowY - 30, width - 32, 60, 18, "rgba(255,255,255,0.42)");
+          drawCanvasRoundedRect(ctx, plotLeft, rowY - 5, plotRight - plotLeft, 10, 5, "#edf4f1");
+          drawCanvasRoundedRect(ctx, barX, rowY - 10, barLength, 20, 10, barColor);
+          ctx.beginPath();
+          ctx.arc(endX, rowY, 8, 0, Math.PI * 2);
+          ctx.fillStyle = barColor;
+          ctx.fill();
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = "white";
+          ctx.stroke();
+
+          drawCanvasRoundedRect(ctx, x + 28, rowY - 17, 36, 34, 10, factor.color);
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "white";
+          canvasSetFont(ctx, 13, 900);
+          ctx.fillText(factor.number, x + 46, rowY + 1);
+          ctx.textBaseline = "top";
+          ctx.textAlign = "left";
+          ctx.fillStyle = "#173c38";
+          canvasSetFont(ctx, 24, 800);
+          ctx.fillText(factor.name, x + 78, rowY - 12);
+
+          ctx.fillStyle = directionClass === "is-below" ? "#b46050" : directionClass === "is-positive" ? factor.color : "#8aa29c";
+          canvasSetFont(ctx, 17, 900);
+          ctx.textAlign = difference < 0 ? "right" : "left";
+          ctx.fillText(formatDifference(difference), difference < 0 ? endX - 12 : endX + 12, rowY - 24);
+
+          ctx.textAlign = "right";
+          ctx.fillStyle = factor.color;
+          canvasSetFont(ctx, 25, 900);
+          ctx.fillText(mean.toFixed(2), scoreX, rowY - 15);
+          ctx.fillStyle = "#7d9590";
+          canvasSetFont(ctx, 15, 700);
+          ctx.fillText("對照 " + reference.toFixed(2), scoreX, rowY + 13);
+        });
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        canvasSetFont(ctx, 13, 750);
-        [2, 3, 4, 5].forEach((level) => {
-          ctx.fillText(String(level), centerX + 10, centerY - radius * level / 6 - 8);
-        });
-        ctx.fillStyle = "#4e887c";
-        canvasSetFont(ctx, 13, 900);
-        ctx.fillText("6", centerX + 10, centerY - radius - 8);
-
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, 42, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.94)";
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#d5e9e1";
-        ctx.stroke();
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "#173c38";
-        canvasSetFont(ctx, 20, 900);
-        ctx.fillText("情緒素養", centerX, centerY - 5);
-        ctx.fillStyle = "#7d9590";
-        canvasSetFont(ctx, 12, 800);
-        ctx.fillText("四因素", centerX, centerY + 17);
-
-        FACTORS.forEach((factor, index) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const labelPoint = outerPointAt(index, radius + 47);
-          ctx.textAlign = Math.cos(angle) > 0.35 ? "left" : Math.cos(angle) < -0.35 ? "right" : "center";
-          ctx.textBaseline = "top";
-          const isBottom = Math.sin(angle) > 0.5;
-          const nameY = isBottom ? labelPoint.y - 28 : Math.sin(angle) < -0.5 ? labelPoint.y : labelPoint.y - 12;
-          const valueY = isBottom ? labelPoint.y - 9 : nameY + 25;
-          canvasSetFont(ctx, 24, 800);
-          ctx.fillStyle = "#173c38";
-          ctx.fillText(factor.name, labelPoint.x, nameY);
-          ctx.fillStyle = factor.color;
-          canvasSetFont(ctx, 18, 850);
-          ctx.fillText(Number(userValues[index]).toFixed(2), labelPoint.x, valueY);
-        });
-        ctx.textAlign = "left";
       }
 
       function createShareCardDataUrl(scores, profile) {
@@ -2207,38 +2176,31 @@
         drawCanvasRoundedRect(ctx, 72, 555, 936, 650, 40, "rgba(255,255,255,0.82)", "#dcebe5", 2);
         ctx.fillStyle = "#173c38";
         canvasSetFont(ctx, 29, 850);
-        ctx.fillText("四因素圓形輪廓", 112, 596);
+        ctx.fillText("四因素與對照平均", 112, 596);
         ctx.fillStyle = "#7d9590";
         canvasSetFont(ctx, 18, 650);
-        ctx.fillText("彩色扇區是我的結果 · 灰綠虛線弧線是論文教師樣本平均 · 圓形外圈是固定 6 分上限", 112, 639);
-        drawCanvasRadar(ctx, scores, 540, 907, 190);
-        ctx.fillStyle = "#208478";
-        ctx.fillRect(112, 1172, 18, 18);
+        ctx.fillText("向右表示高於對照 · 向左表示低於對照 · 長條長度代表與對照的差距", 112, 639);
+        drawCanvasDivergingBars(ctx, scores, 112, 675, 896, 455);
+        drawCanvasRoundedRect(ctx, 112, 1172, 28, 12, 6, "#208478");
         ctx.fillStyle = "#55716d";
         canvasSetFont(ctx, 19, 700);
-        ctx.fillText("我的結果", 143, 1169);
+        ctx.fillText("高於對照", 152, 1167);
+        drawCanvasRoundedRect(ctx, 276, 1172, 28, 12, 6, "#d77b6a");
+        ctx.fillText("低於對照", 316, 1167);
         ctx.strokeStyle = "#8fa7a0";
         ctx.lineWidth = 3;
         ctx.setLineDash([8, 7]);
-        ctx.beginPath(); ctx.moveTo(294, 1181); ctx.lineTo(326, 1181); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(442, 1178); ctx.lineTo(474, 1178); ctx.stroke();
         ctx.setLineDash([]);
-        ctx.fillStyle = "#55716d";
-        ctx.fillText("論文教師樣本平均", 339, 1169);
-        ctx.beginPath();
-        ctx.arc(585, 1181, 8, 0, Math.PI * 2);
-        ctx.strokeStyle = "#a9d0c2";
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.fillStyle = "#55716d";
-        ctx.fillText("圓形外圈＝固定 6 分上限", 605, 1169);
+        ctx.fillText("基準線＝論文教師樣本平均", 486, 1167);
 
         drawCanvasRoundedRect(ctx, 72, 1242, 936, 430, 40, "rgba(255,255,255,0.86)", "#dcebe5", 2);
         ctx.fillStyle = "#173c38";
         canvasSetFont(ctx, 29, 850);
-        ctx.fillText("四因素平均", 112, 1284);
+        ctx.fillText("四因素原始分數", 112, 1284);
         ctx.fillStyle = "#7d9590";
         canvasSetFont(ctx, 18, 650);
-        ctx.fillText("彩色長條是你的結果 · 黑色刻度是論文教師樣本平均", 112, 1325);
+        ctx.fillText("彩色長條是你的 1–6 分平均 · 黑色刻度是論文教師樣本平均", 112, 1325);
 
         const rowY = [1372, 1440, 1508, 1576];
         FACTORS.forEach((factor, index) => {
