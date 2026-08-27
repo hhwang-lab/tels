@@ -704,43 +704,45 @@
     .radar-card { padding: 18px 22px 20px; background: linear-gradient(135deg, #fbfefd 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
     .factor-radar-chart { display: flex; justify-content: center; width: 100%; min-height: 0; }
     .factor-radar-chart svg { display: block; width: min(100%, 760px); height: 500px; overflow: visible; }
-    .radar-ring { fill: none; stroke: #dfeee8; stroke-width: 1.2; }
-    .radar-ring:nth-of-type(even) { stroke: #e9f3ef; }
+    .radar-grid-circle { fill: none; stroke: #dfeee8; stroke-width: 1.2; }
+    .radar-grid-circle:nth-of-type(even) { stroke: #e9f3ef; }
     .radar-max-circle { fill: none; stroke: #6fae9f; stroke-width: 4; pointer-events: none; vector-effect: non-scaling-stroke; }
     .radar-max-label { fill: #4e887c; font-weight: 900; }
-    .radar-axis { stroke: #d5e9e1; stroke-width: 1.5; }
-    .radar-axis-dot { stroke: white; stroke-width: 3; }
-    .radar-axis-hit-area { fill: none; stroke: transparent; stroke-width: 28; pointer-events: stroke; }
     .radar-scale-label { fill: #8aa29c; font-size: 11px; font-weight: 750; }
-    .radar-user-area { fill: rgba(32, 132, 120, 0.18); stroke: #208478; stroke-width: 4; stroke-linejoin: round; }
-    .radar-reference-area { fill: rgba(92, 119, 111, 0.04); stroke: #6f8881; stroke-width: 2.5; stroke-dasharray: 8 7; stroke-linejoin: round; }
-    .radar-value-dot { stroke: white; stroke-width: 3; }
+    .radar-sector-group { cursor: pointer; outline: none; }
+    .radar-sector-track { fill: var(--factor-tint); stroke: rgba(255, 255, 255, 0.96); stroke-width: 3; stroke-linejoin: round; opacity: 0.92; transition: fill 220ms ease, opacity 220ms ease, filter 220ms ease; }
+    .radar-sector-user { fill: var(--factor-color); stroke: rgba(255, 255, 255, 0.88); stroke-width: 2.5; stroke-linejoin: round; opacity: 0.8; animation: radarDataIn 560ms ease both; animation-delay: var(--radar-delay, 0ms); transition: opacity 220ms ease, filter 220ms ease; }
+    .radar-reference-arc { fill: none; stroke: #6f8881; stroke-width: 2.5; stroke-dasharray: 8 7; stroke-linecap: round; opacity: 0.95; transition: opacity 220ms ease, stroke-width 220ms ease; }
+    .radar-sector-focus { fill: none; stroke: var(--factor-color); stroke-width: 4; stroke-dasharray: 5 5; stroke-linejoin: round; opacity: 0; pointer-events: none; }
+    .radar-sector-hit-area { fill: transparent; stroke: transparent; pointer-events: all; }
+    .radar-center-disc { fill: rgba(255, 255, 255, 0.94); stroke: #d5e9e1; stroke-width: 2; }
+    .radar-center-title { fill: var(--ink); font-size: 14px; font-weight: 900; text-anchor: middle; }
+    .radar-center-subtitle { fill: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-anchor: middle; }
     .radar-factor-label { fill: var(--ink); font-size: 15px; font-weight: 850; }
     .radar-factor-value { font-size: 13px; font-weight: 850; }
     .radar-factor-hit { cursor: pointer; outline: none; }
     .radar-factor-hit-area { fill: transparent; stroke: none; pointer-events: all; }
     .radar-factor-label-highlight { fill: transparent; stroke: none; pointer-events: none; transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease; }
-    .radar-factor-label, .radar-factor-value, .radar-axis, .radar-axis-dot, .radar-value-dot { transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease, font-size 180ms ease, opacity 180ms ease; }
-    .radar-user-area, .radar-reference-area, .radar-value-dot { animation: radarDataIn 560ms ease both; }
+    .radar-factor-label, .radar-factor-value { transition: fill 180ms ease, stroke 180ms ease, stroke-width 180ms ease, font-size 180ms ease, opacity 180ms ease; }
+    .radar-sector-group:hover .radar-sector-user, .radar-sector-group:focus .radar-sector-user { opacity: 0.96; filter: drop-shadow(0 5px 8px rgba(23, 60, 56, 0.15)); }
+    .radar-sector-group:hover .radar-sector-track, .radar-sector-group:focus .radar-sector-track { opacity: 1; }
+    .radar-sector-group.is-active .radar-sector-track { opacity: 0.66; }
+    .radar-sector-group.is-active .radar-sector-user { opacity: 1; filter: drop-shadow(0 7px 10px rgba(23, 60, 56, 0.2)); }
+    .radar-sector-group.is-active .radar-reference-arc { stroke-width: 3.5; }
+    .radar-sector-group.is-active .radar-sector-focus { opacity: 1; animation: radarSectorFocusPulse 1.5s ease-in-out infinite; }
     .radar-factor-hit:hover .radar-factor-label, .radar-factor-hit:focus .radar-factor-label, .radar-factor-hit.is-active .radar-factor-label { fill: var(--factor-color); }
     .radar-factor-hit.is-active .radar-factor-label { font-size: 17px; }
     .radar-factor-hit.is-active .radar-factor-value { font-size: 15px; }
     .radar-factor-label-group.is-active { animation: radarLabelLift 420ms ease both; }
-    .radar-axis-group.is-active .radar-axis { stroke: var(--factor-color); stroke-width: 3; }
-    .radar-axis-group.is-active .radar-axis-dot { stroke: var(--factor-color); stroke-width: 4; }
     .radar-factor-label-group.is-active .radar-factor-label-highlight { fill: color-mix(in srgb, var(--factor-color) 13%, white); stroke: var(--factor-color); stroke-width: 2; }
-    .radar-value-dot.is-active { stroke: var(--ink); stroke-width: 4; animation: radarValuePulse 1.25s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
     .factor-radar-chart.has-radar-selection .radar-factor-hit:not(.is-active) { opacity: 0.4; }
-    .factor-radar-chart.has-radar-selection .radar-value-dot:not(.is-active) { opacity: 0.32; }
-    .radar-focus-ring { fill: none; stroke: #173c38; stroke-width: 3; stroke-dasharray: 4 4; animation: radarFocusPulse 1.6s ease-in-out infinite; pointer-events: none; transform-box: fill-box; transform-origin: center; }
-    .radar-focus-ring[hidden] { display: none; }
+    .factor-radar-chart.has-radar-selection .radar-sector-group:not(.is-active) { opacity: 0.34; }
     @keyframes radarDataIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes radarLabelLift { 0% { transform: translateY(0); } 55% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
-    @keyframes radarValuePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.34); } }
-    @keyframes radarFocusPulse { 0%, 100% { opacity: 0.42; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+    @keyframes radarSectorFocusPulse { 0%, 100% { opacity: 0.38; stroke-width: 3; } 50% { opacity: 1; stroke-width: 6; } }
     .radar-legend { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: -4px; color: var(--ink-soft); font-size: 12px; }
     .radar-legend span { display: inline-flex; align-items: center; gap: 7px; }
-    .radar-key-user { display: inline-block; width: 22px; height: 9px; background: rgba(32, 132, 120, 0.22); border: 2px solid var(--accent); border-radius: 3px; }
+    .radar-key-user { display: inline-block; width: 16px; height: 16px; background: var(--accent); border: 2px solid white; border-radius: 4px 11px 4px 11px; transform: rotate(45deg); }
     .radar-key-reference { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #6f8881; }
     .radar-key-limit { display: inline-block; width: 16px; height: 16px; border: 3px solid #a9d0c2; border-radius: 50%; }
     .radar-scale-copy { color: var(--muted); }
@@ -762,8 +764,8 @@
     .radar-factor-detail.is-updating { animation: radarDetailIn 360ms ease both; }
     @keyframes radarDetailIn { from { opacity: 0.2; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) {
-      .radar-factor-label, .radar-factor-value, .radar-axis, .radar-axis-dot, .radar-value-dot { transition: none; }
-      .radar-user-area, .radar-reference-area, .radar-value-dot, .radar-factor-label-group.is-active, .radar-value-dot.is-active, .radar-focus-ring, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-radar-selected-dot { animation: none; }
+      .radar-factor-label, .radar-factor-value, .radar-sector-track, .radar-sector-user, .radar-reference-arc { transition: none; }
+      .radar-sector-user, .radar-sector-group.is-active .radar-sector-focus, .radar-factor-label-group.is-active, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-radar-selected-sector { animation: none; }
     }
 
     .factor-definitions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -776,13 +778,13 @@
     .factor-definition-head small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
     .factor-mini-radar { display: grid; place-items: center; justify-self: end; width: 98px; height: 88px; padding: 3px; background: color-mix(in srgb, var(--factor-tint) 64%, white); border: 1px solid color-mix(in srgb, var(--factor-color) 15%, white); border-radius: 14px; }
     .factor-mini-radar svg { display: block; width: 92px; height: 82px; overflow: visible; }
-    .mini-radar-grid { fill: none; stroke: #e3efea; stroke-width: 1; }
+    .mini-radar-grid-circle { fill: none; stroke: #e3efea; stroke-width: 1; }
     .mini-radar-max { fill: none; stroke: #9fcbbd; stroke-width: 2; }
-    .mini-radar-axis { stroke: #dcebe5; stroke-width: 1; }
-    .mini-radar-user { fill: color-mix(in srgb, var(--factor-color) 12%, white); stroke: var(--factor-color); stroke-width: 2.5; stroke-linejoin: round; }
-    .mini-radar-dot { stroke: white; stroke-width: 2; }
-    .mini-radar-selected-dot { stroke: var(--factor-color); stroke-width: 2.5; transform-box: fill-box; transform-origin: center; }
-    .factor-definition-card.is-focused .mini-radar-selected-dot { animation: radarValuePulse 1.25s ease-in-out infinite; }
+    .mini-radar-sector-track { fill: var(--factor-tint); stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
+    .mini-radar-sector-user { fill: var(--factor-color); opacity: 0.74; stroke: white; stroke-width: 1.2; stroke-linejoin: round; }
+    .mini-radar-sector-focus { fill: none; stroke: var(--factor-color); stroke-width: 2.5; stroke-dasharray: 4 3; opacity: 0; pointer-events: none; }
+    .factor-definition-card.is-focused .mini-radar-selected-sector { opacity: 1; animation: radarSectorFocusPulse 1.5s ease-in-out infinite; }
+    .mini-radar-center { fill: rgba(255, 255, 255, 0.86); stroke: #dcebe5; stroke-width: 1; }
     .mini-radar-scale { fill: #6f9188; font-size: 8px; font-weight: 850; }
     .factor-definition-copy { margin: 18px 0 17px; color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
     .factor-component-label { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: var(--muted); font-size: 11px; font-weight: 850; letter-spacing: 0.06em; }
@@ -1131,7 +1133,7 @@
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>點選因素名稱或軸線，讓圖形聚焦並查看該因素的表 3 資訊。</p></div><span class="radar-scale-badge">1–6 六點量尺 · 圓形外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖上的因素</strong><span>查看該因素的分數、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="雷達圖圖例"><span><i class="radar-key-user"></i>你的結果</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span><i class="radar-key-limit"></i>圓形外圈＝固定 6 分上限</span></div></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素輪廓</h2><p>四個彩色扇區呈現目前輪廓；點選因素區域或名稱，可聚焦並查看表 3 資訊。</p></div><span class="radar-scale-badge">1–6 六點量尺 · 圓形外圈 6</span></div><div class="radar-card"><div id="factor-radar-chart" class="factor-radar-chart"></div><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>點選圖上的因素</strong><span>查看該因素的分數、表 3 定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-legend" aria-label="四因素圓形輪廓圖例"><span><i class="radar-key-user"></i>你的分數扇區</span><span><i class="radar-key-reference"></i>論文教師樣本平均</span><span><i class="radar-key-limit"></i>圓形外圈＝固定 6 分上限</span></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
@@ -1749,33 +1751,47 @@
         const centerY = 250;
         const radius = 160;
         const axisCount = FACTORS.length;
-        const pointAt = (value, index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
-          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        const sectorHalfAngle = Math.PI * 39 / 180;
+        const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
+        const pointAtAngle = (distance, angle) => ({ x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance });
+        const sectorAngles = (index) => {
+          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
         };
         const outerPointAt = (index, scale = radius) => {
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
           return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
         };
-        const polygonPoints = (values, scale = radius) => values.map((value, index) => {
-          const point = pointAt(value, index, scale);
-          return point.x.toFixed(1) + "," + point.y.toFixed(1);
-        }).join(" ");
+        const sectorPathAtDistance = (distance, index) => {
+          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
+          const angles = sectorAngles(index);
+          const startPoint = pointAtAngle(safeDistance, angles.start);
+          const endPoint = pointAtAngle(safeDistance, angles.end);
+          return "M " + centerX + " " + centerY + " L " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1) + " Z";
+        };
+        const sectorArcAtDistance = (distance, index) => {
+          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
+          const angles = sectorAngles(index);
+          const startPoint = pointAtAngle(safeDistance, angles.start);
+          const endPoint = pointAtAngle(safeDistance, angles.end);
+          return "M " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1);
+        };
         const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
         const referenceValues = FACTORS.map((factor) => factor.referenceMean);
         const safeReferenceLabel = referenceLabel || "論文平均";
-        const userSummary = FACTORS.map((factor, index) => factor.name + " " + Number(userValues[index]).toFixed(2) + " 分").join("、");
         const ringMarkup = Array.from({ length: 5 }, (_, index) => {
           const level = index + 1;
-          return '<polygon class="radar-ring" points="' + polygonPoints([level, level, level, level]) + '"></polygon><text class="radar-scale-label" x="' + (centerX + 8) + '" y="' + (centerY - radius * level / 6 + 4).toFixed(1) + '">' + level + '</text>';
+          return '<circle class="radar-grid-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + (radius * level / 6).toFixed(1) + '"></circle>';
         }).join("");
+        const scaleMarkup = [2, 3, 4, 5].map((level) => '<text class="radar-scale-label" x="' + (centerX + 9) + '" y="' + (centerY - radius * level / 6 + 4).toFixed(1) + '">' + level + '</text>').join("");
         const maxCircleMarkup = '<circle class="radar-max-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><text class="radar-scale-label radar-max-label" x="' + (centerX + 8) + '" y="' + (centerY - radius - 8).toFixed(1) + '">6</text>';
-        const axisMarkup = FACTORS.map((factor, index) => {
-          const point = outerPointAt(index);
+        const sectorMarkup = FACTORS.map((factor, index) => {
           const mean = Number(userValues[index]) || 0;
           const accessibleLabel = "選擇" + factor.name + "，目前 " + mean.toFixed(2) + " 分";
-          return '<g class="radar-axis-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><line class="radar-axis" x1="' + centerX + '" y1="' + centerY + '" x2="' + point.x.toFixed(1) + '" y2="' + point.y.toFixed(1) + '"></line><line class="radar-axis-hit-area" x1="' + centerX + '" y1="' + centerY + '" x2="' + point.x.toFixed(1) + '" y2="' + point.y.toFixed(1) + '"></line><circle class="radar-axis-dot" data-factor-id="' + factor.id + '" cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="6" fill="' + factor.color + '"></circle></g>';
+          const userDistance = radius * clampValue(mean) / 6;
+          const referenceDistance = radius * clampValue(referenceValues[index]) / 6;
+          const focusDistance = Math.min(radius + 3, Math.max(8, userDistance + 5));
+          return '<g class="radar-sector-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + ';--radar-delay:' + (index * 80) + 'ms" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><path class="radar-sector-track" d="' + sectorPathAtDistance(radius, index) + '"></path><path class="radar-sector-user" d="' + sectorPathAtDistance(userDistance, index) + '"></path><path class="radar-reference-arc" d="' + sectorArcAtDistance(referenceDistance, index) + '"></path><path class="radar-sector-focus" d="' + sectorPathAtDistance(focusDistance, index) + '"></path><path class="radar-sector-hit-area" d="' + sectorPathAtDistance(radius, index) + '"></path></g>';
         }).join("");
         const labelMarkup = FACTORS.map((factor, index) => {
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
@@ -1792,31 +1808,21 @@
           const chipY = nameY - 16;
           return '<g class="radar-factor-label-group radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="radar-factor-hit-area" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><rect class="radar-factor-label-highlight" x="' + chipX.toFixed(1) + '" y="' + chipY.toFixed(1) + '" width="' + chipWidth + '" height="' + chipHeight + '" rx="15"></rect><text class="radar-factor-label" x="' + labelPoint.x.toFixed(1) + '" y="' + nameY.toFixed(1) + '" text-anchor="' + anchor + '" pointer-events="none">' + factor.name + '</text><text class="radar-factor-value" x="' + labelPoint.x.toFixed(1) + '" y="' + valueY.toFixed(1) + '" text-anchor="' + anchor + '" fill="' + factor.color + '" pointer-events="none">' + mean.toFixed(2) + '</text></g>';
         }).join("");
-        container.innerHTML = '<svg class="radar-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="radar-svg-title" aria-describedby="radar-svg-desc" focusable="false"><title id="radar-svg-title">四因素情緒素養雷達圖</title><desc id="radar-svg-desc">實線填色區域是你的結果，灰綠色虛線是' + safeReferenceLabel + '；圓形外圈是固定 6 分上限，內部刻度由 1 分至 5 分。</desc><g class="radar-grid">' + ringMarkup + '</g><g class="radar-axes">' + axisMarkup + '</g><polygon class="radar-reference-area" points="' + polygonPoints(referenceValues) + '"></polygon><polygon class="radar-user-area" points="' + polygonPoints(userValues) + '"></polygon><g class="radar-value-dots">' + FACTORS.map((factor, index) => { const point = pointAt(userValues[index], index); return '<circle class="radar-value-dot" data-factor-id="' + factor.id + '" cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="8" fill="' + factor.color + '"></circle>'; }).join("") + '</g>' + maxCircleMarkup + '<circle id="radar-focus-ring" class="radar-focus-ring" cx="' + centerX + '" cy="' + centerY + '" r="15" hidden></circle><g class="radar-labels">' + labelMarkup + '</g><circle cx="' + centerX + '" cy="' + centerY + '" r="3" fill="#173c38"></circle></svg>';
+        const centerMarkup = '<circle class="radar-center-disc" cx="' + centerX + '" cy="' + centerY + '" r="34"></circle><text class="radar-center-title" x="' + centerX + '" y="' + (centerY - 1) + '">情緒素養</text><text class="radar-center-subtitle" x="' + centerX + '" y="' + (centerY + 16) + '">四因素</text>';
+        container.innerHTML = '<svg class="radar-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="radar-svg-title" aria-describedby="radar-svg-desc" focusable="false"><title id="radar-svg-title">四因素情緒素養圓形輪廓圖</title><desc id="radar-svg-desc">四個彩色扇區呈現你的四因素分數，扇區由中心向外依 1 分至 6 分延伸；灰綠色虛線弧線是' + safeReferenceLabel + '，圓形外圈是固定 6 分上限。</desc><g class="radar-grid">' + ringMarkup + '</g><g class="radar-sectors">' + sectorMarkup + '</g>' + maxCircleMarkup + centerMarkup + '<g class="radar-scale-labels">' + scaleMarkup + '</g><g class="radar-labels">' + labelMarkup + '</g></svg>';
 
         const selectRadarFactor = (factorId) => {
           const factor = FACTORS.find((item) => item.id === factorId);
           if (!factor) return;
           container.classList.add("has-radar-selection");
           syncFactorDefinitionSelection(factor.id);
-          const index = FACTORS.indexOf(factor);
           const score = scores.factors[factor.id] || {};
           const mean = Number(score.mean) || 0;
-          const point = pointAt(mean, index);
           container.querySelectorAll(".radar-factor-hit").forEach((element) => {
             const isActive = element.dataset.factorId === factor.id;
             element.classList.toggle("is-active", isActive);
             element.setAttribute("aria-pressed", String(isActive));
           });
-          container.querySelectorAll(".radar-axis-dot, .radar-value-dot").forEach((element) => {
-            element.classList.toggle("is-active", element.dataset.factorId === factor.id);
-          });
-          const focusRing = container.querySelector("#radar-focus-ring");
-          if (focusRing) {
-            focusRing.setAttribute("cx", point.x.toFixed(1));
-            focusRing.setAttribute("cy", point.y.toFixed(1));
-            focusRing.hidden = false;
-          }
           const detail = $("#radar-factor-detail");
           if (detail) {
             detail.style.setProperty("--factor-color", factor.color);
@@ -1851,38 +1857,33 @@
         const centerY = 44;
         const radius = 30;
         const axisCount = FACTORS.length;
+        const sectorHalfAngle = Math.PI * 37 / 180;
+        const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
         const values = FACTORS.map((item) => {
           const score = scores && scores.factors && scores.factors[item.id];
           return Number(score && score.mean) || 0;
         });
-        const pointAt = (value, index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
-          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        const pointAtAngle = (distance, angle) => ({ x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance });
+        const sectorAngles = (index) => {
+          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
         };
-        const outerPointAt = (index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
+        const sectorPathAtDistance = (distance, index) => {
+          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
+          const angles = sectorAngles(index);
+          const startPoint = pointAtAngle(safeDistance, angles.start);
+          const endPoint = pointAtAngle(safeDistance, angles.end);
+          return "M " + centerX + " " + centerY + " L " + startPoint.x.toFixed(1) + " " + startPoint.y.toFixed(1) + " A " + safeDistance.toFixed(1) + " " + safeDistance.toFixed(1) + " 0 0 1 " + endPoint.x.toFixed(1) + " " + endPoint.y.toFixed(1) + " Z";
         };
-        const fixedPolygonPoints = (scale) => FACTORS.map((item, index) => {
-          const point = outerPointAt(index, scale);
-          return point.x.toFixed(1) + "," + point.y.toFixed(1);
-        }).join(" ");
-        const ringMarkup = [10, 20].map((scale) => '<polygon class="mini-radar-grid" points="' + fixedPolygonPoints(scale) + '"></polygon>').join("");
-        const axisMarkup = FACTORS.map((item, index) => {
-          const point = outerPointAt(index);
-          return '<line class="mini-radar-axis" x1="' + centerX + '" y1="' + centerY + '" x2="' + point.x.toFixed(1) + '" y2="' + point.y.toFixed(1) + '"></line>';
+        const ringMarkup = [10, 20].map((scale) => '<circle class="mini-radar-grid-circle" cx="' + centerX + '" cy="' + centerY + '" r="' + scale + '"></circle>').join("");
+        const sectorMarkup = FACTORS.map((item, index) => {
+          const userDistance = radius * clampValue(values[index]) / 6;
+          const focusDistance = Math.min(radius + 1, Math.max(5, userDistance + 2));
+          const selectedClass = item.id === factor.id ? " is-selected" : "";
+          const selectedPathClass = item.id === factor.id ? " mini-radar-selected-sector" : "";
+          return '<g class="mini-radar-sector-group' + selectedClass + '" style="--factor-color:' + item.color + ';--factor-tint:' + item.tint + '"><path class="mini-radar-sector-track" d="' + sectorPathAtDistance(radius, index) + '"></path><path class="mini-radar-sector-user" d="' + sectorPathAtDistance(userDistance, index) + '"></path><path class="mini-radar-sector-focus' + selectedPathClass + '" d="' + sectorPathAtDistance(focusDistance, index) + '"></path></g>';
         }).join("");
-        const userPoints = values.map((value, index) => {
-          const point = pointAt(value, index);
-          return point.x.toFixed(1) + "," + point.y.toFixed(1);
-        }).join(" ");
-        const dotMarkup = FACTORS.map((item, index) => {
-          const point = pointAt(values[index], index);
-          const selectedClass = item.id === factor.id ? " mini-radar-selected-dot" : "";
-          return '<circle class="mini-radar-dot' + selectedClass + '" cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="' + (item.id === factor.id ? 4 : 2.8) + '" fill="' + item.color + '"></circle>';
-        }).join("");
-        return '<div class="factor-mini-radar" aria-hidden="true"><svg viewBox="0 0 100 88" focusable="false"><g>' + ringMarkup + '</g><circle class="mini-radar-max" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><g>' + axisMarkup + '</g><polygon class="mini-radar-user" points="' + userPoints + '"></polygon><g>' + dotMarkup + '</g><text class="mini-radar-scale" x="' + (centerX + 4) + '" y="' + (centerY - radius - 3) + '">6</text></svg></div>';
+        return '<div class="factor-mini-radar" aria-hidden="true"><svg viewBox="0 0 100 88" focusable="false"><g>' + ringMarkup + '</g><g>' + sectorMarkup + '</g><circle class="mini-radar-max" cx="' + centerX + '" cy="' + centerY + '" r="' + radius + '"></circle><circle class="mini-radar-center" cx="' + centerX + '" cy="' + centerY + '" r="9"></circle><text class="mini-radar-scale" x="' + (centerX + 4) + '" y="' + (centerY - radius - 3) + '">6</text></svg></div>';
       }
 
       function syncFactorDefinitionSelection(factorId) {
@@ -1900,8 +1901,8 @@
         const container = $("#factor-definitions");
         if (!container) return;
         container.innerHTML = FACTORS.map((factor) => {
-          const accessibleLabel = "選擇" + factor.name + "以聚焦雷達圖";
-          return '<article class="factor-definition-card" data-definition-factor="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + '" tabindex="0" role="button" aria-pressed="false" aria-label="' + accessibleLabel + '"><div class="factor-definition-head"><div class="factor-definition-title"><span class="factor-number">' + factor.number + '</span><div><h3>' + factor.name + '</h3><small>Table 3 · 點選卡片聚焦雷達圖</small></div></div>' + renderMiniFactorRadar(factor, scores) + '</div><p class="factor-definition-copy">' + factor.table3Definition + '</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></article>';
+          const accessibleLabel = "選擇" + factor.name + "以聚焦四因素圖";
+          return '<article class="factor-definition-card" data-definition-factor="' + factor.id + '" style="--factor-color:' + factor.color + ';--factor-tint:' + factor.tint + '" tabindex="0" role="button" aria-pressed="false" aria-label="' + accessibleLabel + '"><div class="factor-definition-head"><div class="factor-definition-title"><span class="factor-number">' + factor.number + '</span><div><h3>' + factor.name + '</h3><small>Table 3 · 點選卡片聚焦圖形</small></div></div>' + renderMiniFactorRadar(factor, scores) + '</div><p class="factor-definition-copy">' + factor.table3Definition + '</p><div class="factor-component-label">重要成分</div><ul class="factor-component-list">' + factor.components.map((component) => '<li>' + component + '</li>').join("") + '</ul></article>';
         }).join("");
         container.querySelectorAll("[data-definition-factor]").forEach((card) => {
           const activate = () => {
@@ -1947,7 +1948,7 @@
            <div class="factor-result-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>${factor.english}</small></div></div><div class="factor-score">${score.mean.toFixed(2)}<small> / 6</small></div></div>
            <p>${factor.description}</p>
             <div class="compare-block"><div class="compare-labels"><span>你的題目平均</span><strong>${score.mean.toFixed(2)}</strong></div><div class="compare-track"><div class="compare-user-bar" style="width:${userPercent}%"></div><span class="compare-marker" style="left:${referencePercent}%" title="${referenceLabel} ${factor.referenceMean.toFixed(2)}"></span></div><div class="compare-legend"><span><i></i>你的結果</span><span><i class="reference-dot"></i>${referenceLabel} ${factor.referenceMean.toFixed(2)}</span></div></div>
-           <button class="factor-card-link" type="button" data-radar-select="${factor.id}">聚焦雷達圖 · 查看此因素</button>
+           <button class="factor-card-link" type="button" data-radar-select="${factor.id}">聚焦四因素圖 · 查看此因素</button>
            <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
          </article>`;
        }).join("");
@@ -2036,27 +2037,38 @@
         const axisCount = FACTORS.length;
         const userValues = FACTORS.map((factor) => scores.factors[factor.id]?.mean || 0);
         const referenceValues = FACTORS.map((factor) => factor.referenceMean);
-        const pointAt = (value, index, scale = radius) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
-          const distance = Math.max(0, Math.min(6, Number(value) || 0)) / 6 * scale;
-          return { x: centerX + Math.cos(angle) * distance, y: centerY + Math.sin(angle) * distance };
+        const sectorHalfAngle = Math.PI * 37 / 180;
+        const clampValue = (value) => Math.max(0, Math.min(6, Number(value) || 0));
+        const sectorAngles = (index) => {
+          const centerAngle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
+          return { start: centerAngle - sectorHalfAngle, end: centerAngle + sectorHalfAngle };
         };
         const outerPointAt = (index, scale = radius) => {
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
           return { x: centerX + Math.cos(angle) * scale, y: centerY + Math.sin(angle) * scale };
         };
-        const drawPolygon = (values, stroke, fill, lineWidth = 2, dash = []) => {
+        const drawSector = (distance, index, fill, stroke = "white", lineWidth = 2) => {
+          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
+          const angles = sectorAngles(index);
           ctx.beginPath();
-          values.forEach((value, index) => {
-            const point = pointAt(value, index);
-            if (index === 0) ctx.moveTo(point.x, point.y);
-            else ctx.lineTo(point.x, point.y);
-          });
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(centerX + Math.cos(angles.start) * safeDistance, centerY + Math.sin(angles.start) * safeDistance);
+          ctx.arc(centerX, centerY, safeDistance, angles.start, angles.end, false);
           ctx.closePath();
-          ctx.setLineDash(dash);
+          ctx.fillStyle = fill;
+          ctx.fill();
           ctx.lineWidth = lineWidth;
           ctx.strokeStyle = stroke;
-          if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+          ctx.stroke();
+        };
+        const drawSectorReferenceArc = (distance, index) => {
+          const safeDistance = Math.max(0.5, Number(distance) || 0.5);
+          const angles = sectorAngles(index);
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, safeDistance, angles.start, angles.end, false);
+          ctx.setLineDash([10, 8]);
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = "#6f8881";
           ctx.stroke();
           ctx.setLineDash([]);
         };
@@ -2064,63 +2076,52 @@
         for (let level = 1; level <= 5; level += 1) {
           const ringRadius = radius * (level / 6);
           ctx.beginPath();
-          FACTORS.forEach((factor, index) => {
-            const point = outerPointAt(index, ringRadius);
-            if (index === 0) ctx.moveTo(point.x, point.y);
-            else ctx.lineTo(point.x, point.y);
-          });
-          ctx.closePath();
+          ctx.arc(centerX, centerY, ringRadius, 0, Math.PI * 2);
           ctx.lineWidth = level % 2 === 0 ? 1.5 : 1;
           ctx.strokeStyle = level % 2 === 0 ? "#dcece5" : "#e9f3ef";
           ctx.stroke();
-          ctx.fillStyle = "#8aa29c";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "top";
-          canvasSetFont(ctx, 13, 750);
-          ctx.fillText(String(level), centerX + 10, centerY - ringRadius - 8);
         }
+
+        FACTORS.forEach((factor, index) => {
+          const userDistance = radius * clampValue(userValues[index]) / 6;
+          drawSector(radius, index, factor.tint, "rgba(255,255,255,0.96)", 3);
+          drawSector(userDistance, index, factor.color, "rgba(255,255,255,0.88)", 2.5);
+          drawSectorReferenceArc(radius * clampValue(referenceValues[index]) / 6, index);
+        });
 
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.lineWidth = 4;
         ctx.strokeStyle = "#6fae9f";
         ctx.stroke();
-        ctx.fillStyle = "#4e887c";
+        ctx.fillStyle = "#8aa29c";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
+        canvasSetFont(ctx, 13, 750);
+        [2, 3, 4, 5].forEach((level) => {
+          ctx.fillText(String(level), centerX + 10, centerY - radius * level / 6 - 8);
+        });
+        ctx.fillStyle = "#4e887c";
         canvasSetFont(ctx, 13, 900);
         ctx.fillText("6", centerX + 10, centerY - radius - 8);
 
-        FACTORS.forEach((factor, index) => {
-          const point = outerPointAt(index);
-          ctx.beginPath();
-          ctx.moveTo(centerX, centerY);
-          ctx.lineTo(point.x, point.y);
-          ctx.lineWidth = 1.7;
-          ctx.strokeStyle = "#d5e9e1";
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
-          ctx.fillStyle = factor.color;
-          ctx.fill();
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = "white";
-          ctx.stroke();
-        });
-
-        drawPolygon(referenceValues, "#6f8881", "rgba(95,120,112,0.04)", 3, [10, 8]);
-        drawPolygon(userValues, "#208478", "rgba(32,132,120,0.18)", 5);
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 42, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.94)";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#d5e9e1";
+        ctx.stroke();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#173c38";
+        canvasSetFont(ctx, 20, 900);
+        ctx.fillText("情緒素養", centerX, centerY - 5);
+        ctx.fillStyle = "#7d9590";
+        canvasSetFont(ctx, 12, 800);
+        ctx.fillText("四因素", centerX, centerY + 17);
 
         FACTORS.forEach((factor, index) => {
-          const valuePoint = pointAt(userValues[index], index);
-          ctx.beginPath();
-          ctx.arc(valuePoint.x, valuePoint.y, 10, 0, Math.PI * 2);
-          ctx.fillStyle = factor.color;
-          ctx.fill();
-          ctx.lineWidth = 3.5;
-          ctx.strokeStyle = "white";
-          ctx.stroke();
-
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / axisCount;
           const labelPoint = outerPointAt(index, radius + 47);
           ctx.textAlign = Math.cos(angle) > 0.35 ? "left" : Math.cos(angle) < -0.35 ? "right" : "center";
@@ -2206,10 +2207,10 @@
         drawCanvasRoundedRect(ctx, 72, 555, 936, 650, 40, "rgba(255,255,255,0.82)", "#dcebe5", 2);
         ctx.fillStyle = "#173c38";
         canvasSetFont(ctx, 29, 850);
-        ctx.fillText("四因素雷達圖", 112, 596);
+        ctx.fillText("四因素圓形輪廓", 112, 596);
         ctx.fillStyle = "#7d9590";
         canvasSetFont(ctx, 18, 650);
-        ctx.fillText("實線填色是我的結果 · 灰綠虛線是論文教師樣本平均 · 圓形外圈是固定 6 分上限", 112, 639);
+        ctx.fillText("彩色扇區是我的結果 · 灰綠虛線弧線是論文教師樣本平均 · 圓形外圈是固定 6 分上限", 112, 639);
         drawCanvasRadar(ctx, scores, 540, 907, 190);
         ctx.fillStyle = "#208478";
         ctx.fillRect(112, 1172, 18, 18);
