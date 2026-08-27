@@ -1144,6 +1144,61 @@
         resolve(data.response || { ok: false, error: "雲端服務沒有回傳結果。" });
       });
 
+      // GitHub Pages 的管理者查詢改用隱藏表單 POST；回覆頁會透過 window.top.postMessage 回傳。
+      // 這樣不依賴 Apps Script HTML Service 的巢狀 iframe，也不把 token 放在網址列。
+      function callPublicAdminPost(token) {
+        const endpoint = getGasEndpoint();
+        if (!endpoint) return Promise.resolve({ ok: false, error: "尚未連接 Google Sheets 後端。" });
+        const requestId = "admin-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+        return new Promise((resolve) => {
+          const frame = document.createElement("iframe");
+          const frameName = "el-scale-admin-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+          frame.name = frameName;
+          frame.title = "管理者資料讀取中";
+          frame.setAttribute("aria-hidden", "true");
+          frame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;";
+
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = endpoint;
+          form.target = frameName;
+          form.enctype = "application/x-www-form-urlencoded;charset=UTF-8";
+          form.style.display = "none";
+
+          const actionField = document.createElement("input");
+          actionField.type = "hidden";
+          actionField.name = "action";
+          actionField.value = "getAdminData";
+          const payloadField = document.createElement("input");
+          payloadField.type = "hidden";
+          payloadField.name = "payload";
+          payloadField.value = JSON.stringify({ token: String(token || ""), requestId });
+          form.append(actionField, payloadField);
+
+          let finished = false;
+          let timeoutId = 0;
+          const finish = (result) => {
+            if (finished) return;
+            finished = true;
+            window.clearTimeout(timeoutId);
+            window.removeEventListener("message", onMessage);
+            frame.remove();
+            form.remove();
+            resolve(result);
+          };
+          const onMessage = (event) => {
+            const data = event.data;
+            if (!data || data.source !== "el-scale-gas-admin" || data.requestId !== requestId) return;
+            finish(data.response || { ok: false, error: "雲端後台沒有回傳結果。" });
+          };
+
+          window.addEventListener("message", onMessage);
+          document.body.append(frame, form);
+          timeoutId = window.setTimeout(() => finish({ ok: false, error: "後台讀取逾時，請確認 Apps Script 已重新部署最新版。" }), 20000);
+          try { form.submit(); } catch (error) { finish({ ok: false, error: "目前無法連線至雲端後台。" }); }
+        });
+      }
+
       function callGas(method, payload) {
         if (hasNativeGasBackend()) {
           return new Promise((resolve) => {
@@ -1156,6 +1211,7 @@
           });
         }
         if (!getGasEndpoint()) return Promise.resolve({ ok: false, error: "尚未連接 Google Sheets 後端。" });
+        if (method === "getAdminData") return callPublicAdminPost(payload);
         ensureGasBridge();
         return new Promise((resolve) => {
           sendBridgeRequest({
