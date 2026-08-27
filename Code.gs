@@ -53,12 +53,25 @@ function doGet(e) {
  * 前端使用 text/plain POST，避免跨網域 JSON 預檢；回覆內容不含任何試算表資料。
  */
 function doPost(e) {
-  try {
-    const request = parsePostRequest_(e);
-    if (!request) return jsonOutput_({ ok: false, error: '無法解析送出資料。' });
-    if (request.action && request.action !== 'submitResponse') {
-      return jsonOutput_({ ok: false, error: '不支援的雲端操作。' });
+  const request = parsePostRequest_(e);
+  if (!request) return jsonOutput_({ ok: false, error: '無法解析送出資料。' });
+
+  if (request.action === 'getAdminData') {
+    const payload = request.payload || request;
+    let response;
+    try {
+      response = getAdminData(payload.token);
+    } catch (error) {
+      response = { ok: false, error: '目前無法讀取雲端後台，請稍後再試。' };
     }
+    return adminResponseHtml_(response, payload.requestId);
+  }
+
+  if (request.action && request.action !== 'submitResponse') {
+    return jsonOutput_({ ok: false, error: '不支援的雲端操作。' });
+  }
+
+  try {
     return jsonOutput_(submitResponse(request.payload || request));
   } catch (error) {
     return jsonOutput_({ ok: false, error: '資料暫時無法寫入，請稍後再試。' });
@@ -77,7 +90,7 @@ function createBridge_() {
 <script>
 (function () {
   function reply(requestId, response) {
-    window.parent.postMessage({
+    window.top.postMessage({
       source: 'el-scale-gas-bridge',
       type: 'response',
       requestId: requestId,
@@ -100,7 +113,7 @@ function createBridge_() {
     else reply(data.requestId, { ok: false, error: '不支援的雲端操作。' });
   });
 
-  window.parent.postMessage({ source: 'el-scale-gas-bridge', type: 'ready' }, '*');
+  window.top.postMessage({ source: 'el-scale-gas-bridge', type: 'ready' }, '*');
 }());
 </script>
 </body>
@@ -169,7 +182,8 @@ function parsePostRequest_(e) {
   if (!formPayload) return null;
   try {
     const parsed = JSON.parse(String(formPayload));
-    return parsed && typeof parsed === 'object' ? { action: 'submitResponse', payload: parsed } : null;
+    const action = String((e.parameter && e.parameter.action) || 'submitResponse');
+    return parsed && typeof parsed === 'object' ? { action: action, payload: parsed } : null;
   } catch (error) {
     return null;
   }
@@ -178,6 +192,33 @@ function parsePostRequest_(e) {
 function jsonOutput_(value) {
   return ContentService.createTextOutput(JSON.stringify(value))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/** 將管理者查詢結果放在 HTML iframe 內，再直接傳回最外層公開頁面。 */
+function adminResponseHtml_(response, requestId) {
+  const safeRequestId = JSON.stringify(String(requestId || '').slice(0, 120));
+  const safeResponse = JSON.stringify(response || { ok: false, error: '雲端後台沒有回傳結果。' })
+    .replace(/</g, '\\u003c');
+  const html = `<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><title>情緒素養量表管理者回覆</title></head>
+<body>
+<script>
+(function () {
+  window.top.postMessage({
+    source: 'el-scale-gas-admin',
+    type: 'response',
+    requestId: ${safeRequestId},
+    response: ${safeResponse}
+  }, '*');
+}());
+</script>
+</body>
+</html>`;
+  return HtmlService.createHtmlOutput(html)
+    .setTitle('情緒素養量表管理者回覆')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 function responseIdExists_(sheet, id) {
