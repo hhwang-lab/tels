@@ -1966,6 +1966,17 @@
         setShareCardStatus("已下載 PNG 圖卡，可從手機相簿上傳到 Instagram。", "success");
       }
 
+      function dataUrlToBlob(dataUrl) {
+        const parts = String(dataUrl || "").split(",");
+        if (parts.length !== 2) throw new Error("圖卡資料格式不正確。");
+        const mimeMatch = parts[0].match(/^data:([^;]+);base64$/i);
+        const mime = mimeMatch ? mimeMatch[1] : "image/png";
+        const binary = atob(parts[1]);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+        return new Blob([bytes], { type: mime });
+      }
+
       async function shareShareCard() {
         if (!state.shareCard) {
           openShareCardModal();
@@ -1977,7 +1988,8 @@
           return;
         }
         try {
-          const blob = await (await fetch(state.shareCard.dataUrl)).blob();
+          // 直接從 data URL 建立檔案，保留手機瀏覽器的 user activation，讓分享選單較穩定。
+          const blob = dataUrlToBlob(state.shareCard.dataUrl);
           const file = new File([blob], state.shareCard.filename, { type: "image/png" });
           if (navigator.canShare && !navigator.canShare({ files: [file] })) throw new Error("此裝置目前不支援檔案分享。");
           await navigator.share({ title: "我的情緒素養報表", text: "我的情緒素養自我檢視結果", files: [file] });
