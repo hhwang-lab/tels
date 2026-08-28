@@ -231,9 +231,10 @@ function responseIdExists_(sheet, id) {
 
 /** 後台呼叫：只有輸入 Script Properties 中的代碼才會回傳個別回覆。 */
 function getAdminData(token) {
-  const savedToken = PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN');
+  // 允許管理者從密碼管理器或記事本複製時帶到前後空白，但不降低代碼本身的比對要求。
+  const savedToken = String(PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN') || '').trim();
   if (!savedToken) return { ok: false, error: '尚未設定後台代碼，請到「專案設定 → 指令碼屬性」新增 ADMIN_TOKEN。'};
-  if (String(token || '') !== savedToken) return { ok: false, error: '後台代碼不正確。' };
+  if (String(token || '').trim() !== savedToken) return { ok: false, error: '後台代碼不正確。' };
 
   const sheet = getSheet_();
   const lastRow = sheet.getLastRow();
@@ -400,3 +401,4 @@ function scoreAnswers_(answers) {
     factors: factors
   };
 }
+
