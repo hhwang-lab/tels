@@ -53,13 +53,12 @@
 請依序設定：
 
 1. 先完成上述 Apps Script 部署，確認 `/exec` 可用，並將最新的 `Code.gs` 貼回你的私有 Apps Script 專案；它新增了 `doPost()`，用來接收 GitHub Pages 的回覆。
-2. 在 GitHub repository 開啟 **Settings → Secrets and variables → Actions → New repository secret**。
-3. 名稱填 `GAS_ENDPOINT`；值貼上 Apps Script 的完整 `/exec` 網址。這個網址只放在 GitHub Actions secret，不寫入公開原始碼；不要填管理者代碼或試算表 ID。
+2. 如果使用 GitHub Actions 部署，可在 GitHub repository 開啟 **Settings → Secrets and variables → Actions → New repository secret**，新增 `GAS_ENDPOINT`；值貼上 Apps Script 的完整 `/exec` 網址。這個網址本身是公開服務入口，不是管理者代碼；不要把 `ADMIN_TOKEN` 或試算表 ID 放入 repository。
 4. 開啟 **Settings → Pages**，將 **Source** 設為 **GitHub Actions**。
 5. 將本專案檔案發布到 `main` 分支；`.github/workflows/deploy-pages.yml` 會在建置時把 secret 注入公開版本，然後發布 GitHub Pages。
 6. 用無痕視窗、手機瀏覽器各測一次填答與送出，再到私有試算表確認新資料列。
 
-公開版本的 `APP_CONFIG` 只保留 `__GAS_ENDPOINT__` 標記，部署網址會在 GitHub Actions 建置時才注入。後端回覆採用同一個匿名編號去重，避免網路重試造成重複資料。
+公開版本的 `APP_CONFIG` 會包含 Apps Script 的公開 `/exec` 服務網址；這個網址不是管理者密碼，管理者資料仍由後端 `ADMIN_TOKEN` 保護。若 GitHub Actions secret 有設定，建置時會以該值覆寫公開服務網址。後端回覆採用同一個匿名編號去重，避免網路重試造成重複資料。
 
 如果 GitHub Pages 尚未切換到 Actions，舊版頁面仍會是預覽模式，不會寫入雲端；這是刻意的安全預設。
 
