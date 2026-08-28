@@ -2426,7 +2426,7 @@
           $("#admin-lock").hidden = false;
           $("#admin-dashboard").hidden = true;
           $("#clear-local-button").hidden = true;
-          $("#admin-lock-description").textContent = "雲端模式會要求 Apps Script 中設定的管理者代碼。沒有代碼就無法讀取試算表資料。";
+          $("#admin-lock-description").textContent = "請輸入授權代碼以繼續。";
           $("#admin-login").hidden = false;
           $("#admin-login-message").className = "admin-login-message";
           $("#admin-login-message").textContent = "";
@@ -2436,10 +2436,10 @@
         $("#admin-dashboard").hidden = true;
         state.adminRecords = [];
         $("#clear-local-button").hidden = true;
-        $("#admin-lock-description").textContent = "這個網站尚未連接 Google Sheets。為保護填答者資料，GitHub Pages 預覽版不顯示任何本機或雲端後台內容。";
+        $("#admin-lock-description").textContent = "此入口目前尚未啟用。";
         $("#admin-login").hidden = true;
         $("#admin-login-message").className = "admin-login-message is-info";
-        $("#admin-login-message").textContent = "管理者請使用已部署 Apps Script 的 /exec 網址，再輸入管理者代碼。";
+        $("#admin-login-message").textContent = "請確認服務設定後再試。";
       }
 
       function loadCloudAdmin() {
@@ -2448,6 +2448,8 @@
         const button = $("#admin-login-button");
         button.disabled = true;
         button.textContent = "讀取中";
+        $("#admin-login-message").className = "admin-login-message is-info";
+        $("#admin-login-message").textContent = "正在驗證，請稍候…";
         callGas("getAdminData", code)
           .then((response) => {
             button.disabled = false;
