@@ -33,11 +33,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ -z "${GAS_ENDPOINT}" ]]; then
-            echo "請先在 repository secret 設定 GAS_ENDPOINT。"
-            exit 1
-          fi
-          if [[ ! "${GAS_ENDPOINT}" =~ ^https://script\.google\.com/macros/s/[^/]+/exec$ ]]; then
+          if [[ -n "${GAS_ENDPOINT:-}" && ! "${GAS_ENDPOINT:-}" =~ ^https://script\.google\.com/macros/s/[^/]+/exec$ ]]; then
             echo "GAS_ENDPOINT 必須是 Apps Script 的 /exec 網址。"
             exit 1
           fi
@@ -48,13 +44,20 @@ jobs:
           import os
           from pathlib import Path
 
-          endpoint = os.environ["GAS_ENDPOINT"].strip()
+          endpoint = os.environ.get("GAS_ENDPOINT", "").strip()
           path = Path("_site/index.html")
           source = path.read_text(encoding="utf-8")
-          marker = 'gasEndpoint: "__GAS_ENDPOINT__"'
-          if marker not in source:
-              raise SystemExit("找不到 GAS_ENDPOINT 注入標記。")
-          path.write_text(source.replace(marker, "gasEndpoint: " + json.dumps(endpoint), 1), encoding="utf-8")
+          import re
+
+          endpoint_pattern = r'gasEndpoint:\s*"[^"]*"'
+          if endpoint:
+              if not re.search(endpoint_pattern, source):
+                  raise SystemExit("找不到 GAS_ENDPOINT 設定欄位。")
+              path.write_text(re.sub(endpoint_pattern, "gasEndpoint: " + json.dumps(endpoint), source, count=1), encoding="utf-8")
+          elif "__GAS_ENDPOINT__" in source:
+              raise SystemExit("未設定 GAS_ENDPOINT，且 index.html 仍是佔位字串。")
+          else:
+              print("GAS_ENDPOINT 未設定；沿用 index.html 內已存在的公開 /exec 網址。")
           PY
 
       - name: 上傳 Pages artifact
@@ -65,3 +68,4 @@ jobs:
       - name: 發布網站
         id: deployment
         uses: actions/deploy-pages@v4
+
