@@ -1183,7 +1183,7 @@
           <div class="admin-metrics"><div class="admin-metric"><small>累積回覆</small><strong id="admin-count">0</strong><span>匿名填答筆數</span></div><div class="admin-metric"><small>整體平均</small><strong id="admin-overall-mean">–</strong><span>總量表題目平均</span></div><div class="admin-metric"><small>高分組</small><strong id="admin-high-count">0</strong><span>平均 5 分以上</span></div><div class="admin-metric"><small>最近回覆</small><strong id="admin-latest-date">–</strong><span>最後一筆送出日期</span></div></div>
           <div id="admin-groups" class="admin-groups" aria-label="教師與非教師分組統計"></div>
           <div class="admin-panel"><div class="admin-panel-head"><div><h2>四因素累積平均</h2><p>與論文教師樣本平均並列</p></div></div><div id="admin-factor-table"></div></div>
-          <div class="admin-panel"><div class="admin-toolbar"><p><strong>最近回覆</strong> · 只顯示匿名編號與計分摘要</p><div class="admin-toolbar-actions"><button id="export-csv-button" class="small-button" type="button">匯出 CSV</button><button id="export-json-button" class="small-button" type="button">匯出 JSON</button><button id="clear-local-button" class="small-button danger" type="button">清除本機資料</button></div></div><div id="admin-recent-table" class="admin-recent-wrap"></div></div>
+          <div class="admin-panel"><div class="admin-toolbar"><p><strong>最近回覆</strong> · 只顯示匿名編號與計分摘要</p><div class="admin-toolbar-actions"><button id="export-csv-button" class="small-button" type="button">匯出 CSV</button><button id="export-json-button" class="small-button" type="button">匯出 JSON</button><button id="admin-logout-button" class="small-button" type="button">登出</button><button id="clear-local-button" class="small-button danger" type="button">清除本機資料</button></div></div><div id="admin-recent-table" class="admin-recent-wrap"></div></div>
           <p class="admin-note"><strong>資料保護：</strong>本工具只儲存身分分組、基本背景、作答答案與計分摘要，不收集姓名、Email 或其他直接識別資料。若部署到公開網址，請維持試算表私有，並定期下載備份。</p>
         </div>
       </section>
@@ -2488,6 +2488,20 @@
         $("#clear-local-button").hidden = true;
       }
 
+      function logoutAdmin() {
+        // 不把 token 寫入 localStorage；登出時也清除畫面與記憶體中的後台資料。
+        state.adminRecords = [];
+        $("#admin-dashboard").hidden = true;
+        $("#admin-lock").hidden = false;
+        $("#admin-code").value = "";
+        $("#admin-groups").innerHTML = "";
+        $("#admin-factor-table").innerHTML = "";
+        $("#admin-recent-table").innerHTML = "";
+        $("#admin-login-message").className = "admin-login-message is-info";
+        $("#admin-login-message").textContent = "已登出。";
+        $("#admin-code").focus();
+      }
+
       function makeDownload(filename, content, type) {
         const blob = new Blob([content], { type });
         const url = URL.createObjectURL(blob);
@@ -2548,6 +2562,7 @@
      $("#survey-form").addEventListener("submit", handleSubmit);
       $("#admin-login-button").addEventListener("click", loadCloudAdmin);
       $("#admin-code").addEventListener("keydown", (event) => { if (event.key === "Enter") loadCloudAdmin(); });
+      $("#admin-logout-button").addEventListener("click", logoutAdmin);
       $("#export-csv-button").addEventListener("click", () => exportRecords("csv"));
       $("#export-json-button").addEventListener("click", () => exportRecords("json"));
       $("#clear-local-button").addEventListener("click", () => {
