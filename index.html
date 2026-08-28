@@ -1061,7 +1061,6 @@
       <nav class="site-nav" aria-label="主要導覽">
         <button class="nav-link is-active" type="button" data-view="welcome">首頁</button>
         <button class="nav-link" type="button" data-view="survey">開始填答</button>
-        <button class="nav-link nav-admin" type="button" data-view="admin">資料後台</button>
       </nav>
     </header>
 
@@ -1177,8 +1176,8 @@
       </div>
 
       <section id="admin-view" class="view" hidden aria-labelledby="admin-title">
-        <div class="admin-top"><div><span class="eyebrow">Step 03 · Admin</span><h1 id="admin-title">資料後台</h1><p>查看匿名回覆的累積狀態、整體趨勢與因素平均。</p></div><span id="data-mode" class="data-mode">本機資料模式</span></div>
-        <div id="admin-lock" class="admin-lock" hidden><div class="lock-icon" aria-hidden="true">⌁</div><h2>後台資料需要管理者代碼</h2><p id="admin-lock-description">雲端模式會要求 Apps Script 中設定的後台代碼。這只保護報表讀取，不會影響一般填答。</p><div id="admin-login" class="admin-login"><input id="admin-code" type="password" autocomplete="current-password" placeholder="輸入後台代碼"><button id="admin-login-button" type="button">登入</button></div><p id="admin-login-message" class="admin-login-message" aria-live="polite"></p></div>
+        <div class="admin-top"><div><span class="eyebrow">Management</span><h1 id="admin-title">管理者資料檢視</h1><p>僅限授權管理者使用。</p></div><span id="data-mode" class="data-mode">管理者專用</span></div>
+        <div id="admin-lock" class="admin-lock" hidden><div class="lock-icon" aria-hidden="true">⌁</div><h2>請輸入管理者代碼</h2><p id="admin-lock-description">請輸入 Apps Script 中設定的管理者代碼。一般填答者不會取得任何資料。</p><div id="admin-login" class="admin-login"><input id="admin-code" type="password" autocomplete="current-password" placeholder="輸入管理者代碼"><button id="admin-login-button" type="button">登入</button></div><p id="admin-login-message" class="admin-login-message" aria-live="polite"></p></div>
         <div id="admin-dashboard" class="admin-summary" hidden>
           <div class="admin-metrics"><div class="admin-metric"><small>累積回覆</small><strong id="admin-count">0</strong><span>匿名填答筆數</span></div><div class="admin-metric"><small>整體平均</small><strong id="admin-overall-mean">–</strong><span>總量表題目平均</span></div><div class="admin-metric"><small>高分組</small><strong id="admin-high-count">0</strong><span>平均 5 分以上</span></div><div class="admin-metric"><small>最近回覆</small><strong id="admin-latest-date">–</strong><span>最後一筆送出日期</span></div></div>
           <div id="admin-groups" class="admin-groups" aria-label="教師與非教師分組統計"></div>
@@ -2582,8 +2581,13 @@
         else showView(view);
       });
 
+      function shouldOpenAdminRoute() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("admin") === "1" || window.location.hash === "#admin";
+      }
+
       updateResumeButton();
-      showView("welcome");
+      showView(shouldOpenAdminRoute() ? "admin" : "welcome");
     })();
   </script>
 </body>
