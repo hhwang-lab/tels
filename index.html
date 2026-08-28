@@ -1281,10 +1281,10 @@
 
       const OVERALL_REFERENCE = 4.74;
       const TOTAL_ITEMS = QUESTIONS.length;
-       // Apps Script 版本會直接使用 google.script.run。GitHub Pages 的公開建置流程
-       // 會在上線時把 endpoint placeholder 替換成 /exec；原始碼不保存部署網址。
+       // Apps Script 版本會直接使用 google.script.run；GitHub Pages 版本則透過公開 /exec 服務連線。
        const APP_CONFIG = {
-         gasEndpoint: "__GAS_ENDPOINT__"
+         // Apps Script /exec 是公開資料服務入口；管理者資料仍由 ADMIN_TOKEN 保護。
+         gasEndpoint: "https://script.google.com/macros/s/AKfycbzFSp2A3OtkGLQQnjE4_BdcAEC5QkCojWEEzlyWhvrLcQaZqW2pNXrAjXUN4lb6Q9S39A/exec"
        };
       const STORAGE = {
         draft: "el-scale-draft-v1",
