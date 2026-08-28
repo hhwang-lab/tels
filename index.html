@@ -2586,6 +2586,10 @@
         return params.get("admin") === "1" || window.location.hash === "#admin";
       }
 
+      window.addEventListener("hashchange", () => {
+        showView(shouldOpenAdminRoute() ? "admin" : "welcome");
+      });
+
       updateResumeButton();
       showView(shouldOpenAdminRoute() ? "admin" : "welcome");
     })();
