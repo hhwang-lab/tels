@@ -492,6 +492,15 @@
     .source-copy { display: grid; gap: 9px; }
     .source-copy p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
     .source-copy strong { color: var(--ink); }
+    .source-more { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e6dff2; }
+    .source-more summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #8067a5; cursor: pointer; font-size: 12px; font-weight: 850; list-style: none; }
+    .source-more summary::-webkit-details-marker { display: none; }
+    .source-more summary::after { flex: 0 0 auto; content: "+"; color: #8067a5; font-size: 19px; font-weight: 500; line-height: 1; }
+    .source-more[open] summary::after { content: "−"; }
+    .source-more summary:focus-visible { outline: 3px solid rgba(128, 103, 165, 0.2); outline-offset: 4px; border-radius: 4px; }
+    .source-more-body { display: grid; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #e6dff2; }
+    .source-more-body p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.75; }
+    .source-more-body strong { color: var(--ink); }
 
     .profile-gate {
       margin-bottom: 34px;
@@ -1118,7 +1127,7 @@
             <div class="method-points"><div class="method-point"><b>01</b><strong>直覺填答</strong><span>依第一個真實反應作答，不必揣測「應該選幾分」。</span></div><div class="method-point"><b>02</b><strong>即時計分</strong><span>35 題完成後，自動計算四因素與總量表分數。</span></div><div class="method-point"><b>03</b><strong>對照閱讀</strong><span>完成後在報表中和論文教師樣本平均並列，看見自己的優勢與下一步。</span></div></div>
           </div>
           <div class="privacy-note"><strong>填答提醒</strong><span>本量表不要求填寫姓名或聯絡方式；僅詢問分組統計所需的基本資料。請依照你目前的實際感受作答，結果僅供自我了解與專業發展參考。</span></div>
-          <div class="source-card" id="source"><div class="source-label">Research note</div><div class="source-copy"><p><strong>引用論文：</strong>王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。</p><p><strong>研究支持：</strong>本研究獲教育部高等教育深耕計畫之特色領域研究中心經費補助，由「國立臺灣師範大學社會情緒教育與發展研究中心」支應。</p></div></div>
+          <div class="source-card" id="source"><div class="source-label">Research note</div><div class="source-copy"><p><strong>引用論文：</strong>王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。</p><p><strong>研究支持：</strong>本研究獲教育部高等教育深耕計畫之特色領域研究中心經費補助，由「國立臺灣師範大學社會情緒教育與發展研究中心」支應。</p><details class="source-more"><summary>研究計畫與團隊</summary><div class="source-more-body"><p><strong>研究架構：</strong>本研究中心以兩大主軸推動研究，本研究屬於主軸二「發展教師情意素養培育方案，構築學校、地方社會情緒支持系統」。</p><p><strong>所屬子計畫：</strong>子計畫五「師資生涯發展所需的心理素質與支持建構」。</p><p><strong>計畫團隊：</strong>計畫主持人洪儷瑜教授；協同主持人王宣惠助理教授。</p></div></details></div></div>
         </div>
       </section>
 
