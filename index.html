@@ -640,6 +640,10 @@
     .results-top,
     .admin-top { margin-bottom: 30px; }
 
+    .results-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .report-brand { display: inline-flex; align-items: center; max-width: min(330px, 100%); padding: 8px 12px; background: var(--ink); border: 1px solid rgba(23,60,56,0.82); border-radius: 15px; box-shadow: 0 9px 20px rgba(23,60,56,0.13); }
+    .report-brand img { display: block; width: min(250px, 100%); height: auto; }
+
     .result-hero {
       display: grid;
       grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
@@ -814,7 +818,9 @@
     .reference-stat { padding: 11px 12px; background: rgba(255,255,255,0.75); border-radius: 11px; }
     .reference-stat small { display: block; color: var(--muted); font-size: 10px; }
     .reference-stat strong { display: block; margin-top: 3px; color: var(--accent-deep); font-size: 16px; }
-    .reference-source { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid rgba(205, 220, 213, 0.9); color: var(--muted) !important; font-size: 11px !important; line-height: 1.7 !important; }
+    .reference-source { display: grid; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(205, 220, 213, 0.9); }
+    .reference-source p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .reference-source strong { color: var(--ink-soft); }
 
     .report-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 32px; }
     .share-card-button { color: white; background: var(--ink); border-color: var(--ink); }
@@ -955,6 +961,7 @@
       .importance-grid { grid-template-columns: 1fr; }
       .survey-top, .admin-top { align-items: flex-start; flex-direction: column; }
       .progress-box { width: 100%; min-width: 0; }
+      .report-brand img { width: min(230px, 100%); }
       .result-hero { grid-template-columns: 1fr; gap: 28px; }
       .radar-layout { grid-template-columns: 1fr; }
       .radar-chart-column { order: 1; }
@@ -967,40 +974,62 @@
       .site-header, .main-content, .site-footer { width: min(100% - 28px, 1180px); }
       .site-header { min-height: 70px; }
       .brand-copy small { display: none; }
+      .site-header { gap: 12px; }
       .site-nav { gap: 1px; }
-      .nav-link { flex: 0 0 auto; padding: 8px 8px; font-size: 12px; white-space: nowrap; }
+      .nav-link { flex: 0 0 auto; min-height: 42px; padding: 8px 8px; font-size: 12.5px; white-space: nowrap; }
       .main-content { padding-top: 30px; }
       .hero-copy h1 { font-size: clamp(37px, 12vw, 58px); }
       .hero-description { font-size: 15px; }
+      .trust-line { font-size: 13px; line-height: 1.6; }
       .hero-card { min-height: 0; padding: 24px; }
       .hero-card h2 { margin-top: 28px; font-size: 27px; }
       .hero-card-foot { margin-top: 20px; }
       .stats-ribbon { grid-template-columns: 1fr; }
       .stat-cell { min-height: 80px; padding: 15px 20px; }
       .method-points { grid-template-columns: 1fr; }
+      .method-card p { font-size: 14px; line-height: 1.75; }
+      .method-point span { font-size: 12px; line-height: 1.65; }
       .importance-wrap { margin-top: 58px; }
       .importance-quote { min-height: 0; padding: 24px; }
       .importance-quote blockquote { font-size: 19px; }
+      .importance-source { font-size: 12px; }
       .privacy-note { flex-direction: column; gap: 4px; }
       .source-card { grid-template-columns: 1fr; gap: 8px; }
       .profile-gate-head, .profile-actions { align-items: stretch; flex-direction: column; }
       .profile-step { align-self: flex-start; }
       .identity-options, .profile-grid { grid-template-columns: 1fr; }
+      .identity-option small { font-size: 12px; line-height: 1.6; }
+      .profile-field > span { font-size: 14px; }
+      .profile-field select { min-height: 50px; font-size: 15px; }
       .survey-notice { align-items: flex-start; flex-direction: column; }
+      .survey-notice { font-size: 14px; line-height: 1.65; }
+      .progress-meta { font-size: 12px; }
       .factor-section-header { align-items: flex-start; flex-direction: column; }
-      .factor-reference { text-align: left; }
+      .factor-title h2 { font-size: 21px; }
+      .factor-reference { font-size: 13px; text-align: left; }
+      .factor-reference strong { font-size: 18px; }
       .question-card { padding: 17px 14px 15px; }
       .question-card legend { gap: 9px; font-size: 15px; }
+      .item-number { font-size: 12px; }
       .response-labels { grid-template-columns: repeat(3, 1fr); gap: 6px; margin-left: 0; }
-      .response-option label { min-height: 58px; padding-inline: 3px; }
+      .response-option label { min-height: 64px; padding: 8px 3px; }
+      .response-option label b { font-size: 18px; }
+      .response-option label small { max-width: 100%; font-size: 12px; line-height: 1.35; }
       .survey-actions { align-items: stretch; flex-direction: column; }
       .actions-right { justify-content: stretch; }
       .actions-right .button { flex: 1; }
+      .results-top { align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+      .report-brand { max-width: 100%; padding: 7px 10px; }
+      .report-brand img { width: min(205px, 100%); }
       .result-hero { padding: 24px 19px; }
       .overall-score { align-items: flex-start; flex-direction: column; }
       .score-ring { width: 142px; height: 142px; }
       .score-ring::before, .score-ring-inner { width: 114px; height: 114px; }
       .score-ring-inner strong { font-size: 37px; }
+      .overall-copy p { font-size: 15px; line-height: 1.75; }
+      .result-section-header h2 { font-size: 23px; }
+      .result-section-header p { font-size: 13px; line-height: 1.7; }
+      .radar-scale-badge { font-size: 12px; }
       .factor-results-grid, .insight-grid { grid-template-columns: 1fr; }
       .factor-definitions-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
@@ -1019,18 +1048,36 @@
       .radar-detail-score { margin-left: 0; }
       .radar-detail-head h3 { font-size: 17px; }
       .radar-factor-detail { padding: 20px 18px; }
+      .radar-detail-definition { font-size: 15px; line-height: 1.8; }
+      .radar-detail-components li { font-size: 13px; }
       .factor-definition-head { grid-template-columns: minmax(0, 1fr) 104px; gap: 8px; }
       .factor-mini-compare { width: 104px; height: 56px; }
       .factor-mini-compare svg { width: 98px; height: 50px; }
       .radar-legend { justify-content: flex-start; gap: 9px 14px; font-size: 11px; }
       .factor-definition-card { padding: 20px 18px; }
+      .factor-definition-copy { font-size: 14px; line-height: 1.8; }
+      .factor-component-label { font-size: 12px; }
+      .factor-component-list li { font-size: 13px; }
+      .factor-result-card > p { font-size: 14px; line-height: 1.75; }
+      .compare-labels, .compare-legend { font-size: 12px; }
+      .reference-card p { font-size: 13px; line-height: 1.8; }
+      .reference-source p { font-size: 12px; line-height: 1.75; }
+      .factor-definition-note { font-size: 12px; }
+      .report-actions { align-items: stretch; flex-direction: column; }
+      .report-actions .button { width: 100%; }
+      .report-stamp { font-size: 12px; line-height: 1.6; }
       .share-card-modal { padding: 10px; }
       .share-card-dialog { max-height: 95vh; padding: 19px; border-radius: 21px; }
       .share-card-dialog-head h2 { font-size: 25px; }
+      .share-card-dialog-head p { font-size: 14px; }
       .share-card-content { grid-template-columns: 1fr; gap: 18px; margin-top: 17px; }
       .share-card-preview-shell { width: min(100%, 245px); }
       .share-card-actions { flex-direction: column; }
       .share-card-actions .button { width: 100%; flex-basis: auto; }
+      .share-card-tools > p { font-size: 14px; line-height: 1.8; }
+      .share-card-note { font-size: 13px !important; line-height: 1.7 !important; }
+      .share-card-status { font-size: 13px !important; }
+      .share-card-hint { font-size: 12px !important; }
       .admin-metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
       .admin-groups { grid-template-columns: 1fr; }
       .admin-metric { padding: 15px; }
@@ -1038,6 +1085,14 @@
       .admin-panel { padding: 17px 14px; }
       .admin-login { flex-direction: column; gap: 8px; }
       .admin-login input, .admin-login button { min-height: 44px; border-radius: 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .site-header { min-height: 0; padding: 12px 0 10px; flex-wrap: wrap; gap: 8px 10px; }
+      .brand { min-width: 0; flex: 1 1 auto; }
+      .site-nav { flex: 1 0 100%; justify-content: space-between; gap: 4px; }
+      .nav-link { flex: 1 1 0; min-height: 44px; padding-inline: 5px; font-size: 13px; }
+      .main-content { padding-top: 24px; }
     }
 
     @media print {
@@ -1144,19 +1199,19 @@
       </section>
 
       <section id="results-view" class="view" hidden aria-labelledby="results-title">
-        <div class="results-top"><span class="eyebrow">Step 02 · Your report</span></div>
+        <div class="results-top"><span class="eyebrow">Step 02 · Your report</span><div class="report-brand" aria-label="SEED 社會情緒教育與發展研究中心"><img src="SEED-橫式-768x128.png" alt="SEED 社會情緒教育與發展研究中心標誌"></div></div>
         <div id="result-hero" class="result-hero">
           <div class="overall-score"><div id="overall-ring" class="score-ring" aria-label="總量表平均分數"><div class="score-ring-inner"><strong id="overall-mean">–</strong><span>/ 6 平均</span></div></div></div>
           <div class="overall-copy"><span class="eyebrow">Overall emotional literacy</span><h1 id="results-title">你的情緒素養輪廓</h1><p id="overall-summary">完成 35 題後，這裡會出現你的整體結果。</p><div class="overall-meta"><span id="overall-band" class="pill">–</span><span id="overall-total" class="pill warm">總分 – / 210</span><span id="reference-average-pill" class="pill">論文教師樣本 4.74</span><span id="respondent-summary" class="pill" hidden></span></div></div>
         </div>
 
-        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看該因素的說明。</p></div><span class="radar-scale-badge">Diverging Bar · 1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
+        <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看該因素的說明。</p></div><span class="radar-scale-badge">1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
 
         <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
 
         <section class="result-section" aria-labelledby="factor-definition-title"><div class="result-section-header"><div><h2 id="factor-definition-title">四因素定義與重要成分</h2><p>詳見王宣惠、洪儷瑜（付梓中）</p></div></div><div id="factor-definitions" class="factor-definitions-grid"></div><p class="factor-definition-note">為避免影響填答，35 題作答時不顯示題目所屬因素；完成後才提供這份架構說明。</p></section>
 
-        <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><p class="reference-source">引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。<br>研究支持：教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></section>
+        <section class="result-section" aria-labelledby="reading-title"><div class="result-section-header"><div><h2 id="reading-title">怎麼讀這份結果</h2><p>把分數當作現在的座標，而不是給自己的標籤。</p></div></div><div class="insight-grid"><div class="insight-card"><h3>給你的閱讀線索</h3><ul id="insight-list" class="insight-list"></ul></div><div class="reference-card"><h3>論文參考基準</h3><p id="reference-copy">本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。</p><div class="reference-stats"><div class="reference-stat"><small>總量表平均</small><strong>4.74 / 6</strong></div><div class="reference-stat"><small>最高因素平均</small><strong>社會覺察 5.00</strong></div></div><div class="reference-source"><p><strong>引用論文：</strong>王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。</p><p><strong>研究支持：</strong>教育部高等教育深耕計畫特色領域研究中心經費，由國立臺灣師範大學社會情緒教育與發展研究中心支應。</p></div></div></div></section>
 
         <div class="report-actions"><button id="print-button" class="button" type="button">列印／儲存 PDF</button><button id="share-card-button" class="button share-card-button" type="button">生成 9:16 圖卡</button><button id="retake-button" class="button secondary" type="button">重新填答</button><button id="results-home-button" class="button ghost" type="button">回到首頁</button></div>
         <p id="report-stamp" class="report-stamp"></p>
@@ -1280,7 +1335,8 @@
       ];
 
       const OVERALL_REFERENCE = 4.74;
-      const TOTAL_ITEMS = QUESTIONS.length;
+       const TOTAL_ITEMS = QUESTIONS.length;
+       const SEED_LOGO_SRC = "SEED-橫式-768x128.png";
        // Apps Script 版本會直接使用 google.script.run；GitHub Pages 版本則透過公開 /exec 服務連線。
        const APP_CONFIG = {
          // Apps Script /exec 是公開資料服務入口；管理者資料仍由 ADMIN_TOKEN 保護。
@@ -1304,6 +1360,21 @@
 
       const $ = (selector) => document.querySelector(selector);
       const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+      let seedLogoPromise = null;
+
+      function loadSeedLogo() {
+        if (seedLogoPromise) return seedLogoPromise;
+        seedLogoPromise = new Promise((resolve) => {
+          const image = new Image();
+          image.onload = () => resolve(image);
+          image.onerror = () => resolve(null);
+          image.src = SEED_LOGO_SRC;
+        });
+        return seedLogoPromise;
+      }
+
+      void loadSeedLogo();
 
       const gasBridge = {
         frame: null,
@@ -2117,7 +2188,8 @@
         ctx.textBaseline = "top";
       }
 
-      function createShareCardDataUrl(scores, profile) {
+      async function createShareCardDataUrl(scores, profile) {
+        const seedLogo = await loadSeedLogo();
         const width = 1080;
         const height = 1920;
         const canvas = document.createElement("canvas");
@@ -2142,9 +2214,20 @@
         ctx.beginPath(); ctx.arc(46, 1660, 160, 0, Math.PI * 2); ctx.fill();
         ctx.globalAlpha = 1;
 
-        ctx.fillStyle = "#173c38";
-        canvasSetFont(ctx, 24, 850);
-        ctx.fillText("EL  ·  EMOTIONAL LITERACY", 72, 67);
+        if (seedLogo) {
+          const logoPanelX = 72;
+          const logoPanelY = 36;
+          const logoPanelWidth = 344;
+          const logoPanelHeight = 66;
+          const logoWidth = 312;
+          const logoHeight = logoWidth * ((seedLogo.naturalHeight || seedLogo.height) / (seedLogo.naturalWidth || seedLogo.width));
+          drawCanvasRoundedRect(ctx, logoPanelX, logoPanelY, logoPanelWidth, logoPanelHeight, 22, "#173c38");
+          ctx.drawImage(seedLogo, logoPanelX + 16, logoPanelY + (logoPanelHeight - logoHeight) / 2, logoWidth, logoHeight);
+        } else {
+          ctx.fillStyle = "#173c38";
+          canvasSetFont(ctx, 24, 850);
+          ctx.fillText("EL  ·  EMOTIONAL LITERACY", 72, 67);
+        }
         ctx.textAlign = "right";
         ctx.fillStyle = "#7d9590";
         canvasSetFont(ctx, 21, 750);
@@ -2245,7 +2328,7 @@
         ctx.fillText("看見自己，讓下一步更有方向。", 104, 1733);
         ctx.fillStyle = "#7d9590";
         canvasSetFont(ctx, 17, 600);
-        drawCanvasWrappedText(ctx, "王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。", 104, 1771, 860, 25, 2);
+        drawCanvasWrappedText(ctx, "引用論文：王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。", 104, 1771, 860, 25, 2);
         drawCanvasWrappedText(ctx, "研究支持：教育部高等教育深耕計畫特色領域研究中心／國立臺灣師範大學社會情緒教育與發展研究中心。", 104, 1820, 860, 24, 2);
 
         return canvas.toDataURL("image/png");
@@ -2261,7 +2344,7 @@
         status.className = "share-card-status" + (type === "error" ? " is-error" : "");
       }
 
-      function openShareCardModal() {
+      async function openShareCardModal() {
         if (!state.results) {
           showToast("請先完成填答，再生成圖卡。", "error");
           return;
@@ -2270,7 +2353,7 @@
         trigger.disabled = true;
         trigger.textContent = "正在製作圖卡…";
         try {
-          const dataUrl = createShareCardDataUrl(state.results, state.profile);
+          const dataUrl = await createShareCardDataUrl(state.results, state.profile);
           state.shareCard = { dataUrl, filename: shareCardFilename() };
           $("#share-card-preview").src = dataUrl;
           $("#share-card-preview").alt = `情緒素養 9:16 圖卡預覽，總量表平均 ${state.results.overall.mean.toFixed(2)} 分`;
@@ -2293,9 +2376,9 @@
         if (returnFocus) $("#share-card-button").focus();
       }
 
-      function downloadShareCard() {
+      async function downloadShareCard() {
         if (!state.shareCard) {
-          openShareCardModal();
+          await openShareCardModal();
           return;
         }
         const link = document.createElement("a");
@@ -2320,11 +2403,11 @@
 
       async function shareShareCard() {
         if (!state.shareCard) {
-          openShareCardModal();
+          await openShareCardModal();
           return;
         }
         if (!navigator.share || typeof File === "undefined") {
-          downloadShareCard();
+          await downloadShareCard();
           setShareCardStatus("此瀏覽器不支援直接分享，已改為下載 PNG 圖卡。", "success");
           return;
         }
@@ -2340,7 +2423,7 @@
             setShareCardStatus("已取消分享。", "success");
             return;
           }
-          downloadShareCard();
+          await downloadShareCard();
           setShareCardStatus("此裝置無法直接分享檔案，已改為下載 PNG 圖卡。", "success");
         }
       }
