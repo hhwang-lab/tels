@@ -22,6 +22,9 @@
       --sun-soft: #fff5d8;
       --blue: #6f9cc1;
       --blue-soft: #e6f0f8;
+      --compare-positive: #208478;
+      --compare-negative: #d77b6a;
+      --compare-neutral: #9ab3ac;
       --shadow: 0 22px 60px rgba(31, 79, 69, 0.10);
       --shadow-soft: 0 12px 32px rgba(31, 79, 69, 0.07);
       --radius-lg: 28px;
@@ -697,29 +700,29 @@
     .result-section-header h2 { margin: 0; font-size: 25px; letter-spacing: -0.06em; }
     .result-section-header p { margin: 0; color: var(--muted); font-size: 12px; }
 
-    .factor-results-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-
-    .factor-result-card { padding: 24px; background: white; border: 1px solid var(--line); border-top: 4px solid var(--factor-color); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
-    .factor-result-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
-    .factor-result-header .factor-title h3 { margin: 0; font-size: 19px; letter-spacing: -0.05em; }
-    .factor-result-header .factor-title .factor-number { width: 30px; height: 30px; border-radius: 9px; font-size: 11px; }
-    .factor-score { color: var(--factor-color); font-size: 31px; font-weight: 850; letter-spacing: -0.07em; line-height: 1; text-align: right; }
-    .factor-score small { color: var(--muted); font-size: 12px; font-weight: 750; letter-spacing: 0; }
-    .factor-result-card > p { min-height: 43px; margin: 18px 0 18px; color: var(--ink-soft); font-size: 13px; line-height: 1.65; }
-    .compare-block { padding-top: 14px; border-top: 1px dashed var(--line); }
-    .compare-labels { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 750; }
-    .compare-labels strong { color: var(--ink); font-size: 11px; }
-    .compare-track { position: relative; height: 10px; margin: 9px 0 8px; background: #edf4f1; border-radius: 999px; }
-    .compare-user-bar { width: 0%; height: 100%; background: var(--factor-color); border-radius: inherit; transition: width 600ms ease; }
-    .compare-marker { position: absolute; top: -4px; left: 0%; width: 2px; height: 18px; background: var(--ink); border-radius: 99px; opacity: 0.65; }
-    .compare-marker::after { position: absolute; top: -4px; left: -3px; width: 8px; height: 8px; content: ""; background: var(--ink); border-radius: 50%; }
-    .compare-legend { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; }
-    .compare-legend span { display: inline-flex; align-items: center; gap: 5px; }
-    .compare-legend i { display: inline-block; width: 8px; height: 8px; background: var(--factor-color); border-radius: 50%; }
-    .compare-legend .reference-dot { width: 2px; height: 11px; background: var(--ink); border-radius: 0; }
-    .factor-result-footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 17px; color: var(--muted); font-size: 12px; }
-    .factor-card-link { margin-top: 15px; padding: 0; color: var(--accent-deep); background: transparent; border: 0; font-size: 11px; font-weight: 850; cursor: pointer; }
-    .factor-card-link:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    .factor-profile-chart { padding: 26px 28px 22px; background: linear-gradient(135deg, #ffffff 0%, #f4faf7 100%); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
+    .profile-chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+    .profile-chart-kicker { color: var(--accent); font-size: 10px; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+    .profile-chart-title { display: block; margin-top: 6px; color: var(--ink); font-size: 21px; letter-spacing: -0.05em; }
+    .profile-chart-head p { max-width: 500px; margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .profile-chart-scale, .profile-chart-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 74px; align-items: center; gap: 14px; }
+    .profile-chart-scale { margin-top: 25px; color: var(--muted); font-size: 10px; font-weight: 800; }
+    .profile-chart-scale > span:first-child { color: transparent; user-select: none; }
+    .profile-scale-track { display: flex; justify-content: space-between; gap: 8px; padding: 0 1px; }
+    .profile-scale-track span { white-space: nowrap; }
+    .profile-chart-rows { display: grid; gap: 13px; margin-top: 9px; }
+    .profile-chart-row { min-height: 45px; }
+    .profile-row-label { display: flex; align-items: center; min-width: 0; gap: 9px; }
+    .profile-row-label i { display: grid; place-items: center; flex: 0 0 auto; width: 27px; height: 27px; color: white; background: var(--factor-color); border-radius: 9px; font-size: 10px; font-style: normal; font-weight: 850; }
+    .profile-row-label strong { min-width: 0; overflow: hidden; color: var(--ink); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+    .profile-row-rank { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; }
+    .profile-row-track { position: relative; height: 16px; overflow: hidden; background: repeating-linear-gradient(90deg, #edf4f1 0, #edf4f1 calc(20% - 1px), #dcebe5 calc(20% - 1px), #dcebe5 20%); border-radius: 999px; box-shadow: inset 0 1px 2px rgba(23,60,56,0.05); }
+    .profile-row-track span { display: block; width: var(--bar-width); height: 100%; background: linear-gradient(90deg, color-mix(in srgb, var(--factor-color) 70%, white), var(--factor-color)); border-radius: inherit; animation: profileBarIn 650ms var(--bar-delay, 0ms) ease both; }
+    .profile-row-value { color: var(--factor-color); font-size: 22px; font-weight: 850; letter-spacing: -0.07em; line-height: 1; text-align: right; white-space: nowrap; }
+    .profile-row-value small { color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: 0; }
+    .profile-chart-footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 14px; color: var(--muted); border-top: 1px solid #e7f0ec; font-size: 11px; }
+    .profile-chart-footer strong { color: var(--ink-soft); font-weight: 800; }
+    @keyframes profileBarIn { from { width: 0; opacity: 0.35; } to { width: var(--bar-width); opacity: 1; } }
     .delta-positive { color: var(--accent-deep); font-weight: 850; }
     .delta-negative { color: #b46050; font-weight: 850; }
     .delta-neutral { color: #9b7830; font-weight: 850; }
@@ -736,12 +739,12 @@
     .diverging-row-band { fill: transparent; stroke: transparent; stroke-width: 1.5; transition: fill 200ms ease, stroke 200ms ease, opacity 200ms ease; }
     .diverging-row-separator { stroke: #edf4f1; stroke-width: 1; }
     .diverging-track { fill: #edf4f1; }
-    .diverging-bar { fill: var(--factor-color); opacity: 0.88; animation: divergingBarIn 560ms var(--bar-delay, 0ms) ease both; transition: fill 200ms ease, opacity 200ms ease, filter 200ms ease; }
-    .diverging-bar.is-below { fill: #d77b6a; }
-    .diverging-bar.is-neutral { fill: #9ab3ac; }
-    .diverging-end { fill: var(--factor-color); stroke: white; stroke-width: 2.5; opacity: 0.92; transition: opacity 200ms ease, stroke 200ms ease, stroke-width 200ms ease; }
-    .diverging-end.is-below { fill: #d77b6a; }
-    .diverging-end.is-neutral { fill: #9ab3ac; }
+    .diverging-bar { fill: var(--compare-positive); opacity: 0.88; animation: divergingBarIn 560ms var(--bar-delay, 0ms) ease both; transition: fill 200ms ease, opacity 200ms ease, filter 200ms ease; }
+    .diverging-bar.is-below { fill: var(--compare-negative); }
+    .diverging-bar.is-neutral { fill: var(--compare-neutral); }
+    .diverging-end { fill: var(--compare-positive); stroke: white; stroke-width: 2.5; opacity: 0.92; transition: opacity 200ms ease, stroke 200ms ease, stroke-width 200ms ease; }
+    .diverging-end.is-below { fill: var(--compare-negative); }
+    .diverging-end.is-neutral { fill: var(--compare-neutral); }
     .diverging-baseline { stroke: #173c38; stroke-width: 2.5; stroke-dasharray: 6 6; }
     .diverging-gridline { stroke: #dbece5; stroke-width: 1; }
     .diverging-scale-label { fill: #8aa29c; font-size: 11px; font-weight: 750; }
@@ -749,15 +752,17 @@
     .diverging-factor-chip { fill: var(--factor-color); }
     .diverging-factor-code { fill: white; font-size: 10px; font-weight: 900; text-anchor: middle; }
     .diverging-factor-label { fill: var(--ink); font-size: 15px; font-weight: 850; }
-    .diverging-score { fill: var(--factor-color); font-size: 15px; font-weight: 900; text-anchor: middle; transition: fill 180ms ease, font-size 180ms ease; }
+    .diverging-score { fill: var(--compare-positive); font-size: 15px; font-weight: 900; text-anchor: middle; transition: fill 180ms ease, font-size 180ms ease; }
+    .diverging-score.is-below { fill: var(--compare-negative); }
+    .diverging-score.is-neutral { fill: var(--compare-neutral); }
     .diverging-reference { fill: var(--muted); font-size: 10px; font-weight: 750; text-anchor: middle; }
     .diverging-delta { font-size: 11px; font-weight: 900; transition: fill 180ms ease, font-size 180ms ease, opacity 180ms ease; }
-    .diverging-delta.is-positive { fill: var(--factor-color); }
-    .diverging-delta.is-below { fill: #b46050; }
-    .diverging-delta.is-neutral { fill: #8aa29c; }
+    .diverging-delta.is-positive { fill: var(--compare-positive); }
+    .diverging-delta.is-below { fill: var(--compare-negative); }
+    .diverging-delta.is-neutral { fill: var(--compare-neutral); }
     .radar-factor-hit { cursor: pointer; outline: none; }
     .diverging-row-hit-area { fill: transparent; stroke: none; pointer-events: all; }
-    .radar-factor-hit:hover .diverging-row-band, .radar-factor-hit:focus .diverging-row-band, .radar-factor-hit.is-active .diverging-row-band { fill: color-mix(in srgb, var(--factor-color) 8%, white); stroke: color-mix(in srgb, var(--factor-color) 32%, #dcebe5); }
+    .radar-factor-hit:hover .diverging-row-band, .radar-factor-hit:focus .diverging-row-band, .radar-factor-hit.is-active .diverging-row-band { fill: color-mix(in srgb, var(--direction-color) 8%, white); stroke: color-mix(in srgb, var(--direction-color) 32%, #dcebe5); }
     .radar-factor-hit:hover .diverging-bar, .radar-factor-hit:focus .diverging-bar { opacity: 1; filter: drop-shadow(0 4px 7px rgba(23, 60, 56, 0.14)); }
     .radar-factor-hit.is-active .diverging-bar { opacity: 1; filter: drop-shadow(0 6px 9px rgba(23, 60, 56, 0.2)); }
     .radar-factor-hit.is-active .diverging-end { stroke: var(--ink); stroke-width: 3.5; animation: divergingEndPulse 1.35s ease-in-out infinite; }
@@ -769,8 +774,8 @@
     .radar-legend { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: -4px; color: var(--ink-soft); font-size: 12px; }
     .radar-legend span { display: inline-flex; align-items: center; gap: 7px; }
     .radar-key-positive, .radar-key-negative { display: inline-block; width: 22px; height: 9px; border-radius: 999px; }
-    .radar-key-positive { background: var(--accent); }
-    .radar-key-negative { background: #d77b6a; }
+    .radar-key-positive { background: var(--compare-positive); }
+    .radar-key-negative { background: var(--compare-negative); }
     .radar-key-baseline { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #173c38; }
     .radar-scale-copy { color: var(--muted); }
     .radar-factor-detail { display: grid; align-content: center; gap: 16px; min-height: 100%; margin: 0; padding: 25px 24px; background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(245, 252, 249, 0.84)); border: 1px solid var(--line); border-left: 4px solid var(--factor-color, var(--accent)); border-radius: 19px; box-shadow: 0 14px 30px rgba(31, 79, 69, 0.06); }
@@ -792,8 +797,8 @@
     .radar-factor-detail.is-updating { animation: radarDetailIn 360ms ease both; }
     @keyframes radarDetailIn { from { opacity: 0.2; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) {
-      .diverging-row-band, .diverging-bar, .diverging-end, .diverging-score, .diverging-delta { transition: none; }
-      .diverging-bar, .radar-factor-hit.is-active .diverging-end, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-compare-bar { animation: none; }
+      .diverging-row-band, .diverging-bar, .diverging-end, .diverging-score, .diverging-delta, .profile-row-track span { transition: none; }
+      .diverging-bar, .radar-factor-hit.is-active .diverging-end, .radar-factor-detail.is-updating, .factor-definition-card.is-focused .mini-compare-bar, .profile-row-track span { animation: none; }
     }
 
     .factor-definitions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -809,15 +814,15 @@
     .mini-compare-track { stroke: #dcebe5; stroke-width: 7; stroke-linecap: round; }
     .mini-compare-grid { stroke: #e5f0ec; stroke-width: 1; }
     .mini-compare-baseline { stroke: #6f8881; stroke-width: 1.5; stroke-dasharray: 3 3; }
-    .mini-compare-bar { stroke: var(--factor-color); stroke-width: 8; stroke-linecap: round; transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease; }
-    .mini-compare-bar.is-below { stroke: #d77b6a; }
-    .mini-compare-bar.is-neutral { stroke: #9ab3ac; }
-    .mini-compare-dot { fill: var(--factor-color); stroke: white; stroke-width: 1.5; }
-    .mini-compare-dot.is-below { fill: #d77b6a; }
-    .mini-compare-dot.is-neutral { fill: #9ab3ac; }
-    .mini-compare-delta { fill: var(--factor-color); font-size: 9px; font-weight: 900; text-anchor: middle; }
-    .mini-compare-delta.is-below { fill: #b46050; }
-    .mini-compare-delta.is-neutral { fill: #8aa29c; }
+    .mini-compare-bar { stroke: var(--compare-positive); stroke-width: 8; stroke-linecap: round; transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease; }
+    .mini-compare-bar.is-below { stroke: var(--compare-negative); }
+    .mini-compare-bar.is-neutral { stroke: var(--compare-neutral); }
+    .mini-compare-dot { fill: var(--compare-positive); stroke: white; stroke-width: 1.5; }
+    .mini-compare-dot.is-below { fill: var(--compare-negative); }
+    .mini-compare-dot.is-neutral { fill: var(--compare-neutral); }
+    .mini-compare-delta { fill: var(--compare-positive); font-size: 9px; font-weight: 900; text-anchor: middle; }
+    .mini-compare-delta.is-below { fill: var(--compare-negative); }
+    .mini-compare-delta.is-neutral { fill: var(--compare-neutral); }
     .mini-compare-score { fill: var(--muted); font-size: 8px; font-weight: 750; text-anchor: end; }
     .factor-definition-card.is-focused .mini-compare-bar { animation: miniComparePulse 1.35s ease-in-out infinite; }
     @keyframes miniComparePulse { 0%, 100% { opacity: 0.78; stroke-width: 7; } 50% { opacity: 1; stroke-width: 10; } }
@@ -1058,7 +1063,7 @@
       .result-section-header h2 { font-size: 23px; }
       .result-section-header p { font-size: 13px; line-height: 1.7; }
       .radar-scale-badge { font-size: 12px; }
-      .factor-results-grid, .insight-grid { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
       .factor-definitions-grid { grid-template-columns: 1fr; }
       .result-section-header { align-items: flex-start; flex-direction: column; gap: 5px; }
       .radar-card { padding: 12px 12px 16px; }
@@ -1086,8 +1091,16 @@
       .factor-definition-copy { font-size: 14px; line-height: 1.8; }
       .factor-component-label { font-size: 12px; }
       .factor-component-list li { font-size: 13px; }
-      .factor-result-card > p { font-size: 14px; line-height: 1.75; }
-      .compare-labels, .compare-legend { font-size: 12px; }
+      .factor-profile-chart { padding: 20px 16px 18px; }
+      .profile-chart-head { flex-direction: column; gap: 4px; }
+      .profile-chart-title { font-size: 23px; }
+      .profile-chart-head p { font-size: 13px; line-height: 1.7; }
+      .profile-chart-scale, .profile-chart-row { grid-template-columns: 118px minmax(0, 1fr) 54px; gap: 8px; }
+      .profile-chart-scale { margin-top: 21px; font-size: 9px; }
+      .profile-row-label strong { font-size: 13px; }
+      .profile-row-value { font-size: 20px; }
+      .profile-row-value small { font-size: 9px; }
+      .profile-chart-footer { font-size: 12px; line-height: 1.55; }
       .reference-card p { font-size: 13px; line-height: 1.8; }
       .reference-source p { font-size: 12px; line-height: 1.75; }
       .factor-definition-note { font-size: 12px; }
@@ -1128,9 +1141,9 @@
       .site-header, .site-footer, .report-actions, .toast, .admin-view, #welcome-view, #survey-view, .share-card-modal { display: none !important; }
       .main-content { width: 100%; margin: 0; padding: 0; }
       #results-view { display: block !important; }
-      .result-hero, .factor-result-card, .insight-card, .reference-card { box-shadow: none; break-inside: avoid; }
+      .result-hero, .factor-profile-chart, .insight-card, .reference-card { box-shadow: none; break-inside: avoid; }
       .result-hero { padding: 24px; }
-      .factor-results-grid { gap: 10px; }
+      .factor-profile-chart { padding: 20px; }
     }
   </style>
 </head>
@@ -1252,7 +1265,7 @@
 
         <section class="result-section radar-section" aria-labelledby="radar-title"><div class="result-section-header"><div><h2 id="radar-title">四因素與對照平均</h2><p>以論文教師樣本平均作為基準線，向左或向右呈現各因素的差距；移入或選取列可查看該因素的說明。</p></div><span class="radar-scale-badge">1–6 六點量尺</span></div><div class="radar-card"><div class="radar-layout"><div id="radar-factor-detail" class="radar-factor-detail" tabindex="-1" aria-live="polite"><div class="radar-detail-empty"><strong>移入圖表中的因素</strong><span>左側會呈現該因素的分數、對照平均、定義與重要成分；也可以使用鍵盤聚焦後按 Enter。</span></div></div><div class="radar-chart-column"><div id="factor-radar-chart" class="factor-diverging-chart"></div><div class="radar-legend" aria-label="發散長條圖圖例"><span><i class="radar-key-positive"></i>高於對照平均</span><span><i class="radar-key-negative"></i>低於對照平均</span><span><i class="radar-key-baseline"></i>基準線＝論文教師樣本平均</span></div></div></div></div></section>
 
-        <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">四因素表現</h2><p id="factor-results-caption">彩色長條是你的題目平均，黑色標記是論文教師樣本平均。</p></div></div><div id="factor-results" class="factor-results-grid"></div></section>
+        <section class="result-section" aria-labelledby="factor-results-title"><div class="result-section-header"><div><h2 id="factor-results-title">你的四因素輪廓</h2><p id="factor-results-caption">以同一條 1–6 分尺度，看見目前四個因素的相對強弱。</p></div></div><div id="factor-results" class="factor-profile-chart"></div></section>
 
         <section class="result-section" aria-labelledby="factor-definition-title"><div class="result-section-header"><div><h2 id="factor-definition-title">四因素定義與重要成分</h2><p>詳見王宣惠、洪儷瑜（付梓中）</p></div></div><div id="factor-definitions" class="factor-definitions-grid"></div><p class="factor-definition-note">為避免影響填答，35 題作答時不顯示題目所屬因素；完成後才提供這份架構說明。</p></section>
 
@@ -1903,15 +1916,16 @@
           const mean = Number(userValues[index]) || 0;
           const reference = Number(referenceValues[index]) || 0;
           const difference = differences[index];
-          const safeDifference = Math.abs(difference) < 0.005 ? 0 : difference;
-          const directionClass = safeDifference > 0 ? "is-positive" : safeDifference < 0 ? "is-below" : "is-neutral";
-          const barLength = Math.max(6, Math.min(halfWidth, Math.abs(safeDifference) / maxAbs * halfWidth));
+           const safeDifference = Math.abs(difference) < 0.005 ? 0 : difference;
+           const directionClass = safeDifference > 0 ? "is-positive" : safeDifference < 0 ? "is-below" : "is-neutral";
+           const directionColor = safeDifference > 0 ? "#208478" : safeDifference < 0 ? "#d77b6a" : "#9ab3ac";
+           const barLength = Math.max(6, Math.min(halfWidth, Math.abs(safeDifference) / maxAbs * halfWidth));
           const barX = safeDifference < 0 ? baselineX - barLength : baselineX;
           const endX = safeDifference < 0 ? baselineX - barLength : baselineX + barLength;
           const deltaX = safeDifference < 0 ? Math.max(plotLeft - 3, endX - 10) : Math.min(plotRight + 3, endX + 10);
           const deltaAnchor = safeDifference < 0 ? "end" : "start";
           const accessibleLabel = "選擇" + factor.name + "，你的平均 " + mean.toFixed(2) + " 分，" + directionText(safeDifference) + safeReferenceLabel + " " + reference.toFixed(2) + " 分，差距 " + formatDifference(safeDifference) + " 分";
-          return '<g class="diverging-row radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + ';--bar-delay:' + (index * 80) + 'ms" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="diverging-row-band" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect><rect class="diverging-track" x="' + plotLeft + '" y="' + (rowY - 5) + '" width="' + (plotRight - plotLeft) + '" height="10" rx="5"></rect><rect class="diverging-bar ' + directionClass + '" x="' + barX.toFixed(1) + '" y="' + (rowY - 9) + '" width="' + barLength.toFixed(1) + '" height="18" rx="9"></rect><circle class="diverging-end ' + directionClass + '" cx="' + endX.toFixed(1) + '" cy="' + rowY + '" r="6.5"></circle><rect class="diverging-factor-chip" x="28" y="' + (rowY - 17) + '" width="34" height="34" rx="10"></rect><text class="diverging-factor-code" x="45" y="' + (rowY + 4) + '">' + factor.number + '</text><text class="diverging-factor-label" x="74" y="' + (rowY + 6) + '">' + factor.name + '</text><text class="diverging-delta ' + directionClass + '" x="' + deltaX.toFixed(1) + '" y="' + (rowY - 13) + '" text-anchor="' + deltaAnchor + '">' + formatDifference(safeDifference) + '</text><text class="diverging-score" x="710" y="' + (rowY - 1) + '">' + mean.toFixed(2) + '</text><text class="diverging-reference" x="710" y="' + (rowY + 16) + '">對照 ' + reference.toFixed(2) + '</text><rect class="diverging-row-hit-area" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect></g>';
+           return '<g class="diverging-row radar-factor-hit" data-factor-id="' + factor.id + '" style="--factor-color:' + factor.color + ';--direction-color:' + directionColor + ';--bar-delay:' + (index * 80) + 'ms" role="button" tabindex="0" aria-pressed="false" aria-label="' + accessibleLabel + '"><rect class="diverging-row-band" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect><rect class="diverging-track" x="' + plotLeft + '" y="' + (rowY - 5) + '" width="' + (plotRight - plotLeft) + '" height="10" rx="5"></rect><rect class="diverging-bar ' + directionClass + '" x="' + barX.toFixed(1) + '" y="' + (rowY - 9) + '" width="' + barLength.toFixed(1) + '" height="18" rx="9"></rect><circle class="diverging-end ' + directionClass + '" cx="' + endX.toFixed(1) + '" cy="' + rowY + '" r="6.5"></circle><rect class="diverging-factor-chip" x="28" y="' + (rowY - 17) + '" width="34" height="34" rx="10"></rect><text class="diverging-factor-code" x="45" y="' + (rowY + 4) + '">' + factor.number + '</text><text class="diverging-factor-label" x="74" y="' + (rowY + 6) + '">' + factor.name + '</text><text class="diverging-delta ' + directionClass + '" x="' + deltaX.toFixed(1) + '" y="' + (rowY - 13) + '" text-anchor="' + deltaAnchor + '">' + formatDifference(safeDifference) + '</text><text class="diverging-score ' + directionClass + '" x="710" y="' + (rowY - 1) + '">' + mean.toFixed(2) + '</text><text class="diverging-reference" x="710" y="' + (rowY + 16) + '">對照 ' + reference.toFixed(2) + '</text><rect class="diverging-row-hit-area" x="16" y="' + (rowY - 31) + '" width="728" height="62" rx="18"></rect></g>';
         }).join("");
         container.innerHTML = '<svg class="diverging-svg" viewBox="0 0 ' + width + ' ' + height + '" role="group" aria-labelledby="diverging-svg-title" aria-describedby="diverging-svg-desc" focusable="false"><title id="diverging-svg-title">四因素與論文教師樣本平均發散長條圖</title><desc id="diverging-svg-desc">中央垂直基準線代表' + safeReferenceLabel + '；每一列的長條向左表示低於對照，向右表示高於對照，長度代表差距大小。</desc><g class="diverging-grid">' + gridMarkup + '</g><g class="diverging-rows">' + rowMarkup + '</g></svg>';
 
@@ -2026,33 +2040,14 @@
         $("#reference-average-pill").textContent = `${referenceLabel} 4.74`;
         $("#respondent-summary").textContent = `填答身分：${respondentLabel}`;
         $("#respondent-summary").hidden = !profile || !profile.respondentType;
-        $("#factor-results-caption").textContent = `彩色長條是你的題目平均，黑色標記是${referenceLabel}。`;
+        $("#factor-results-caption").textContent = "這張圖只呈現你的四因素輪廓；長條越長，表示目前自評越高。";
         $("#reference-copy").textContent = profile && profile.respondentType === "non-teacher" ? "你選擇以非教師身分填答；本報表仍並列論文中 554 位教師的六點量表平均，僅作探索性參考，不代表非教師常模或能力診斷。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組。" : "本報表以論文中 554 位教師的六點量表平均作為對照。低於 4 分為低分組，4 分至未達 5 分為中分組，5 分以上為高分組；這些分組僅用於閱讀，不代表能力診斷。";
-       $("#factor-results").innerHTML = FACTORS.map((factor, index) => {
-         const score = scores.factors[factor.id];
-          const factorDelta = getDeltaCopy(score.difference, referenceLabel);
-         const userPercent = Math.min(100, Math.max(0, score.mean / 6 * 100));
-         const referencePercent = Math.min(100, Math.max(0, factor.referenceMean / 6 * 100));
-         return `<article class="factor-result-card" style="--factor-color:${factor.color}">
-           <div class="factor-result-header"><div class="factor-title"><span class="factor-number">${factor.number}</span><div><h3>${factor.name}</h3><small>${factor.english}</small></div></div><div class="factor-score">${score.mean.toFixed(2)}<small> / 6</small></div></div>
-           <p>${factor.description}</p>
-            <div class="compare-block"><div class="compare-labels"><span>你的題目平均</span><strong>${score.mean.toFixed(2)}</strong></div><div class="compare-track"><div class="compare-user-bar" style="width:${userPercent}%"></div><span class="compare-marker" style="left:${referencePercent}%" title="${referenceLabel} ${factor.referenceMean.toFixed(2)}"></span></div><div class="compare-legend"><span><i></i>你的結果</span><span><i class="reference-dot"></i>${referenceLabel} ${factor.referenceMean.toFixed(2)}</span></div></div>
-           <button class="factor-card-link" type="button" data-radar-select="${factor.id}">查看${factor.name}的圖形</button>
-           <div class="factor-result-footer"><span>原始分數 ${score.total} / ${score.max}</span><span class="${factorDelta.className}">${factorDelta.label} ${Math.abs(score.difference).toFixed(2)}</span></div>
-         </article>`;
-       }).join("");
-       renderFactorRadar(scores, referenceLabel);
-       renderFactorDefinitions(scores);
-       $("#factor-results").querySelectorAll("[data-radar-select]").forEach((button) => button.addEventListener("click", () => {
-         selectRenderedRadarFactor(button.dataset.radarSelect);
-         const detail = $("#radar-factor-detail");
-         if (detail) {
-           detail.scrollIntoView({ behavior: "smooth", block: "center" });
-           detail.focus({ preventScroll: true });
-         }
-       }));
+        const profileFactors = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
+        $("#factor-results").innerHTML = `<div class="profile-chart-head"><div><span class="profile-chart-kicker">Your profile</span><strong class="profile-chart-title">四因素的相對強弱</strong><p>依你的四因素平均排序，協助看見目前較突出與較需要留意的方向。</p></div><span class="radar-scale-badge">1–6 六點量尺</span></div><div class="profile-chart-scale"><span aria-hidden="true">&nbsp;</span><div class="profile-scale-track"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div><span>平均</span></div><div class="profile-chart-rows">${profileFactors.map((factor, index) => { const score = scores.factors[factor.id]; const percent = Math.min(100, Math.max(0, score.mean / 6 * 100)); return `<div class="profile-chart-row" style="--factor-color:${factor.color};--bar-width:${percent}%;--bar-delay:${index * 80}ms"><div class="profile-row-label"><i>${factor.number}</i><div><strong>${factor.name}</strong><span class="profile-row-rank">相對排序第 ${index + 1}</span></div></div><div class="profile-row-track" role="img" aria-label="${factor.name} ${score.mean.toFixed(2)} 分，共 6 分"><span></span></div><div class="profile-row-value">${score.mean.toFixed(2)}<small> / 6</small></div></div>`; }).join("")}</div><div class="profile-chart-footer"><span>長條越長，表示目前自評越高。</span><strong>僅呈現你的四因素輪廓</strong></div>`;
+        renderFactorRadar(scores, referenceLabel);
+        renderFactorDefinitions(scores);
 
-       const sorted = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
+        const sorted = [...FACTORS].sort((a, b) => scores.factors[b.id].mean - scores.factors[a.id].mean);
        const strongest = sorted[0];
        const practice = sorted[sorted.length - 1];
        const closest = [...FACTORS].sort((a, b) => Math.abs(scores.factors[a.id].difference) - Math.abs(scores.factors[b.id].difference))[0];
@@ -2183,7 +2178,7 @@
           const barLength = Math.max(7, Math.min(halfWidth, Math.abs(difference) / maxAbs * halfWidth));
           const endX = difference < 0 ? baselineX - barLength : baselineX + barLength;
           const barX = difference < 0 ? endX : baselineX;
-          const barColor = difference < 0 ? "#d77b6a" : difference > 0 ? factor.color : "#9ab3ac";
+          const barColor = difference < 0 ? "#d77b6a" : difference > 0 ? "#208478" : "#9ab3ac";
 
           if (index < FACTORS.length - 1) {
             ctx.strokeStyle = "#edf4f1";
