@@ -443,24 +443,46 @@
       line-height: 1.7;
     }
 
-    .method-card {
+    .method-preview {
       display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
+      grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+      align-items: stretch;
       gap: 24px;
-      padding: 30px;
-      background: var(--wash);
+      padding: 26px;
+      background: linear-gradient(135deg, #eef9f4 0%, #ffffff 68%, #fff8ee 100%);
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
     }
 
-    .method-card h3 { margin: 0 0 8px; font-size: 22px; letter-spacing: -0.05em; }
-    .method-card p { margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .preview-copy { display: flex; flex-direction: column; justify-content: center; padding: 8px 4px; }
+    .preview-kicker { color: var(--accent); font-size: 11px; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+    .preview-copy h3 { margin: 12px 0 10px; font-size: clamp(24px, 2.5vw, 32px); letter-spacing: -0.06em; line-height: 1.25; }
+    .preview-copy p { max-width: 410px; margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
+    .preview-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .preview-tag { padding: 8px 10px; color: var(--accent-deep); background: rgba(255,255,255,0.78); border: 1px solid rgba(190,222,211,0.95); border-radius: 999px; font-size: 11px; font-weight: 800; }
+    .preview-caption { margin-top: 16px; color: var(--muted); font-size: 11px; line-height: 1.6; }
 
-    .method-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .method-point { padding: 18px; background: rgba(255,255,255,0.66); border: 1px solid rgba(220,235,229,0.88); border-radius: 15px; }
-    .method-point b { display: grid; place-items: center; width: 30px; height: 30px; color: white; background: var(--accent); border-radius: 10px; font-size: 12px; }
-    .method-point strong { display: block; margin-top: 13px; font-size: 14px; }
-    .method-point span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .result-preview { min-width: 0; padding: 22px 22px 18px; background: rgba(255,255,255,0.9); border: 1px solid rgba(211,231,223,0.96); border-radius: 22px; box-shadow: 0 16px 34px rgba(31,79,69,0.1); }
+    .result-preview-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .result-preview-overline { display: block; color: var(--accent); font-size: 10px; font-weight: 850; letter-spacing: 0.15em; text-transform: uppercase; }
+    .result-preview-head strong { display: block; margin-top: 6px; color: var(--ink); font-size: 22px; letter-spacing: -0.06em; }
+    .result-preview-badge { flex: 0 0 auto; padding: 6px 9px; color: #8b6b2b; background: #fff5d8; border: 1px solid #f2deb1; border-radius: 999px; font-size: 10px; font-weight: 850; }
+    .result-preview-overall { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-top: 22px; padding-bottom: 17px; border-bottom: 1px solid #e7f0ec; }
+    .result-preview-overall small { display: block; color: var(--muted); font-size: 11px; font-weight: 750; }
+    .result-preview-overall strong { display: block; margin-top: 3px; color: var(--accent-deep); font-size: 36px; letter-spacing: -0.08em; line-height: 1; }
+    .result-preview-overall strong span { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0; }
+    .result-preview-meter { width: min(150px, 36%); height: 10px; overflow: hidden; background: #edf4f1; border-radius: 999px; }
+    .result-preview-meter span { display: block; width: 77%; height: 100%; background: linear-gradient(90deg, #86cdb7, var(--accent)); border-radius: inherit; }
+    .result-preview-section-label { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; color: var(--muted); font-size: 10px; font-weight: 800; }
+    .result-preview-factors { display: grid; gap: 10px; margin-top: 12px; }
+    .result-preview-row { display: grid; grid-template-columns: 9px 76px minmax(0, 1fr) 38px; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 11px; }
+    .result-preview-row i { width: 9px; height: 9px; background: var(--factor-color); border-radius: 50%; }
+    .result-preview-row strong { color: var(--ink); font-size: 11px; white-space: nowrap; }
+    .result-preview-bar { height: 8px; overflow: hidden; background: #edf4f1; border-radius: 999px; }
+    .result-preview-bar span { display: block; width: var(--bar-width); height: 100%; background: var(--factor-color); border-radius: inherit; }
+    .result-preview-row b { color: var(--factor-color); font-size: 12px; text-align: right; }
+    .result-preview-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 17px; padding-top: 13px; color: var(--muted); border-top: 1px solid #e7f0ec; font-size: 10px; }
+    .result-preview-foot strong { color: var(--ink-soft); font-size: 11px; }
 
     .privacy-note {
       display: flex;
@@ -957,7 +979,7 @@
     @media (max-width: 880px) {
       .hero-grid { grid-template-columns: 1fr; min-height: auto; gap: 42px; }
       .hero-card { min-height: 0; max-width: 680px; }
-      .method-card { grid-template-columns: 1fr; }
+      .method-preview { grid-template-columns: 1fr; }
       .importance-grid { grid-template-columns: 1fr; }
       .survey-top, .admin-top { align-items: flex-start; flex-direction: column; }
       .progress-box { width: 100%; min-width: 0; }
@@ -986,9 +1008,15 @@
       .hero-card-foot { margin-top: 20px; }
       .stats-ribbon { grid-template-columns: 1fr; }
       .stat-cell { min-height: 80px; padding: 15px 20px; }
-      .method-points { grid-template-columns: 1fr; }
-      .method-card p { font-size: 14px; line-height: 1.75; }
-      .method-point span { font-size: 12px; line-height: 1.65; }
+      .method-preview { gap: 18px; padding: 20px; }
+      .preview-copy h3 { font-size: 25px; }
+      .preview-copy p { font-size: 15px; line-height: 1.75; }
+      .preview-caption { font-size: 12px; }
+      .result-preview { padding: 19px 17px 16px; }
+      .result-preview-head strong { font-size: 23px; }
+      .result-preview-row { grid-template-columns: 9px 82px minmax(0, 1fr) 40px; font-size: 12px; }
+      .result-preview-row strong { font-size: 12px; }
+      .result-preview-row b { font-size: 13px; }
       .importance-wrap { margin-top: 58px; }
       .importance-quote { min-height: 0; padding: 24px; }
       .importance-quote blockquote { font-size: 19px; }
@@ -1167,10 +1195,27 @@
         </section>
 
         <div class="method-wrap">
-          <div class="section-heading"><span class="eyebrow">How it works</span><h2>把感受整理成可以前進的線索</h2><p>每一題都沒有標準答案，請依「現在實際的狀態與感受」選擇最符合你的程度。</p></div>
-          <div class="method-card">
-            <div><h3>你會得到一份個人化的四因素報表</h3><p>完成填答後，結果會呈現各因素的題目平均、原始總分、與論文教師樣本平均的差距，並用低／中／高分區協助閱讀。這是一份自我反思工具，不是診斷或排名。</p></div>
-            <div class="method-points"><div class="method-point"><b>01</b><strong>直覺填答</strong><span>依第一個真實反應作答，不必揣測「應該選幾分」。</span></div><div class="method-point"><b>02</b><strong>即時計分</strong><span>35 題完成後，自動計算四因素與總量表分數。</span></div><div class="method-point"><b>03</b><strong>對照閱讀</strong><span>完成後在報表中和論文教師樣本平均並列，看見自己的優勢與下一步。</span></div></div>
+          <div class="section-heading"><span class="eyebrow">How it works</span><h2>完成後，你會得到一份看得懂的結果</h2><p>35 題完成後，從一張報表看見自己的情緒素養輪廓。</p></div>
+          <div class="method-preview">
+            <div class="preview-copy">
+              <span class="preview-kicker">Result preview</span>
+              <h3>把填答結果，整理成一眼看懂的輪廓。</h3>
+              <p>你會看到整體平均、四因素表現、對照閱讀，以及可以保存或分享的 9:16 圖卡。</p>
+              <div class="preview-tags"><span class="preview-tag">整體平均</span><span class="preview-tag">四因素輪廓</span><span class="preview-tag">9:16 圖卡</span></div>
+              <small class="preview-caption">下方為示意畫面，不代表任何人的實際填答結果。</small>
+            </div>
+            <div class="result-preview" aria-label="填答完成後的報表示意畫面，不代表任何人的實際結果">
+              <div class="result-preview-head"><div><span class="result-preview-overline">My self-reflection</span><strong>我的情緒素養</strong></div><span class="result-preview-badge">示意畫面</span></div>
+              <div class="result-preview-overall"><div><small>整體平均</small><strong>4.62 <span>/ 6</span></strong></div><div class="result-preview-meter" aria-hidden="true"><span></span></div></div>
+              <div class="result-preview-section-label"><span>四因素輪廓</span><span>完成後可查看對照</span></div>
+              <div class="result-preview-factors">
+                <div class="result-preview-row" style="--factor-color:#208478;--bar-width:82%"><i></i><strong>自我覺察</strong><div class="result-preview-bar"><span></span></div><b>4.94</b></div>
+                <div class="result-preview-row" style="--factor-color:#d77b6a;--bar-width:74%"><i></i><strong>自我管理</strong><div class="result-preview-bar"><span></span></div><b>4.46</b></div>
+                <div class="result-preview-row" style="--factor-color:#6f9cc1;--bar-width:84%"><i></i><strong>社會覺察</strong><div class="result-preview-bar"><span></span></div><b>5.00</b></div>
+                <div class="result-preview-row" style="--factor-color:#c6a75d;--bar-width:78%"><i></i><strong>人際技能</strong><div class="result-preview-bar"><span></span></div><b>4.67</b></div>
+              </div>
+              <div class="result-preview-foot"><span>完成後可下載個人圖卡</span><strong>PNG · PDF</strong></div>
+            </div>
           </div>
           <div class="privacy-note"><strong>填答提醒</strong><span>本量表不要求填寫姓名或聯絡方式；僅詢問分組統計所需的基本資料。請依照你目前的實際感受作答，結果僅供自我了解與專業發展參考。</span></div>
           <div class="source-card" id="source"><div class="source-label">Research note</div><div class="source-copy"><p><strong>引用論文：</strong>王宣惠、洪儷瑜（付梓中）。教師情緒素養量表之編製。教育科學研究期刊。</p><p><strong>研究支持：</strong>本研究獲教育部高等教育深耕計畫之特色領域研究中心經費補助，由國立臺灣師範大學社會情緒教育與發展研究中心（Social Emotional Education and Development Center, SEED）支應。</p><p><strong>研究計畫：</strong>本研究屬於 SEED 主軸二「發展教師情意素養培育方案，構築學校、地方社會情緒支持系統」之子計畫五「師資生涯發展所需的心理素質與支持建構」。</p></div></div>
@@ -1226,7 +1271,7 @@
           </div>
           <div class="share-card-content">
             <div class="share-card-preview-shell"><img id="share-card-preview" class="share-card-preview" alt="情緒素養 9:16 圖卡預覽"></div>
-            <div class="share-card-tools"><h3>已準備好你的視覺報表</h3><p>下載後可以保存到手機相簿；在支援檔案分享的手機瀏覽器中，也可以直接從系統分享選單選擇 Instagram 或其他社群平台。</p><p class="share-card-note">Instagram 是否出現在分享選單，取決於裝置與 App 是否已安裝。網站不會代替你直接發布貼文。</p><p id="share-card-status" class="share-card-status" aria-live="polite"></p><div class="share-card-actions"><button id="download-share-card-button" class="button" type="button">下載 9:16 圖卡</button><button id="share-share-card-button" class="button secondary" type="button">分享圖卡</button><button id="share-card-close-bottom" class="button ghost" type="button">回到報表</button></div><p class="share-card-hint">建議：若瀏覽器不支援直接分享，先下載 PNG，再於 Instagram 的限時動態或貼文中選取圖片。</p></div>
+            <div class="share-card-tools"><h3>已準備好你的視覺報表</h3><p>下載後可以保存到手機相簿；在支援檔案分享的手機瀏覽器中，也可以直接從系統分享選單選擇 Instagram 或其他社群平台。</p><p class="share-card-note">Instagram 是否出現在分享選單，取決於裝置與 App 是否已安裝。網站不會代替你直接發布貼文。</p><p id="share-card-status" class="share-card-status" aria-live="polite"></p><div class="share-card-actions"><button id="download-share-card-button" class="button" type="button">下載 9:16 圖卡</button><button id="share-share-card-button" class="button secondary" type="button">分享圖卡</button><button id="open-share-card-button" class="button ghost" type="button">在新分頁開啟</button><button id="share-card-close-bottom" class="button ghost" type="button">回到報表</button></div><p class="share-card-hint">若裝置沒有自動下載，請使用「在新分頁開啟」，再長按或右鍵儲存圖卡。</p></div>
           </div>
         </div>
       </div>
@@ -2217,12 +2262,15 @@
         if (seedLogo) {
           const logoPanelX = 72;
           const logoPanelY = 36;
-          const logoPanelWidth = 344;
-          const logoPanelHeight = 66;
-          const logoWidth = 312;
-          const logoHeight = logoWidth * ((seedLogo.naturalHeight || seedLogo.height) / (seedLogo.naturalWidth || seedLogo.width));
+          const logoPanelWidth = 178;
+          const logoPanelHeight = 88;
+          // 寬版檔案右側含中心中英文名稱；圖卡只裁切左側的圖像標誌與 SEED 字樣。
+          const sourceWidth = Math.min(238, seedLogo.naturalWidth || seedLogo.width);
+          const sourceHeight = seedLogo.naturalHeight || seedLogo.height;
+          const logoWidth = 142;
+          const logoHeight = logoWidth * (sourceHeight / sourceWidth);
           drawCanvasRoundedRect(ctx, logoPanelX, logoPanelY, logoPanelWidth, logoPanelHeight, 22, "#173c38");
-          ctx.drawImage(seedLogo, logoPanelX + 16, logoPanelY + (logoPanelHeight - logoHeight) / 2, logoWidth, logoHeight);
+          ctx.drawImage(seedLogo, 0, 0, sourceWidth, sourceHeight, logoPanelX + 18, logoPanelY + (logoPanelHeight - logoHeight) / 2, logoWidth, logoHeight);
         } else {
           ctx.fillStyle = "#173c38";
           canvasSetFont(ctx, 24, 850);
@@ -2376,18 +2424,40 @@
         if (returnFocus) $("#share-card-button").focus();
       }
 
+      function downloadShareCardBlob(blob, filename) {
+        if (typeof navigator.msSaveOrOpenBlob === "function") {
+          navigator.msSaveOrOpenBlob(blob, filename);
+          return;
+        }
+        if (!window.URL || typeof window.URL.createObjectURL !== "function") throw new Error("目前瀏覽器不支援圖卡下載。");
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.rel = "noopener";
+        link.style.position = "fixed";
+        link.style.left = "-10000px";
+        link.style.opacity = "0";
+        document.body.appendChild(link);
+        link.click();
+        window.setTimeout(() => {
+          link.remove();
+          window.URL.revokeObjectURL(url);
+        }, 10000);
+      }
+
       async function downloadShareCard() {
         if (!state.shareCard) {
           await openShareCardModal();
           return;
         }
-        const link = document.createElement("a");
-        link.href = state.shareCard.dataUrl;
-        link.download = state.shareCard.filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setShareCardStatus("已下載 PNG 圖卡，可從手機相簿上傳到 Instagram。", "success");
+        try {
+          downloadShareCardBlob(dataUrlToBlob(state.shareCard.dataUrl), state.shareCard.filename);
+          setShareCardStatus("已開始下載 PNG 圖卡，可從手機相簿上傳到 Instagram。", "success");
+        } catch (error) {
+          setShareCardStatus(error && error.message ? error.message : "目前無法下載圖卡。", "error");
+          showToast("圖卡下載失敗，請改用「在新分頁開啟」。", "error");
+        }
       }
 
       function dataUrlToBlob(dataUrl) {
@@ -2399,6 +2469,27 @@
         const bytes = new Uint8Array(binary.length);
         for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
         return new Blob([bytes], { type: mime });
+      }
+
+      function openShareCardInNewTab() {
+        if (!state.shareCard) {
+          void openShareCardModal();
+          return;
+        }
+        try {
+          const url = window.URL.createObjectURL(dataUrlToBlob(state.shareCard.dataUrl));
+          const opened = window.open(url, "_blank");
+          if (!opened) {
+            window.URL.revokeObjectURL(url);
+            throw new Error("瀏覽器阻擋了新分頁。請允許彈出視窗，或直接使用下載按鈕。");
+          }
+          try { opened.opener = null; } catch (error) { /* no-op */ }
+          window.setTimeout(() => window.URL.revokeObjectURL(url), 60000);
+          setShareCardStatus("已在新分頁開啟圖卡；手機可長按圖片儲存。", "success");
+        } catch (error) {
+          setShareCardStatus(error && error.message ? error.message : "目前無法開啟圖卡。", "error");
+          showToast("無法開啟新分頁，請直接使用下載按鈕。", "error");
+        }
       }
 
       async function shareShareCard() {
@@ -2633,6 +2724,7 @@
       $("#share-card-button").addEventListener("click", openShareCardModal);
       $("#download-share-card-button").addEventListener("click", downloadShareCard);
       $("#share-share-card-button").addEventListener("click", shareShareCard);
+      $("#open-share-card-button").addEventListener("click", openShareCardInNewTab);
       $("#share-card-close").addEventListener("click", () => closeShareCardModal());
       $("#share-card-close-bottom").addEventListener("click", () => closeShareCardModal());
       $("#share-card-modal").addEventListener("click", (event) => {
